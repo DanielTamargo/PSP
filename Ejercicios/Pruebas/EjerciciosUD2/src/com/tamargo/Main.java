@@ -12,16 +12,15 @@ public class Main {
 
         //ejercicio3();
 
-        //ejercicio4();
+        ejercicio4();
 
         //ejercicio5();
 
-        ejercicio6();
+        //ejercicio6();
 
         //ejercicio7();
 
     }
-
 
     public static void ejercicio7() throws InterruptedException {
 
@@ -111,15 +110,16 @@ public class Main {
         System.out.println("Creamos los hilos.");
         Hilo3 hiloPares = new Hilo3(0); // 0 = empieza en 0, es decir, pares
         hiloPares.setName("Pares");
+        hiloPares.setPriority(10);
         Hilo3 hiloImpares = new Hilo3(1); // 1 = empieza en 1, es decir, impares
         hiloImpares.setName("Impares");
+        hiloImpares.setPriority(1);
 
         System.out.println("Ejecutamos los hilos.");
         hiloPares.start();
         hiloImpares.start();
 
     }
-
 
     public static void ejercicio3() {
 

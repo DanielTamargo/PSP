@@ -12,7 +12,7 @@ public class Hilo3 extends Thread {
     public void run() {
 
         for (int i = comienzo; i < 100; i++) {
-            System.out.println("Hilo: '" + getName() + "': " + i);
+            System.out.println("Hilo: '" + getName() + "' (prioridad: " + getPriority() + "): " + i);
             i++;
         }
         super.run();
