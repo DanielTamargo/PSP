@@ -12,7 +12,8 @@ public class Hilo6 extends Thread {
     public void run() {
         System.out.println("Hilo '" + getName() + "': inicio contador = " + contador);
         for (int i = 0; i < 5000; i++) {
-            contador+= 1;
+            Main.contador++;
+            contador++;
         }
         System.out.println("Hilo '" + getName() + "': fin contador = " + contador + "\n");
         super.run();

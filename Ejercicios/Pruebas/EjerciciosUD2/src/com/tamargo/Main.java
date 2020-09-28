@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 
 public class Main {
 
+    public static Integer contador = 0;
+
     public static void main(String[] args) throws IOException, InterruptedException {
 
         //ejercicio1y2();
@@ -16,9 +18,9 @@ public class Main {
 
         //ejercicio5();
 
-        ejercicio6();
+        //ejercicio6();
 
-        //ejercicio7();
+        ejercicio7();
 
         //tests();
 
@@ -56,24 +58,29 @@ public class Main {
 
         System.out.println("Ejercicio 7\n");
 
-        Integer contador = 0;
+        Integer contador2 = 0;
+        Variables v = new Variables();
 
-        System.out.println("Contador inicial: " + contador);
+        System.out.println("Contador local inicial: " + contador2);
+        System.out.println("Contador global inicial: " + contador);
         System.out.println();
-        Hilo6 h1 = new Hilo6(contador);
+        Hilo6 h1 = new Hilo6(contador2);
         h1.start();
-        h1.join();
-        Hilo6 h2 = new Hilo6(contador);
+        //h1.join();
+        Hilo6 h2 = new Hilo6(contador2);
         h2.start();
-        h2.join();
-        Hilo6 h3 = new Hilo6(contador);
+        //h2.join();
+        Hilo6 h3 = new Hilo6(contador2);
         h3.start();
-        h3.join();
-        Hilo6 h4 = new Hilo6(contador);
+        //h3.join();
+        Hilo6 h4 = new Hilo6(contador2);
         h4.start();
-        h4.join();
+        //h4.join();
 
-        System.out.println("Contador final: " + contador);
+        Thread.sleep(3000);
+
+        System.out.println("Contador local final: " + contador2);
+        System.out.println("Contador global final: " + contador);
 
     }
 
