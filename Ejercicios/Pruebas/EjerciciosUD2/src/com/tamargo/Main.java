@@ -12,13 +12,33 @@ public class Main {
 
         //ejercicio3();
 
-        ejercicio4();
+        //ejercicio4();
 
-        //ejercicio5();
+        ejercicio5();
 
         //ejercicio6();
 
         //ejercicio7();
+
+        //tests();
+
+    }
+
+    public static void tests() {
+
+        System.out.println("Algunos testeos:\n");
+
+        System.out.println("- Sleep con hilo Runnable:");
+        HiloRunnable hr = new HiloRunnable();
+        Thread hilo_hr = new Thread(hr);
+        hilo_hr.start();
+        try {
+            Thread.sleep(1300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println();
+
 
     }
 
@@ -94,6 +114,9 @@ public class Main {
         Hilo4 hiloPing = new Hilo4(0); // 0 = ping
         Hilo4 hiloPong = new Hilo4(1); // 1 = pong
 
+        hiloPing.setPriority(10);
+        hiloPong.setPriority(1);
+
         System.out.println("Lanzamos los hilos.");
         hiloPing.start();
         hiloPong.start();
@@ -108,7 +131,7 @@ public class Main {
         System.out.println("Ejercicio 4\n");
 
         System.out.println("Creamos los hilos.");
-        Hilo3 hiloPares = new Hilo3(0); // 0 = empieza en 0, es decir, pares
+        Hilo3 hiloPares = new Hilo3(2); // 0 = empieza en 0, es decir, pares
         hiloPares.setName("Pares");
         hiloPares.setPriority(10);
         Hilo3 hiloImpares = new Hilo3(1); // 1 = empieza en 1, es decir, impares

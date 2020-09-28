@@ -11,8 +11,14 @@ public class Hilo3 extends Thread {
     @Override
     public void run() {
 
-        for (int i = comienzo; i < 100; i++) {
+        for (int i = comienzo; i <= 100; i++) {
             System.out.println("Hilo: '" + getName() + "' (prioridad: " + getPriority() + "): " + i);
+            if (i == 50) {
+                if (comienzo == 0)
+                    setPriority(10);
+                else
+                    setPriority(1);
+            }
             i++;
         }
         super.run();

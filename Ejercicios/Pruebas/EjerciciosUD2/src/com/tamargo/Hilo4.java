@@ -17,7 +17,7 @@ public class Hilo4 extends Thread {
                 System.out.print("pong ");
 
             try {
-                sleep(100);
+                sleep(400);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
