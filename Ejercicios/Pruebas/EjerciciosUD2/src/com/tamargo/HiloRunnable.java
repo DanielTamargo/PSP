@@ -9,12 +9,12 @@ public class HiloRunnable implements Runnable {
     @Override
     public void run() {
 
-        System.out.println("Hola");
+        System.out.println("Hilo Runnable '" + Thread.currentThread().getName() + "': Hola");
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Adiós");
+        System.out.println("Hilo Runnable '" + Thread.currentThread().getName() + "': Adiós");
     }
 }

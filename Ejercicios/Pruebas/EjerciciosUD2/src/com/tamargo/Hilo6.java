@@ -10,9 +10,11 @@ public class Hilo6 extends Thread {
 
     @Override
     public void run() {
+        System.out.println("Hilo '" + getName() + "': inicio contador = " + contador);
         for (int i = 0; i < 5000; i++) {
             contador+= 1;
         }
+        System.out.println("Hilo '" + getName() + "': fin contador = " + contador + "\n");
         super.run();
     }
 }

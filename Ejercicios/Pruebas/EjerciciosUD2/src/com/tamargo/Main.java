@@ -14,9 +14,9 @@ public class Main {
 
         //ejercicio4();
 
-        ejercicio5();
+        //ejercicio5();
 
-        //ejercicio6();
+        ejercicio6();
 
         //ejercicio7();
 
@@ -24,21 +24,31 @@ public class Main {
 
     }
 
-    public static void tests() {
+    public static void tests() throws InterruptedException {
 
         System.out.println("Algunos testeos:\n");
 
+        /*
         System.out.println("- Sleep con hilo Runnable:");
         HiloRunnable hr = new HiloRunnable();
         Thread hilo_hr = new Thread(hr);
         hilo_hr.start();
-        try {
-            Thread.sleep(1300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Thread.sleep(1300);
         System.out.println();
+        */
 
+        System.out.println("- Lanzamos varias veces el hilo Runnable anterior:");
+        new Thread(new HiloRunnable(), "1").start();
+        Thread.sleep(1200);
+        new Thread(new HiloRunnable(), "2").start();
+        Thread.sleep(100);
+        new Thread(new HiloRunnable(), "3").start();
+        Thread.sleep(100);
+        new Thread(new HiloRunnable(), "4").start();
+        Thread.sleep(1500);
+        System.out.println("Fin.");
+
+        System.out.println();
 
     }
 
@@ -49,7 +59,7 @@ public class Main {
         Integer contador = 0;
 
         System.out.println("Contador inicial: " + contador);
-
+        System.out.println();
         Hilo6 h1 = new Hilo6(contador);
         h1.start();
         h1.join();
@@ -71,38 +81,34 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int tiempo = 1;
-        System.out.print("¿Cuántos segundos quieres esperar entre hilos? ");
-        tiempo = Integer.parseInt(br.readLine());
-
-        Hilo5 h1 = new Hilo5();
+        Hilo5 h1 = new Hilo5(2, "Hola");
         h1.start();
-        Thread.sleep(tiempo * 1000);
-        //h1.join(tiempo * 1000);
+        h1.join();
 
-        Hilo5 h2 = new Hilo5();
+        Hilo5 h2 = new Hilo5(2, "Adiós");
         h2.start();
-        Thread.sleep(tiempo * 1000);
-        //h2.join(tiempo * 1000);
+        h2.join();
 
-        Hilo5 h3 = new Hilo5();
+        Hilo5 h3 = new Hilo5(3, "Qué tal");
         h3.start();
-        Thread.sleep(tiempo * 1000);
-        //h3.join(tiempo * 1000);
+        h3.join();
 
-        Hilo5 h4 = new Hilo5();
+        Hilo5 h4 = new Hilo5(1, "Bien");
         h4.start();
-        Thread.sleep(tiempo * 1000);
-        //h4.join(tiempo * 1000);
+        h4.join();
 
-        Hilo5 h5 = new Hilo5();
+        Hilo5 h5 = new Hilo5(2, "Mal");
         h5.start();
-        Thread.sleep(tiempo * 1000);
-        //h5.join(tiempo * 1000);
+        h5.join();
 
-        Hilo5 h6 = new Hilo5();
+        Hilo5 h6 = new Hilo5(1, "Sin más");
         h6.start();
-        h6.join(tiempo * 1000);
+        h6.join();
+
+        // Sin los join se ejecutan los hilos de seguido sin esperar a que vayan finalizando y
+        // por lo tanto los hilos se mezclan en base a cuándo se lanzan por el SO y al tiempo que tengan
+        // que esperar con el Thread sleep, por lo que seguramente el h6 aunque es el último en
+        // ser lanzado, saldría antes que el h1, h2 y h3 solo porque estos esperan más tiempo que el propio h6
 
     }
 
@@ -119,6 +125,7 @@ public class Main {
 
         System.out.println("Lanzamos los hilos.");
         hiloPing.start();
+        Thread.sleep(50); // Esperamos 50 ms para que se ejecute sí o sí hiloPing primero
         hiloPong.start();
 
         hiloPong.join();
