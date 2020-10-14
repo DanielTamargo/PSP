@@ -12,20 +12,26 @@ public class Principal3 {
         boolean jubilado;
         int r;
 
-        for (int i = 0; i < 15; i++) {
+        MedidorTemperatura mt = new MedidorTemperatura(m);
+        mt.start();
+
+        for (int i = 0; i < 20; i++) {
             r = new Random().nextInt(4);
             if (r == 0)
                 jubilado = true;
             else
                 jubilado = false;
+
             Persona p = new Persona(m, jubilado);
+            if (jubilado)
+                p.setPriority(10);
             p.start();
         }
 
+        // Salimos al apretar ENTER
         Scanner teclado = new Scanner (System.in);
         teclado.nextLine();
         System.exit(0);
-
 
     }
 

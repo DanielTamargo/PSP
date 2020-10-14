@@ -3,6 +3,7 @@ package com.tamargo.ejercicio3;
 public class MedidorTemperatura extends Thread {
 
     private Museo museo;
+    private int mediciones = 0;
 
     public MedidorTemperatura(Museo museo) {
         this.museo = museo;
@@ -10,10 +11,11 @@ public class MedidorTemperatura extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        while (mediciones < 7) {
             museo.medirTemperatura();
+            mediciones++;
             try {
-                Thread.sleep(5000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
