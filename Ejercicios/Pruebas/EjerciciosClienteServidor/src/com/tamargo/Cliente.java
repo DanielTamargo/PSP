@@ -85,9 +85,8 @@ public class Cliente {
         boolean bucle = true;
 
         try {
+            Socket socket = new Socket("localhost", 5600);
             while (bucle) {
-                // Solo se conecta
-                Socket socket = new Socket("localhost", 5600);
 
                 DataOutputStream datoSalida = new DataOutputStream(socket.getOutputStream());
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -103,9 +102,8 @@ public class Cliente {
                     System.out.println("\tCliente: dirección: " + datoEntrada.readUTF());
                     System.out.println();
                 }
-
-                socket.close();
             }
+            socket.close();
         } catch (IOException e) {
             System.out.println("\tCliente: el server ha rechazado la conexión");
         }

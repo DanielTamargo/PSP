@@ -71,26 +71,42 @@ public class Servidor {
     }
 
     public static void servidor4() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(5600);
-        System.out.println("Servidor: encendido");
+        int puerto = 5600;
+        byte[] msgARecibir = new byte[1024];
+        byte[] msg = new byte[1024];
+        DatagramSocket serverSocket = new DatagramSocket(puerto);
+        System.out.println("[Server] servidor conectado");
+        System.out.println();
         boolean bucle = true;
         while (bucle) {
-            Socket socket = serverSocket.accept();
-            DataOutputStream datoSalida = new DataOutputStream(socket.getOutputStream());
-            DataInputStream datoEntrada = new DataInputStream(socket.getInputStream());
-            String mensaje = datoEntrada.readUTF();
+            DatagramPacket recibido = new DatagramPacket(msgARecibir, msgARecibir.length);
+            serverSocket.receive(recibido);
+
+            String mensaje = new String(recibido.getData());
+
+            System.out.println("[Server] Mensaje recibido: " + mensaje);
+            System.out.println("[Server] Procedente de:    " + recibido.getSocketAddress());
+            System.out.println("[Server] Procedente de:    " + recibido.getAddress());
+            System.out.println("[Server] Puerto:           " + recibido.getPort());
+
             if (mensaje.equalsIgnoreCase("fin"))
                 bucle = false;
             else {
                 LocalDateTime hora = LocalDateTime.now();
                 DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-                datoSalida.writeUTF(hora.format(formato));
-                datoSalida.writeInt(socket.getPort());
-                datoSalida.writeUTF(socket.getInetAddress().toString());
+                String mensajeEnviar = "Hora del servidor: " + hora.format(formato);
+                msg = mensajeEnviar.getBytes();
+
+                DatagramPacket paquete = new DatagramPacket(msg, msg.length, recibido.getAddress(), recibido.getPort());
+
+                serverSocket.send(paquete);
+
             }
-            socket.close();
+
         }
         serverSocket.close();
+        System.out.println();
+        System.out.println("[Server] desconectando servidor");
     }
 
     public static void servidor5() throws IOException {
