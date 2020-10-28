@@ -1,10 +1,12 @@
-package com.tamargo.ejercicio7;
+package com.tamargo.ejercicio8;
+
+import com.tamargo.ejercicio7.HiloServidor7;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 
-
-public class Servidor7 {
+public class Servidor8 {
 
     public static void main(String[] args) {
 
@@ -16,10 +18,11 @@ public class Servidor7 {
             while (true) {
                 Socket socket = serverSocket.accept();
                 clientes++;
-                HiloServidor7 hilo = new HiloServidor7(socket, clientes);
+                HiloServidor8 hilo = new HiloServidor8(socket, clientes);
                 hilo.start();
             }
         } catch (IOException ignored) { }
+
     }
 
 }

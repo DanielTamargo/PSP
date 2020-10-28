@@ -31,6 +31,7 @@ public class Cliente5 {
 
                 System.out.println("[Cliente " + num + "] mensaje recibido: " + mensaje);
             }
+            escucha.leaveGroup(InetAddress.getByName("230.0.0.1"));
             escucha.close();
             System.out.println("\n[Cliente " + num + "] desconectando del servidor (sin fallos)");
         } catch (IOException e) {

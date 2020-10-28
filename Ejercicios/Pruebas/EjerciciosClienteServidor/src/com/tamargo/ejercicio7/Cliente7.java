@@ -1,8 +1,6 @@
 package com.tamargo.ejercicio7;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
@@ -13,32 +11,30 @@ public class Cliente7 {
 
     public static void main(String[] args) {
 
+    }
+
+    public void ejecutarCliente() {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         try {
-            MulticastSocket escucha = new MulticastSocket(55557);
-            System.out.println("[Cliente] cliente conectado al servidor");
-            escucha.joinGroup(InetAddress.getByName("230.0.0.1"));
-            byte[] dato = new byte [1024];
-            DatagramPacket dgp = new DatagramPacket(dato, dato.length);
-            escucha.receive(dgp);
-            byte[] data = dgp.getData();
-            String n1 = new String(data, StandardCharsets.UTF_8).trim();
-            escucha.receive(dgp);
-            data = dgp.getData();
-            String n2 = new String(data, StandardCharsets.UTF_8).trim();
+            // Solo se conecta
+            Socket socket = new Socket("localhost", 5600);
 
-            System.out.println();
-            System.out.println("[Cliente] números recibidos: " + n1 + ", " + n2);
-            int sol = Integer.parseInt(n1) * Integer.parseInt(n2);
-            System.out.println("[Cliente] solución enviada: " + sol);
+            DataInputStream datoEntrada = new DataInputStream(socket.getInputStream());
+            System.out.println("[Cliente] mensaje del servidor: " + datoEntrada.readUTF());
 
-            byte[] solucion = String.valueOf(sol).getBytes();
-            dgp = new DatagramPacket(solucion, solucion.length, InetAddress.getByName("230.0.0.1"), 55557);
-            escucha.send(dgp);
+            DataOutputStream datoSalida = new DataOutputStream(socket.getOutputStream());
 
-            System.out.println("[Cliente] cliente desconectado del servidor");
+            System.out.print("[Cliente] mensaje a enviar: ");
+            String mensaje = br.readLine();
+            datoSalida.writeUTF(mensaje);
+
+            System.out.println("[Cliente] mensaje del servidor: '" + datoEntrada.readUTF() + "'");
+
+            socket.close();
 
         } catch (IOException e) {
-            System.out.println("[Cliente] error al conectar con el servidor");
+            System.out.println("[Cliente] el server ha rechazado la conexión");
         }
     }
 
