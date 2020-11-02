@@ -113,10 +113,10 @@
     </configuration>
     <list>
       <item itemvalue="Application.Cliente6" />
-      <item itemvalue="Application.Servidor8" />
       <item itemvalue="Application.Cliente8n1" />
       <item itemvalue="Application.Cliente8n2" />
       <item itemvalue="Application.Cliente8n3" />
+      <item itemvalue="Application.Servidor8" />
     </list>
     <recent_temporary>
       <list>
