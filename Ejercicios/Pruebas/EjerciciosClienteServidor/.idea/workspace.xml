@@ -19,7 +19,17 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="59635feb-883f-48c2-9842-1dd1934d1431" name="Default Changelist" comment="" />
+    <list default="true" id="59635feb-883f-48c2-9842-1dd1934d1431" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/archivo1.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/archivo2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/prueba3.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/GuardarFichero.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/HiloServidorFTP.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/ServidorFTP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/ServidorFTP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/ServidorFTP/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,7 +52,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../EjerciciosVarios/UD3ejer7" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RunManager" selected="Application.Cliente8n1">

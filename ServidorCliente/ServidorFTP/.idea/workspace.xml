@@ -19,7 +19,19 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b9ace1d-c3b4-4802-9dd0-404c7033912a" name="Default Changelist" comment="" />
+    <list default="true" id="2b9ace1d-c3b4-4802-9dd0-404c7033912a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../PracticaFTP/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaFTP/archivos/archivo1.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaFTP/archivos/archivo2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaFTP/archivos/prueba3.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaFTP/archivoscliente/subir1.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaFTP/src/com/tamargo/Cliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaFTP/src/com/tamargo/ComprobarFichero.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaFTP/src/com/tamargo/HiloServidorFTP.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaFTP/src/com/tamargo/ServidorFTP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ejercicios/Pruebas/EjerciciosClienteServidor/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ejercicios/Pruebas/EjerciciosClienteServidor/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,12 +47,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="260" />
-    <option name="y" value="20" />
-    <option name="width" value="1400" />
-    <option name="height" value="1000" />
-  </component>
   <component name="ProjectId" id="1jkSXxUXBr3fY7G9Ea4EtjwBAAl" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -48,6 +54,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541497956930" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
@@ -105,9 +112,7 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="586" y="198" key="#Inspections" timestamp="1604346677837">
