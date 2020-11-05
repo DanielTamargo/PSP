@@ -5,13 +5,13 @@ import java.io.File;
 public class Main {
 
     public static void main(String[] args) {
-        File carpetaArchivos = new File(".\\archivos/hola");
-
-        if (carpetaArchivos.exists()) {
-            int numArchivos = carpetaArchivos.listFiles().length;
-            System.out.println(numArchivos);
+        String nomFichero = "hola";
+        try {
+            String nombre = nomFichero.substring(0, nomFichero.lastIndexOf('.'));
+            String extension = nomFichero.substring(nomFichero.lastIndexOf('.'));
+            System.out.println(nombre + "(" + 1 + ")" + extension);
+        } catch (IndexOutOfBoundsException ignored) {
+            System.out.println(nomFichero + "(" + 1 + ")");
         }
-
-        System.out.println(carpetaArchivos.getPath());
     }
 }

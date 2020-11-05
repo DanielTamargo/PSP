@@ -1,35 +1,41 @@
-package com.tamargo;
+package com.tamargo.servidores;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class HiloServidorFTP extends Thread {
+public class HiloServidor extends Thread {
 
-    private final Socket cliente;
-    private final int numCliente;
-    private final String nombre;
+    private Socket socket;
+    private ServidorFTP serverFTP;
+    private String nombre;
+    private int numCliente;
 
-    private DataInputStream dataIS;
     private DataOutputStream dataOS;
+    private DataInputStream dataIS;
 
     private final File carpetaArchivos = new File("./archivos");
     private ArrayList<File> ficheros = new ArrayList<>();
 
-    public HiloServidorFTP(Socket cliente, int numCliente, String nombre) {
-        this.cliente = cliente;
-        this.numCliente = numCliente;
+    public HiloServidor(Socket socket, ServidorFTP serverFTP, String nombre, int numCliente) {
+        this.socket = socket;
+        this.serverFTP = serverFTP;
         this.nombre = nombre;
-
-        try {
-            dataIS = new DataInputStream(cliente.getInputStream());
-            dataOS = new DataOutputStream(cliente.getOutputStream());
-        } catch (IOException ignored) { }
+        this.numCliente = numCliente;
     }
 
     @Override
     public void run() {
-        if (cliente != null && dataIS != null & dataOS != null) {
+
+        try {
+            dataOS = new DataOutputStream(socket.getOutputStream());
+            dataIS = new DataInputStream(socket.getInputStream());
+        } catch (IOException ignored) { }
+
+        if (socket != null && dataIS != null & dataOS != null) {
             String opciones = "Saludos Cliente " + numCliente + ", por favor seleccione una de las siguientes opciones.\n" +
                     "1) Descargar archivo.\n" +
                     "2) Subir archivo.\n" +
@@ -37,25 +43,30 @@ public class HiloServidorFTP extends Thread {
                     "Opción: ";
             boolean bucle = true;
             try {
-                //while (bucle) {
+                while (bucle) {
                     // Pedimos la opción (descargar archivo, subir archivo o salir)
                     System.out.println(nombre + "Enviando opciones al Cliente " + numCliente);
-                    int respuesta = opcionValida(opciones, 3);
+                    int opcion = opcionValida(opciones, 3);
 
                     // Procesamos la opción
-                    switch (respuesta) {
-                        case 1 -> { // Descargar archivo
-                            // Mostrar listado y pedir que seleccione uno
+                    switch (opcion) {
+                        case 1 -> { // Descargar archivo (el cliente elige un archivo del listado y se lo enviamos)
                             System.out.println(nombre + "Enviando lista ficheros al Cliente " + numCliente);
                             int numFichero = opcionValida(listadoArchivos().toString(), numArchivos());
 
-                            // Mandar archivo (el cliente lo descarga)
-                            mandarArchivo(numFichero);
+                            dataOS.writeBoolean(serverFTP.comprobarServidorFTP());
+                            if (serverFTP.comprobarServidorFTP())
+                                serverFTP.ejecutarServidorFTP(numCliente, opcion, numFichero, ficheros);
+                            else
+                                System.out.println(nombre + "Error con el servicio FTP, no se ha podido enviar el fichero");
+
                         }
-                        case 2 -> { // Subir archivo
-                            // Recibir archivo (el cliente lo sube)
-                            // Almacenarlo en la carpeta archivos
-                            recibirFichero();
+                        case 2 -> { // Subir archivo (el cliente sube archivo, aquí lo recibimos y almacenamos en la carpeta archivos)
+                            dataOS.writeBoolean(serverFTP.comprobarServidorFTP());
+                            if (serverFTP.comprobarServidorFTP())
+                                serverFTP.ejecutarServidorFTP(numCliente, opcion, 1, null);
+                            else
+                                System.out.println(nombre + "Error con el servicio FTP, no se ha podido recibir el fichero");
 
                         }
                         case 3 -> { // Despedirse y salir del bucle
@@ -64,9 +75,9 @@ public class HiloServidorFTP extends Thread {
                             System.out.println(nombre + "Despidiéndome del Cliente " + numCliente);
                         }
                     }
-                //}
+                }
             } catch (IOException ignored) {
-                // TODO volver a poner el bucle y comprobar si salen errores aquí
+                System.out.println(nombre + "Error con la conexión con el Cliente " + numCliente);
             }
         } else {
             System.out.println(nombre + "Error al generar los flujos de entrada y salida de datos.\n" +
@@ -75,94 +86,12 @@ public class HiloServidorFTP extends Thread {
         try {
             dataIS.close();
             dataOS.close();
-            if (cliente != null)
-                cliente.close();
+            if (socket != null)
+                socket.close();
             System.out.println(nombre + "Conexión finalizada con el Cliente " + numCliente);
         } catch (IOException ignored) { }
+
     }
-
-
-    /**
-     * Recibe y almacena un fichero, utiliza la clase ComprobarFichero que comprueba si el nombre del fichero está
-     * disponible, y si no lo está, añadirá entre paréntesis el primer número disponible para que el fichero sea único.
-     */
-    public void recibirFichero() {
-        try {
-            // Recibimos nombre del fichero y tamaño
-            String nombreFichero = dataIS.readUTF();
-            int tamanyoFichero = dataIS.readInt();
-            System.out.println(nombre + "Recibiendo el fichero " + nombreFichero + " ("
-                    + tamanyoFichero + ") del Cliente " + numCliente);
-
-            String nombreFicheroFinal = new ComprobarFichero().nombreFichero(carpetaArchivos, nombreFichero);
-            if (!nombreFicheroFinal.equalsIgnoreCase(nombreFichero))
-                System.out.println(nombre + "El fichero '" + nombreFichero + "' ya existe, renombrando a '"
-                    + nombreFicheroFinal + "'");
-            System.out.println(nombre + "Guardando el archivo en: " + carpetaArchivos.getPath() + "\\"
-                    + nombreFicheroFinal);
-
-            // Preparamos el medio para recibirlo
-            BufferedInputStream bis = new BufferedInputStream(cliente.getInputStream());
-            byte[] buffer = new byte[tamanyoFichero];
-
-            // Lo leemos y guardamos en un buffer
-            for (int i = 0; i < buffer.length; i++) {
-                buffer[i] = (byte) bis.read();
-            }
-
-            // Preparamos el medio para volcarlo en el fichero
-            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(new File(carpetaArchivos, nombreFicheroFinal)));
-
-            // Volcamos lo leído en el fichero
-            bos.write(buffer);
-
-            // Cerramos los nuevos flujos de datos
-            bos.flush();
-            bis.close();
-            bos.close();
-
-            System.out.println(nombre + "Fichero '" + nombreFicheroFinal
-                    + "' recibido por el Cliente " + numCliente + " con éxito");
-
-        } catch (IOException ignored) { }
-    }
-
-    /**
-     * Manda un fichero al cliente. Se le mandan nombre, tamaño y contenido del fichero para que el cliente pueda
-     * generar una copia del fichero
-     * @param numFichero int recibido por el cliente para elegir qué fichero quiere descargar
-     */
-    public void mandarArchivo(int numFichero) {
-        File fichero = ficheros.get(numFichero - 1); // -1 porque el ArrayList comienza desde el 0 y mostramos las opciones desde 1
-        int tamanyoFichero = (int) fichero.length();
-
-        try {
-            // Mandamos nombre y tamaño fichero
-            dataOS.writeUTF(fichero.getName());
-            dataOS.writeInt(tamanyoFichero);
-
-            // Preparamos el contenido del fichero para poder mandarlo
-            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fichero));
-            byte[] bufferFichero = new byte[tamanyoFichero];
-            bis.read(bufferFichero);
-
-            // Preparamos el medio para mandarlo
-            BufferedOutputStream bos = new BufferedOutputStream(cliente.getOutputStream());
-
-            // Lo mandamos
-            for (int i = 0; i < bufferFichero.length; i++) {
-                bos.write(bufferFichero[i]);
-            }
-
-            // Cerramos los nuevos flujos de datos
-            bis.close();
-            bos.close();
-
-            System.out.println(nombre + "Fichero '" + fichero.getName() + "' enviado al Cliente " + numCliente);
-
-        } catch (IOException ignored) { }
-    }
-
 
     /**
      * Devuelve un StringBuilder con el listado de los ficheros que contiene la carpeta './archivos';

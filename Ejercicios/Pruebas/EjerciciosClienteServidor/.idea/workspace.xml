@@ -20,15 +20,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="59635feb-883f-48c2-9842-1dd1934d1431" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/archivo1.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/archivo2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/prueba3.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/GuardarFichero.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/HiloServidorFTP.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/ServidorFTP.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/clientes/Cliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/HiloServidor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/Servidor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/ServidorFTP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/ServidorFTP/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/subir1.txt(0)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1.txt(0)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1.txt(1)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(0)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(1)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(10)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(11)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(12)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(2)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(3)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(4)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(5)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(6)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(7)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(8)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(9)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/clientes/ClienteFTP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/ComprobarFichero.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/ComprobarFichero.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/HiloServidorFTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/HiloServidorFTP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/ServidorFTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/ServidorFTP.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
