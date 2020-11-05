@@ -40,6 +40,7 @@ public class Cliente {
                         System.out.println();
                     } catch (EOFException ignored) {
                         esperar(250);
+                        System.out.println(nombre + "Servidor no responde, esperando...");
                     }
                 }
 

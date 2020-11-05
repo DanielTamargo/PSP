@@ -75,6 +75,11 @@ public class HiloServidor extends Thread {
                             System.out.println(nombre + "Despidiéndome del Cliente " + numCliente);
                         }
                     }
+
+                    // Si el cliente se desconecta sin elegir la opción 3, nos quedaríamos con el hilo
+                    //      en el bucle infinito, acumulando hilos que nunca mueren y saturarían la memoria
+                    if (!socket.getKeepAlive() && opcion != 2 && opcion != 1)
+                        bucle = false;
                 }
             } catch (IOException ignored) {
                 System.out.println(nombre + "Error con la conexión con el Cliente " + numCliente);

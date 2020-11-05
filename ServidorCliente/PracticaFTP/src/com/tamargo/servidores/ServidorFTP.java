@@ -34,7 +34,6 @@ public class ServidorFTP {
         Socket cliente = null;
         try {
             cliente = servidorFTP.accept();
-            System.out.println(nombre + "¡Nueva conexión! Conectando con Cliente " + numCliente);
         } catch (IOException ignored) { }
 
         if (cliente != null) {

@@ -4,6 +4,8 @@ import com.tamargo.utilidades.ComprobarFichero;
 
 import java.io.*;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class HiloServidorFTP extends Thread {
@@ -84,6 +86,18 @@ public class HiloServidorFTP extends Thread {
             System.out.println(nombre + "Fichero '" + nombreFicheroFinal
                     + "' recibido por el Cliente " + numCliente + " con éxito");
 
+            // SMTP Enviamos un email de confirmación
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String asunto = "[SMTP] Confirmación subida";
+            String mensaje = String.format("""
+                    Estimado/a cliente:
+                    
+                    Te enviamos la confirmación de la subida a nuestro sevidor del archivo %s a las %s.
+                    
+                    Este correo no es más que un mero recordatorio de que usted realizó dicha descarga.
+                    """, nombreFichero, LocalDateTime.now().format(formatter));
+            //new ServidorSMTP().enviarEmail(asunto, mensaje);
+
         } catch (IOException ignored) { }
     }
 
@@ -110,8 +124,8 @@ public class HiloServidorFTP extends Thread {
             BufferedOutputStream bos = new BufferedOutputStream(cliente.getOutputStream());
 
             // Lo mandamos
-            for (int i = 0; i < bufferFichero.length; i++) {
-                bos.write(bufferFichero[i]);
+            for (byte b : bufferFichero) {
+                bos.write(b);
             }
 
             // Cerramos los nuevos flujos de datos
@@ -119,6 +133,19 @@ public class HiloServidorFTP extends Thread {
             bos.close();
 
             System.out.println(nombre + "Fichero '" + fichero.getName() + "' enviado al Cliente " + numCliente);
+
+
+            // SMTP Enviamos un email de confirmación
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String asunto = "[SMTP] Confirmación descarga";
+            String mensaje = String.format("""
+                    Estimado/a cliente:
+                    
+                    Te enviamos la confirmación de la descarga de nuestro servidor del archivo %s a las %s.
+                    
+                    Este correo no es más que un mero recordatorio de que usted realizó dicha descarga.
+                    """, fichero.getName(), LocalDateTime.now().format(formatter));
+            //new ServidorSMTP().enviarEmail(asunto, mensaje);
 
         } catch (IOException ignored) { }
     }

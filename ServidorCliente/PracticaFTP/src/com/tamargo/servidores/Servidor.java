@@ -21,6 +21,7 @@ public class Servidor {
             while (true) {
                 Socket socket = serverSocket.accept();
                 numCliente++;
+                System.out.println(nombre + "¡Nueva conexión! Conectando con Cliente " + numCliente);
 
                 HiloServidor hilo = new HiloServidor(socket, serverFTP, nombre, numCliente);
                 hilo.start();
