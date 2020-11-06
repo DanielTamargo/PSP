@@ -34,19 +34,20 @@ public class HiloServidor extends Thread {
             dataOS = new DataOutputStream(socket.getOutputStream());
             dataIS = new DataInputStream(socket.getInputStream());
         } catch (IOException ignored) { }
-
+        int opcion = 0;
         if (socket != null && dataIS != null & dataOS != null) {
             String opciones = "Saludos Cliente " + numCliente + ", por favor seleccione una de las siguientes opciones.\n" +
                     "1) Descargar archivo.\n" +
                     "2) Subir archivo.\n" +
                     "3) Salir.\n" +
                     "Opción: ";
+
             boolean bucle = true;
             try {
                 while (bucle) {
                     // Pedimos la opción (descargar archivo, subir archivo o salir)
                     System.out.println(nombre + "Enviando opciones al Cliente " + numCliente);
-                    int opcion = opcionValida(opciones, 3);
+                    opcion = opcionValida(opciones, 3);
 
                     // Procesamos la opción
                     switch (opcion) {
@@ -78,8 +79,11 @@ public class HiloServidor extends Thread {
 
                     // Si el cliente se desconecta sin elegir la opción 3, nos quedaríamos con el hilo
                     //      en el bucle infinito, acumulando hilos que nunca mueren y saturarían la memoria
-                    if (!socket.getKeepAlive() && opcion != 2 && opcion != 1)
+                    //      el método opcionValida devolverá opcion = 0 si el cliente se desconecta y el bucle
+                    //      finalizará y comunicará que se ha perdido la conexión con el cliente
+                    if (opcion != 2 && opcion != 1)
                         bucle = false;
+
                 }
             } catch (IOException ignored) {
                 System.out.println(nombre + "Error con la conexión con el Cliente " + numCliente);
@@ -93,7 +97,10 @@ public class HiloServidor extends Thread {
             dataOS.close();
             if (socket != null)
                 socket.close();
-            System.out.println(nombre + "Conexión finalizada con el Cliente " + numCliente);
+            if (opcion == 3)
+                System.out.println(nombre + "Conexión finalizada con el Cliente " + numCliente);
+            else
+                System.out.println(nombre + "Conexión con el Cliente " + numCliente + " perdida.");
         } catch (IOException ignored) { }
 
     }

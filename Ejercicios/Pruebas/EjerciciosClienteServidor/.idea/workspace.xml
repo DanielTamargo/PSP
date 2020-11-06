@@ -20,32 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="59635feb-883f-48c2-9842-1dd1934d1431" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/clientes/Cliente.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/HiloServidor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/Servidor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/tamargo/pruebas/ClientePrueba.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/tamargo/pruebas/ServerPrueba.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/subir1.txt(0)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1.txt(0)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1.txt(1)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(0)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(1)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(10)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(11)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(12)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(2)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(3)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(4)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(5)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(6)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(7)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(8)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/prueba3.txt(9)" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/clientes/ClienteFTP.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/ComprobarFichero.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/ComprobarFichero.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/HiloServidorFTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/HiloServidorFTP.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/ServidorFTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/ServidorFTP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/HiloServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/HiloServidor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,20 +51,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
-  <component name="RunManager" selected="Application.Cliente8n1">
-    <configuration name="Cliente6" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.tamargo.ejercicio6.Cliente6" />
-      <module name="EjerciciosClienteServidor" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.tamargo.ejercicio6.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.ClientePrueba">
     <configuration name="Cliente8n1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.tamargo.ejercicio8.Cliente8n1" />
       <module name="EjerciciosClienteServidor" />
@@ -126,12 +91,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Servidor8" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.tamargo.ejercicio8.Servidor8" />
+    <configuration name="ClientePrueba" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.tamargo.pruebas.ClientePrueba" />
       <module name="EjerciciosClienteServidor" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.tamargo.ejercicio8.*" />
+          <option name="PATTERN" value="com.tamargo.pruebas.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerPrueba" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.tamargo.pruebas.ServerPrueba" />
+      <module name="EjerciciosClienteServidor" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.tamargo.pruebas.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -140,19 +118,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Cliente6" />
       <item itemvalue="Application.Cliente8n1" />
       <item itemvalue="Application.Cliente8n2" />
       <item itemvalue="Application.Cliente8n3" />
-      <item itemvalue="Application.Servidor8" />
+      <item itemvalue="Application.ServerPrueba" />
+      <item itemvalue="Application.ClientePrueba" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ClientePrueba" />
+        <item itemvalue="Application.ServerPrueba" />
         <item itemvalue="Application.Cliente8n1" />
         <item itemvalue="Application.Cliente8n2" />
         <item itemvalue="Application.Cliente8n3" />
-        <item itemvalue="Application.Servidor8" />
-        <item itemvalue="Application.Cliente6" />
       </list>
     </recent_temporary>
   </component>
@@ -188,29 +166,29 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="768" y="285" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1603916474754" />
-    <state width="1877" height="332" key="GridCell.Tab.0.bottom" timestamp="1603918437979">
+    <state width="1594" height="236" key="GridCell.Tab.0.bottom" timestamp="1604625007514">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="332" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1603918437979" />
-    <state width="1877" height="332" key="GridCell.Tab.0.center" timestamp="1603918437979">
+    <state width="1594" height="236" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604625007514" />
+    <state width="1594" height="236" key="GridCell.Tab.0.center" timestamp="1604625007514">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="332" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1603918437979" />
-    <state width="1877" height="332" key="GridCell.Tab.0.left" timestamp="1603918437979">
+    <state width="1594" height="236" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604625007514" />
+    <state width="1594" height="236" key="GridCell.Tab.0.left" timestamp="1604625007514">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="332" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1603918437979" />
-    <state width="1877" height="332" key="GridCell.Tab.0.right" timestamp="1603918437979">
+    <state width="1594" height="236" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604625007514" />
+    <state width="1594" height="236" key="GridCell.Tab.0.right" timestamp="1604625007514">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="332" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1603918437979" />
+    <state width="1594" height="236" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604625007514" />
     <state x="692" y="99" width="758" height="763" key="dock-window-1" timestamp="1603908190335">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="692" y="99" width="758" height="763" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1603908190335" />
-    <state x="651" y="241" width="672" height="678" key="search.everywhere.popup" timestamp="1603742188611">
+    <state x="651" y="241" width="672" height="678" key="search.everywhere.popup" timestamp="1604624931096">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="651" y="241" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1603742188611" />
+    <state x="651" y="241" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604624931096" />
   </component>
 </project>

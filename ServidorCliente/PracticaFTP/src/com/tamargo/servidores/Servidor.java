@@ -20,6 +20,7 @@ public class Servidor {
             System.out.println(nombre + "Esperando a los clientes...");
             while (true) {
                 Socket socket = serverSocket.accept();
+
                 numCliente++;
                 System.out.println(nombre + "¡Nueva conexión! Conectando con Cliente " + numCliente);
 
