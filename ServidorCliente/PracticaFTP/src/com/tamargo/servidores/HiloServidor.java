@@ -17,7 +17,7 @@ public class HiloServidor extends Thread {
     private DataOutputStream dataOS;
     private DataInputStream dataIS;
 
-    private final File carpetaArchivos = new File("./archivos");
+    private final File carpetaArchivos = new File("./archivos/servidor");
     private ArrayList<File> ficheros = new ArrayList<>();
 
     public HiloServidor(Socket socket, ServidorFTP serverFTP, String nombre, int numCliente) {
@@ -120,8 +120,18 @@ public class HiloServidor extends Thread {
             for (File file : carpetaArchivos.listFiles()) {
                 if (file.isFile()) {
                     ficheros.add(file);
+                    int tamanyoFichero = (int)file.length();
+                    String tamanyo;
+                    if (tamanyoFichero < 1024)
+                        tamanyo = (float) tamanyoFichero + " bytes";
+                    else if (tamanyoFichero < (1024 * 1024))
+                        tamanyo = String.format("%.2f",((float) tamanyoFichero / 1024)) + " Kb";
+                    else if (tamanyoFichero < (1024 * 1024 * 1024))
+                        tamanyo = String.format("%.2f",((float) tamanyoFichero / (1024 * 1024))) + " Mb";
+                    else
+                        tamanyo = String.format("%.2f",((float) tamanyoFichero / (1024 * 1024 * 1024))) + " Gb";
                     n++;
-                    sb.append(n).append(") ").append(file.getName()).append(" (").append(file.length()).append(")").append("\n");
+                    sb.append(n).append(") ").append(file.getName()).append(" (").append(tamanyo).append(")").append("\n");
                 }
             }
         }

@@ -1,7 +1,6 @@
 package com.tamargo.clientes;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 

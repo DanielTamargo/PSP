@@ -20,10 +20,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="59635feb-883f-48c2-9842-1dd1934d1431" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/tamargo/pruebas/ClientePrueba.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/tamargo/pruebas/ServerPrueba.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/cliente/subir/subir1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/tamargo/ejercicio5/Cliente5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/tamargo/ejercicio5/Cliente5.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/archivo1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/servidor/archivo1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/archivo2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/prueba3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/subir1(0).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/subir1(1).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/subir1(2).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/subir1(3).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/subir1(4).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/subir1(5).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/subir1(6).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/subir1(7).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivos/subir1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/archivoscliente/subir1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1(0).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1(1).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1(10).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1(11).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1(12).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1(2).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1(3).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1(4).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1(5).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1(6).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1(7).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1(8).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1(9).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo2(0).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/archivo2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/copias/subir1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/clientes/ClienteFTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/clientes/ClienteFTP.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/HiloServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/HiloServidor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/HiloServidorFTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/HiloServidorFTP.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

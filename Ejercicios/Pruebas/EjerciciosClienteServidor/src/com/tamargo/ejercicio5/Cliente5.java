@@ -14,7 +14,7 @@ public class Cliente5 {
         boolean bucle = true;
 
         try {
-            MulticastSocket escucha = new MulticastSocket(55557);
+            MulticastSocket escucha = new MulticastSocket();
             System.out.println("[Cliente " + num + "] conexión realizada");
             System.out.println();
             escucha.joinGroup(InetAddress.getByName("230.0.0.1"));

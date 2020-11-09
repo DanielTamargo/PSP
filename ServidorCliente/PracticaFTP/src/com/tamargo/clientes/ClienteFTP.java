@@ -9,13 +9,13 @@ import java.net.SocketException;
 
 public class ClienteFTP {
 
-
     private DataInputStream dataIS;
     private DataOutputStream dataOS;
     private Socket socketFTP;
 
     private final String nombre = "[Cliente FTP] ";
-    private final File carpetaArchivos = new File("./copias");
+    private final File carpetaDescargas = new File("./archivos/cliente/descargas");
+    private final File carpetaSubir = new File("./archivos/cliente/subir");
 
     private int opcion;
 
@@ -36,7 +36,7 @@ public class ClienteFTP {
             dataOS = new DataOutputStream(socketFTP.getOutputStream());
 
             if (opcion == 1)
-                descargarFichero(carpetaArchivos);
+                descargarFichero();
             else
                 subirFichero(); //TODO ¿posible listado para elegir cuál subir?
 
@@ -56,7 +56,7 @@ public class ClienteFTP {
 
 
     public void subirFichero() {
-        File fichero = new File("./archivoscliente/subir1.txt");
+        File fichero = new File(carpetaSubir, "subir1.txt"); // TODO añadir un listado 'local' y que elija cual subir ?
         int tamanyoFichero = (int) fichero.length();
 
         try {
@@ -86,19 +86,29 @@ public class ClienteFTP {
         } catch (IOException ignored) { }
     }
 
-    public void descargarFichero(File carpetaArchivos) {
+    public void descargarFichero() {
         try {
             // Recibimos nombre del fichero y tamaño
             String nombreFichero = dataIS.readUTF();
             int tamanyoFichero = dataIS.readInt();
-            System.out.println(nombre + "Recibiendo el fichero " + nombreFichero + " ("
-                    + tamanyoFichero + ") del Servidor");
+            String tamanyo;
+            if (tamanyoFichero < 1024)
+                tamanyo = (float) tamanyoFichero + " bytes";
+            else if (tamanyoFichero < (1024 * 1024))
+                tamanyo = String.format("%.2f",((float) tamanyoFichero / 1024)) + " Kb";
+            else if (tamanyoFichero < (1024 * 1024 * 1024))
+                tamanyo = String.format("%.2f",((float) tamanyoFichero / (1024 * 1024))) + " Mb";
+            else
+                tamanyo = String.format("%.2f",((float) tamanyoFichero / (1024 * 1024 * 1024))) + " Gb";
 
-            String nombreFicheroFinal = new ComprobarFichero().nombreFichero(carpetaArchivos, nombreFichero);
+            System.out.println(nombre + "Recibiendo el fichero " + nombreFichero + " ("
+                    + tamanyo + ") del Servidor");
+
+            String nombreFicheroFinal = new ComprobarFichero().nombreFichero(carpetaDescargas, nombreFichero);
             if (!nombreFicheroFinal.equalsIgnoreCase(nombreFichero))
                 System.out.println(nombre + "El fichero '" + nombreFichero + "' ya existe, renombrando a '"
                         + nombreFicheroFinal + "'");
-            System.out.println(nombre + "Guardando el archivo en: " + carpetaArchivos.getPath() + "\\"
+            System.out.println(nombre + "Guardando el archivo en: " + carpetaDescargas.getPath() + "\\"
                     + nombreFicheroFinal);
 
             // Preparamos el medio para recibirlo
@@ -111,7 +121,7 @@ public class ClienteFTP {
             }
 
             // Preparamos el medio para volcarlo en el fichero
-            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(new File(carpetaArchivos, nombreFicheroFinal)));
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(new File(carpetaDescargas, nombreFicheroFinal)));
 
             // Volcamos lo leído en el fichero
             bos.write(buffer);

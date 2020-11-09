@@ -20,7 +20,7 @@ public class HiloServidorFTP extends Thread {
 
     private int numFichero = 1;
 
-    private final File carpetaArchivos = new File("./archivos");
+    private final File carpetaArchivos = new File("./archivos/servidor");
     private ArrayList<File> ficheros = new ArrayList<>();
 
     public HiloServidorFTP(Socket cliente, int numCliente, String nombre, int opcion) {
