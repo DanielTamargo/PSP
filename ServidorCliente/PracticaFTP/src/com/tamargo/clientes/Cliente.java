@@ -86,7 +86,7 @@ public class Cliente {
         } catch (
                 SocketException ex) {
             if (ex.getLocalizedMessage().contains("reset"))
-                System.out.println(nombre + "Error, conexión con el Servidor reiniciada");
+                System.out.println(nombre + "Error, conexión con el Servidor reiniciada y/o perdida");
             else
                 System.out.println(nombre + "Error: " + ex.getLocalizedMessage());
         } catch (
