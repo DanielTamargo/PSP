@@ -1,14 +1,19 @@
 package com.tamargo.clientes;
 
 import com.tamargo.utilidades.ComprobarFichero;
+import com.tamargo.utilidades.ConsoleColors;
 import me.tongfei.progressbar.ProgressBar;
 import me.tongfei.progressbar.ProgressBarBuilder;
 import me.tongfei.progressbar.ProgressBarStyle;
 
+import java.awt.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.text.DecimalFormat;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,7 +27,6 @@ public class ClienteFTP {
 
     private final String nombre = "[Cliente FTP] ";
     private final File carpetaDescargas = new File("./archivos/cliente/descargas");
-    private final File carpetaSubir = new File("./archivos/cliente/subir");
 
     private int opcion;
 
@@ -30,7 +34,7 @@ public class ClienteFTP {
         this.opcion = opcion;
     }
 
-    public void ejecutarClienteFTP() {
+    public void ejecutarClienteFTP(File fichero) {
 
         try {
             InetAddress direccion = InetAddress.getByName("localhost"); //ip a la que se conectará
@@ -45,7 +49,7 @@ public class ClienteFTP {
             if (opcion == 1)
                 descargarFichero();
             else
-                subirFichero(); //TODO ¿posible listado para elegir cuál subir?
+                subirFichero(fichero);
 
             dataIS.close();
             dataOS.close();
@@ -62,8 +66,7 @@ public class ClienteFTP {
 
 
 
-    public void subirFichero() {
-        File fichero = new File(carpetaSubir, "subir1.txt"); // TODO añadir un listado 'local' y que elija cual subir ?
+    public void subirFichero(File fichero) {
         int tamanyoFichero = (int) fichero.length();
 
         try {
@@ -122,26 +125,45 @@ public class ClienteFTP {
             BufferedInputStream bis = new BufferedInputStream(socketFTP.getInputStream());
             byte[] buffer = new byte[tamanyoFichero];
 
-
             try {
-                /*
-                ProgressBarBuilder pbb = new ProgressBarBuilder()
-                        .setStyle(ProgressBarStyle.ASCII)
-                        .setTaskName("Descarga:")
-                        .setInitialMax(tamanyoFichero)
-                        .setUpdateIntervalMillis(150)
-                        .setUnit("Bytes", 1)
-                        .showSpeed();
-                */
+                long initialMax;
+                String unitName;
+                long unitSize;
 
-                ProgressBar pb = new ProgressBar("Descarga:", tamanyoFichero);
-                // Lo leemos y guardamos en un buffer
+                if (tamanyo.contains("byte")) {
+                    initialMax = tamanyoFichero;
+                    unitName = " bytes";
+                    unitSize = 1L;
+                } else if (tamanyo.contains("Kb")) {
+                    initialMax = tamanyoFichero / 1024L;
+                    unitName = " KBs";
+                    unitSize = 1024L;
+                } else if (tamanyo.contains("Mb")) {
+                    initialMax = tamanyoFichero / (1024L * 1024L);
+                    unitName = " MBs";
+                    unitSize = 1024L * 1024L;
+                } else {
+                    initialMax = tamanyoFichero / (1024L * 1024L * 1024L);
+                    unitName = " GBs";
+                    unitSize = 1024L * 1024L * 1024L;
+                }
+
+                System.out.print(ConsoleColors.CYAN_BRIGHT);
+                ProgressBar pb = new ProgressBar("Descarga:", initialMax, 20,
+                        System.out, ProgressBarStyle.ASCII, unitName, 1L, false,
+                        (DecimalFormat)null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
+                int n = 1;
                 for (int i = 0; i < buffer.length; i++) {
-                    buffer[i] = (byte) bis.read();
-                    pb.step();
+                    buffer[i] = (byte) bis.read(); // Lo leemos y guardamos en un buffer
+                    if (unitSize == n) {
+                        pb.step();
+                        n = 0;
+                    }
+                    n++;
                 }
                 pb.close();
-                System.out.print("\r" + nombre + "Descarga completada, guardando el fichero en el disco duro...");
+                System.out.print("Descarga completada, guardando el fichero en el disco duro...");
+                System.out.print(ConsoleColors.RESET);
             } catch (Exception ignored) { }
 
             // Preparamos el medio para volcarlo en el fichero

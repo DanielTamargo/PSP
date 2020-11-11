@@ -23,8 +23,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cdfe572-b076-4e14-adeb-a64e1ed9ed25" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PracticaFTP/PracticaFTP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../PracticaFTP/PracticaFTP.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaFTP/src/com/tamargo/utilidades/ConsoleColors.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PracticaFTP/src/com/tamargo/clientes/ClienteFTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../PracticaFTP/src/com/tamargo/clientes/ClienteFTP.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -93,5 +92,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

@@ -3,6 +3,8 @@ package com.tamargo.clientes;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class Cliente {
 
@@ -62,14 +64,14 @@ public class Cliente {
 
                         if (dataIS.readBoolean()) {
                             ClienteFTP cliFTP = new ClienteFTP(opcion);
-                            cliFTP.ejecutarClienteFTP();
+                            cliFTP.ejecutarClienteFTP(null);
                         } else
                             System.out.println(nombre + "Error al conectar con el servicio FTP del servidor");
                     }
                     case 2 -> {
                         if (dataIS.readBoolean()) {
                             ClienteFTP cliFTP = new ClienteFTP(opcion);
-                            cliFTP.ejecutarClienteFTP();
+                            cliFTP.ejecutarClienteFTP(elegirFichero());
                         } else
                             System.out.println(nombre + "Error al conectar con el servicio FTP del servidor");
                     }
@@ -94,6 +96,51 @@ public class Cliente {
             System.out.println(nombre + "Error al conectar con el Servidor (timeout)");
         }
 
+    }
+
+    public static File elegirFichero() {
+        File fichero;
+
+        File carpetaSubidas = new File("./archivos/cliente/subir");
+        ArrayList<File> ficheros = new ArrayList<>();
+        for (File f: Objects.requireNonNull(carpetaSubidas.listFiles())) {
+            if (f.isFile())
+                ficheros.add(f);
+        }
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int opcion = 0;
+        boolean bucle = true;
+        while (bucle) {
+            System.out.println("Lista de archivos a subir:");
+            for (int i = 0; i < ficheros.size(); i++) {
+                File f = ficheros.get(i);
+                int tamanyoFichero = (int)f.length();
+                String tamanyo;
+                if (tamanyoFichero < 1024)
+                    tamanyo = (float) tamanyoFichero + " bytes";
+                else if (tamanyoFichero < (1024 * 1024))
+                    tamanyo = String.format("%.2f",((float) tamanyoFichero / 1024)) + " Kb";
+                else if (tamanyoFichero < (1024 * 1024 * 1024))
+                    tamanyo = String.format("%.2f",((float) tamanyoFichero / (1024 * 1024))) + " Mb";
+                else
+                    tamanyo = String.format("%.2f",((float) tamanyoFichero / (1024 * 1024 * 1024))) + " Gb";
+                System.out.println((i + 1) + ") " + f.getName() + " (" + tamanyo + ")");
+            }
+            System.out.print("Opción: ");
+            try {
+                opcion = Integer.parseInt(br.readLine()) - 1;
+
+                if (opcion >= 0 && opcion < ficheros.size())
+                    bucle = false;
+            } catch (NumberFormatException | IOException ignored) { }
+
+            if (bucle)
+                System.out.println("Error. Introduce una opción válida.\n");
+        }
+
+        fichero = ficheros.get(opcion);
+        return fichero;
     }
 
     public static void esperar(long milliseconds) {

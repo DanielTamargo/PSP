@@ -43,6 +43,11 @@ public class ServidorFTP {
                 hsFTP.setNumFichero(numFichero);
             }
             hsFTP.start();
+            try {
+                hsFTP.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } else {
             System.out.println(nombre + "Error al conectar con el Cliente " + numCliente);
         }
