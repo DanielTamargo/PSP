@@ -1,11 +1,18 @@
 package com.tamargo.clientes;
 
 import com.tamargo.utilidades.ComprobarFichero;
+import me.tongfei.progressbar.ProgressBar;
+import me.tongfei.progressbar.ProgressBarBuilder;
+import me.tongfei.progressbar.ProgressBarStyle;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class ClienteFTP {
 
@@ -115,10 +122,27 @@ public class ClienteFTP {
             BufferedInputStream bis = new BufferedInputStream(socketFTP.getInputStream());
             byte[] buffer = new byte[tamanyoFichero];
 
-            // Lo leemos y guardamos en un buffer
-            for (int i = 0; i < buffer.length; i++) {
-                buffer[i] = (byte) bis.read();
-            }
+
+            try {
+                /*
+                ProgressBarBuilder pbb = new ProgressBarBuilder()
+                        .setStyle(ProgressBarStyle.ASCII)
+                        .setTaskName("Descarga:")
+                        .setInitialMax(tamanyoFichero)
+                        .setUpdateIntervalMillis(150)
+                        .setUnit("Bytes", 1)
+                        .showSpeed();
+                */
+
+                ProgressBar pb = new ProgressBar("Descarga:", tamanyoFichero);
+                // Lo leemos y guardamos en un buffer
+                for (int i = 0; i < buffer.length; i++) {
+                    buffer[i] = (byte) bis.read();
+                    pb.step();
+                }
+                pb.close();
+                System.out.print("\r" + nombre + "Descarga completada, guardando el fichero en el disco duro...");
+            } catch (Exception ignored) { }
 
             // Preparamos el medio para volcarlo en el fichero
             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(new File(carpetaDescargas, nombreFicheroFinal)));
@@ -131,9 +155,11 @@ public class ClienteFTP {
             bis.close();
             bos.close();
 
-            System.out.println(nombre + "Fichero '" + nombreFicheroFinal + "' descargado del Servidor con éxito");
+            System.out.println("\r" + nombre + "Fichero '" + nombreFicheroFinal + "' descargado del Servidor con éxito");
 
-        } catch (IOException ignored) { }
+        } catch (IOException ignored) {
+            System.out.println("\r" + nombre + "Error al guardar el fichero");
+        }
     }
 
 }
