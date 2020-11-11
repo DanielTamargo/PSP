@@ -1,0 +1,36 @@
+nov. 11, 2020 8:47:44 P. M. com.tamargo.Main ejercicio1
+WARNING: Nombre de usuario incorrecto
+nov. 11, 2020 8:47:46 P. M. com.tamargo.Main ejercicio1
+WARNING: Nombre de usuario incorrecto
+nov. 11, 2020 8:47:48 P. M. com.tamargo.Main ejercicio1
+WARNING: Nombre de fichero incorrecto
+nov. 11, 2020 8:47:49 P. M. com.tamargo.Main ejercicio1
+WARNING: Nombre de fichero incorrecto
+nov. 11, 2020 8:47:51 P. M. com.tamargo.Main ejercicio1
+WARNING: El fichero no existe
+nov. 11, 2020 8:56:57 P. M. com.tamargo.Main ejercicio1
+WARNING: Nombre de usuario incorrecto -> 1111
+nov. 11, 2020 8:56:59 P. M. com.tamargo.Main ejercicio1
+WARNING: Nombre de usuario incorrecto -> hola111
+nov. 11, 2020 8:57:01 P. M. com.tamargo.Main ejercicio1
+WARNING: Nombre de usuario incorrecto -> ho11la
+nov. 11, 2020 8:57:02 P. M. com.tamargo.Main ejercicio1
+FINE: Usuario loggeado -> asdfasdf
+nov. 11, 2020 8:57:06 P. M. com.tamargo.Main ejercicio1
+WARNING: Nombre de fichero incorrecto -> asdf.123123
+nov. 11, 2020 8:57:09 P. M. com.tamargo.Main ejercicio1
+WARNING: Nombre de fichero incorrecto -> sdfasd.tx1
+nov. 11, 2020 8:57:12 P. M. com.tamargo.Main ejercicio1
+FINE: Fichero introducido correctamente -> asdafds.txt
+nov. 11, 2020 8:57:12 P. M. com.tamargo.Main ejercicio1
+WARNING: El fichero no existe -> asdafds.txt
+nov. 11, 2020 9:22:44 P. M. com.tamargo.Main ejercicio1
+WARNING: Nombre de usuario incorrecto -> ABC
+nov. 11, 2020 9:22:46 P. M. com.tamargo.Main ejercicio1
+FINE: Usuario loggeado -> abc
+nov. 11, 2020 9:22:48 P. M. com.tamargo.Main ejercicio1
+WARNING: Nombre de fichero incorrecto -> abcdERERES
+nov. 11, 2020 9:22:50 P. M. com.tamargo.Main ejercicio1
+FINE: Fichero introducido correctamente -> abc.txt
+nov. 11, 2020 9:22:50 P. M. com.tamargo.Main ejercicio1
+SEVERE: El fichero no existe -> abc.txt
