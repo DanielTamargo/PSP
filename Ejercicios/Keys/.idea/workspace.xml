@@ -19,7 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8df231bf-ba92-4192-95bd-8e2345c576ac" name="Default Changelist" comment="" />
+    <list default="true" id="5629faf2-01ce-4b42-bcf8-920e80ed2baa" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,27 +35,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectId" id="1k9mGfsneaC9PUCnNmf8vXUYySx" />
+  <component name="ProjectId" id="1kTQVAmIHjFCwtES3hF4LzGQec8" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/com/tamargo" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\9fdam10\Desktop\Dani\Gitkraken\PSP\Ejercicios\EjerciciosUD5\src\com\tamargo" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Application.Cliente2">
-    <configuration name="Cliente2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.tamargo.ejercicio2.Cliente2" />
-      <module name="EjerciciosUD5" />
+  <component name="RunManager" selected="Application.Cliente">
+    <configuration name="Cliente" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-15" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.tamargo.Cliente" />
+      <module name="Keys" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.tamargo.ejercicio2.*" />
+          <option name="PATTERN" value="com.tamargo.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -65,7 +59,7 @@
     </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.tamargo.Main" />
-      <module name="EjerciciosUD5" />
+      <module name="Keys" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
@@ -73,12 +67,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Servidor2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.tamargo.ejercicio2.Servidor2" />
-      <module name="EjerciciosUD5" />
+    <configuration name="Servidor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-15" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.tamargo.Servidor" />
+      <module name="Keys" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.tamargo.ejercicio2.*" />
+          <option name="PATTERN" value="com.tamargo.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -86,22 +82,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Servidor" />
+      <item itemvalue="Application.Cliente" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Cliente2" />
-        <item itemvalue="Application.Servidor2" />
-        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Cliente" />
+        <item itemvalue="Application.Servidor" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="8df231bf-ba92-4192-95bd-8e2345c576ac" name="Default Changelist" comment="" />
-      <created>1605121088103</created>
+      <changelist id="5629faf2-01ce-4b42-bcf8-920e80ed2baa" name="Default Changelist" comment="" />
+      <created>1605722124422</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1605121088103</updated>
+      <updated>1605722124422</updated>
     </task>
     <servers />
   </component>
@@ -115,32 +115,27 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="763" y="242" key="#com.intellij.ide.util.MemberChooser" timestamp="1605721612046">
+    <state x="440" y="179" width="1092" height="786" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605722328379">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="763" y="242" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1605721612046" />
-    <state width="1819" height="247" key="GridCell.Tab.0.bottom" timestamp="1605722224533">
+    <state x="440" y="179" width="1092" height="786" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605722328379" />
+    <state width="1175" height="277" key="GridCell.Tab.0.bottom" timestamp="1605723280252">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1819" height="247" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605722224533" />
-    <state width="1819" height="247" key="GridCell.Tab.0.center" timestamp="1605722224532">
+    <state width="1175" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605723280252" />
+    <state width="1175" height="277" key="GridCell.Tab.0.center" timestamp="1605723280252">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1819" height="247" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605722224532" />
-    <state width="1819" height="247" key="GridCell.Tab.0.left" timestamp="1605722224532">
+    <state width="1175" height="277" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605723280252" />
+    <state width="1175" height="277" key="GridCell.Tab.0.left" timestamp="1605723280252">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1819" height="247" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605722224532" />
-    <state width="1819" height="247" key="GridCell.Tab.0.right" timestamp="1605722224533">
+    <state width="1175" height="277" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605723280252" />
+    <state width="1175" height="277" key="GridCell.Tab.0.right" timestamp="1605723280252">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1819" height="247" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605722224533" />
-    <state x="341" y="147" key="new project wizard" timestamp="1605722122438">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="341" y="147" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1605722122438" />
+    <state width="1175" height="277" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605723280252" />
   </component>
 </project>

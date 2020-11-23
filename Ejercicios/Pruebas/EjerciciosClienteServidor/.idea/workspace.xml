@@ -82,35 +82,22 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
-  <component name="RunManager" selected="Application.ClientePrueba">
+  <component name="RunManager" selected="Application.Cliente6">
+    <configuration name="Cliente6" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.tamargo.ejercicio6.Cliente6" />
+      <module name="EjerciciosClienteServidor" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.tamargo.ejercicio6.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Cliente8n1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.tamargo.ejercicio8.Cliente8n1" />
-      <module name="EjerciciosClienteServidor" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.tamargo.ejercicio8.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Cliente8n2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.tamargo.ejercicio8.Cliente8n2" />
-      <module name="EjerciciosClienteServidor" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.tamargo.ejercicio8.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Cliente8n3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.tamargo.ejercicio8.Cliente8n3" />
       <module name="EjerciciosClienteServidor" />
       <extension name="coverage">
         <pattern>
@@ -148,20 +135,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Servidor6" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.tamargo.ejercicio6.Servidor6" />
+      <module name="EjerciciosClienteServidor" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.tamargo.ejercicio6.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
+      <item itemvalue="Application.Cliente6" />
       <item itemvalue="Application.Cliente8n1" />
-      <item itemvalue="Application.Cliente8n2" />
-      <item itemvalue="Application.Cliente8n3" />
-      <item itemvalue="Application.ServerPrueba" />
       <item itemvalue="Application.ClientePrueba" />
+      <item itemvalue="Application.ServerPrueba" />
+      <item itemvalue="Application.Servidor6" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Cliente6" />
+        <item itemvalue="Application.Servidor6" />
         <item itemvalue="Application.ClientePrueba" />
         <item itemvalue="Application.ServerPrueba" />
         <item itemvalue="Application.Cliente8n1" />
-        <item itemvalue="Application.Cliente8n2" />
-        <item itemvalue="Application.Cliente8n3" />
       </list>
     </recent_temporary>
   </component>
@@ -197,22 +197,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="768" y="285" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1603916474754" />
-    <state width="1594" height="236" key="GridCell.Tab.0.bottom" timestamp="1604625007514">
+    <state width="1819" height="326" key="GridCell.Tab.0.bottom" timestamp="1605722219998">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1594" height="236" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604625007514" />
-    <state width="1594" height="236" key="GridCell.Tab.0.center" timestamp="1604625007514">
+    <state width="1819" height="326" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605722219998" />
+    <state width="1819" height="326" key="GridCell.Tab.0.center" timestamp="1605722219998">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1594" height="236" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604625007514" />
-    <state width="1594" height="236" key="GridCell.Tab.0.left" timestamp="1604625007514">
+    <state width="1819" height="326" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605722219998" />
+    <state width="1819" height="326" key="GridCell.Tab.0.left" timestamp="1605722219998">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1594" height="236" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604625007514" />
-    <state width="1594" height="236" key="GridCell.Tab.0.right" timestamp="1604625007514">
+    <state width="1819" height="326" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605722219998" />
+    <state width="1819" height="326" key="GridCell.Tab.0.right" timestamp="1605722219998">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1594" height="236" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604625007514" />
+    <state width="1819" height="326" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605722219998" />
     <state x="692" y="99" width="758" height="763" key="dock-window-1" timestamp="1603908190335">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
