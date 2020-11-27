@@ -2,6 +2,10 @@ package com.tamargo;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,7 +19,13 @@ public class Servidor {
     public static void main(String[] args) {
 
         try {
-            ServerSocket serverSocket = new ServerSocket(5800);
+            // Configuramos las propiedades para seleccionar qué certificado definirá la confianza con el servidor
+            System.setProperty("javax.net.ssl.keyStore", "AlmacenSSL.jks");
+            System.setProperty("javax.net.ssl.keyStorePassword", "12345Abcde");
+
+            SSLServerSocketFactory sfact = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+            SSLServerSocket serverSocketSSL = (SSLServerSocket) sfact.createServerSocket(6000);
+
             int clientes = 0;
 
             KeyPairGenerator keygen = KeyPairGenerator.getInstance("RSA");
@@ -26,12 +36,14 @@ public class Servidor {
 
             System.out.println("[Servidor] Esperando a los clientes...");
             while (true) {
-                Socket socket = serverSocket.accept();
+                SSLSocket socket = (SSLSocket) serverSocketSSL.accept();
                 clientes++;
                 HiloServidor hilo = new HiloServidor(socket, clientes, keyPair, rsaCipher);
                 hilo.start();
             }
-        } catch (IOException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException ignored) { }
+        } catch (IOException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException e) {
+            e.printStackTrace();
+        }
 
     }
 

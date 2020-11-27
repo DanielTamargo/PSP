@@ -1,6 +1,8 @@
 package com.tamargo;
 
 import javax.crypto.*;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.Socket;
 import java.security.InvalidKeyException;
@@ -12,16 +14,21 @@ public class Cliente {
     public static void main(String[] args) {
         String nombre = "[Cliente] ";
         try {
+            // Configuramos las propiedades para que ""reciba"" el certificado (realmente accede a él)
+            System.setProperty("javax.net.ssl.trustStore", "UsuarioAlmacenSSL");
+            System.setProperty("javax.net.ssl.trustStorePassword", "890123");
+
             // Solo se conecta
-            Socket socket = new Socket("localhost", 5800);
+            SSLSocketFactory sfact= (SSLSocketFactory) SSLSocketFactory.getDefault();
+            SSLSocket socketSSL = (SSLSocket) sfact.createSocket ("localhost", 6000);
             System.out.println(nombre + "Conexión realizada");
 
             // Generamos flujos de datos
-            DataInputStream dataIS = new DataInputStream(socket.getInputStream());
-            DataOutputStream dataOS = new DataOutputStream(socket.getOutputStream());
+            DataInputStream dataIS = new DataInputStream(socketSSL.getInputStream());
+            DataOutputStream dataOS = new DataOutputStream(socketSSL.getOutputStream());
 
-            ObjectInputStream datoEntrada = new ObjectInputStream(socket.getInputStream());
-            ObjectOutputStream datoSalida = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream datoEntrada = new ObjectInputStream(socketSSL.getInputStream());
+            ObjectOutputStream datoSalida = new ObjectOutputStream(socketSSL.getOutputStream());
 
             // Recibir clave pública
             System.out.println(nombre + "Recibiendo clave pública");

@@ -1,6 +1,7 @@
 package com.tamargo;
 
 import javax.crypto.Cipher;
+import javax.net.ssl.SSLSocket;
 import java.io.*;
 import java.net.Socket;
 import java.security.KeyPair;
@@ -8,7 +9,7 @@ import java.security.KeyPair;
 public class HiloServidor extends Thread {
 
     private String nombre;
-    private Socket socket;
+    private SSLSocket socket;
     private int cliente;
     private KeyPair keyPair = null;
     private Cipher rsaCipher = null;
@@ -17,13 +18,13 @@ public class HiloServidor extends Thread {
     DataInputStream dataIS;
     DataOutputStream dataOS;
 
-    public HiloServidor(Socket socket, int cliente) {
+    public HiloServidor(SSLSocket socket, int cliente) {
         this.socket = socket;
         this.cliente = cliente;
         this.nombre = "[Servidor Cliente " + cliente + "] ";
     }
 
-    public HiloServidor(Socket socket, int cliente, KeyPair keyPair, Cipher rsaCipher) {
+    public HiloServidor(SSLSocket socket, int cliente, KeyPair keyPair, Cipher rsaCipher) {
         this.socket = socket;
         this.cliente = cliente;
         this.nombre = "[Servidor Cliente " + cliente + "] ";
@@ -42,7 +43,6 @@ public class HiloServidor extends Thread {
 
                 datoSalida = new ObjectOutputStream(socket.getOutputStream());
                 datoEntrada = new ObjectInputStream(socket.getInputStream());
-                System.out.println("Flujos OBJECT preparados");
             } catch (IOException ignored) { }
 
             // Enviar clave pública
@@ -62,7 +62,8 @@ public class HiloServidor extends Thread {
 
 
         } catch (IOException e) {
-            System.out.println("[Cliente] el server ha rechazado la conexión");
+            System.out.println(nombre + "El server ha rechazado la conexión. Motivo:");
+            e.printStackTrace();
         }
 
 
