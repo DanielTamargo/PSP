@@ -25,10 +25,13 @@ public class Main {
                 this.getClass().getPackageName() + "." + this.getClass().getSimpleName(),
                 stackTraceElements[0].getMethodName(),
                 "Este es un log de prueba");*/
-        GuardarLogs.escribirLog(
+
+        /*GuardarLogs.escribirLog(
                 Level.FINE,
                 "Main",
                 "pruebaLog",
-                "Este es un log de prueba");
+                "Este es un log de prueba");*/
+
+        GuardarLogs.logger.log(Level.FINE, "Prueba de log");
     }
 }

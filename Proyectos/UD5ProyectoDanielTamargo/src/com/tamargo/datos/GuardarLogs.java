@@ -13,7 +13,7 @@ import java.util.logging.SimpleFormatter;
 
 public class GuardarLogs {
 
-    private static final Logger logger = Logger.getLogger("ProyectoUD5");
+    public static final Logger logger = inicializarLog();
     private static final int numLogsMaximos = 5;
 
     /**
@@ -29,7 +29,8 @@ public class GuardarLogs {
         System.out.println("[Log] Log añadido");
     }
 
-    public static void inicializarLog() {
+    public static Logger inicializarLog() {
+        Logger logger = Logger.getLogger("ProyectoUD5");
         FileHandler fh;
         try {
             comprobarCarpetaLogs();
@@ -52,6 +53,7 @@ public class GuardarLogs {
         } catch (IOException e) {
             System.out.println("Error con el log");
         }
+        return logger;
     }
 
     public static void borrarLogsSobrantes() {
