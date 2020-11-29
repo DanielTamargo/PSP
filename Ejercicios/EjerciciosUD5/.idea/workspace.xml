@@ -19,7 +19,27 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8df231bf-ba92-4192-95bd-8e2345c576ac" name="Default Changelist" comment="" />
+    <list default="true" id="8df231bf-ba92-4192-95bd-8e2345c576ac" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/jaas.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/datos/EscribirFicheros.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/datos/GuardarLogs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/datos/LeerFicheros.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/datos/Pregunta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/datos/Usuario.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/jaas/acciones/AccionEnviarMensaje.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/jaas/modelo/ImplementacionPrincipal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/jaas/modelo/PasswordLoginModule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/jaas/modelo/UserPasswordCallbackHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ServidorCliente/GuiaPracticaFTP.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ServidorCliente/GuiaPracticaFTP.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ServidorCliente/Mini-Guia.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Keys/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Keys/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ServidorCliente/PracticaFTP/archivos/cliente/subir/iOS-01-Navegación.mp4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/HiloServidorFTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/HiloServidorFTP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/Servidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/Servidor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/ServidorSMTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/ServidorSMTP.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,7 +62,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/com/tamargo" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">

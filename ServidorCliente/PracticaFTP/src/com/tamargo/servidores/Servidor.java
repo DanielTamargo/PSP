@@ -6,7 +6,7 @@ import java.net.Socket;
 
 public class Servidor {
 
-    public static String nombre = "[Server] ";
+    public static String nombre = "[Servidor] ";
 
     public static void main(String[] args) {
 
@@ -18,9 +18,8 @@ public class Servidor {
             int numCliente = 0;
 
             System.out.println(nombre + "Esperando a los clientes...");
-            while (true) {
+            while (true) { // Servidor siempre ON
                 Socket socket = serverSocket.accept();
-
                 numCliente++;
                 System.out.println(nombre + "¡Nueva conexión! Conectando con Cliente " + numCliente);
 

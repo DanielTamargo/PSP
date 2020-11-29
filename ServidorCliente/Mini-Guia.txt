@@ -1,0 +1,49 @@
+- ARRANCAR EL PROGRAMA:
+La aplicación se arranca desde el método 'main' dentro de las clases 'Servidor' y 'Cliente'.
+
+
+- DESCARGAS:
+Los archivos disponibles para descargar están en la ruta: /archivos/servidor/
+Y una vez descargados se guardarán en: /archivos/cliente/descargas/
+
+
+- SUBIDAS:
+Los archivos disponibles para subir están en la ruta: /archivos/cliente/subir/
+Y una vez subidos se guardarán en: /archivos/servidor/
+( es decir, una vez subidos podrán descargarse, simulando que es un servidor para compartir ficheros entre clientes )
+
+
+- PROGRESSBAR:
+Los compañeros compartieron la idea y la he implementado, se trata de una barra que muestra el progreso de descarga de un fichero.
+Se puede apreciar cuando realizas la descarga de un fichero con el cliente. 
+El proyecto contiene un archivo decentemente pesado (arkanoid-dani.zip 280MB) perfecto para observar la utilidad y función de la PROGRESSBAR
+
+
+- SMTP:
+La opción enviar e-mail está activada pero siempre se envían a la dirección: daniel.tamargo@ikasle.egibide.org
+Si quieres cambiar la dirección fija para que te lleguen a ti, cambia la primera variable que encontrarás en la clase: ServidorSMTP
+
+
+- LIBRERÍAS:
+Por si una o varias librerías fallan al ejecutar el programa desde otro ordenador, se pueden volver a importar.
+Las librerías están guardadas en la carpeta 'recursos' dentro del proyecto.
+
+
+- FUNCIONAMIENTO:
+Hay una instancia de Servidor FTP y otra de un Servidor normal. El servidor normal recibe clientes y 
+delega las conexiones con dichos clientes en hilos.
+Cada hilo tendrá una conexión con un cliente. Cuando el cliente elige la opción descargar o subir, se comprueba
+el estado correcto del Servidor FTP, y si este es correcto, se establece una conexión entre este Cliente 
+y el servidor FTP (el server FTP delega en un hilo). 
+Una vez el cliente termina el proceso de descarga o subida, si no ha surgido ningún error o imprevisto, 
+se ejecuta el Servidor SMTP que envía un e-mail a la dirección fija asignada.
+
+
+- EXPLICACIÓN DEL USO DEL SERVIDOR NORMAL:
+¿Por qué utilizo un server normal que se comunique con el cliente si finalmente cuando decide descargar/subir un 
+fichero acabo generando un hilo de servidor FTP? 
+Inicialmente obviaba la conexión con el servidor normal y hacía todo con el servidor FTP, pero al cerrar un flujo de
+datos, se me reiniciaba el socket y no podía hacer conexiones en bucle con el servidor (hasta que se selecciona la opción 3
+que indica una desconexión por parte del cliente).
+Me gusta la sensación de "realismo" al permanecer conectado con el servidor y abandonar cuando lo consideres oportuno, y así
+no tener que arrancar una y otra vez si quieres descargar/subir varios archivos.

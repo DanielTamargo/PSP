@@ -1,13 +1,14 @@
 package com.tamargo.servidores;
 
-import java.util.Date;
-
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class ServidorSMTP {
+
+    /** El email se envía a una dirección fija -> cambiar esta dirección si quieres recibir el email en tu dirección */
+    private final String direccionEnvioEmail = "daniel.tamargo@ikasle.egibide.org";
 
     private final String nombre = "[Servidor SMTP] ";
 
@@ -57,7 +58,7 @@ public class ServidorSMTP {
 
         // Configuramos a quién mandar el mensaje
         message.setFrom(new InternetAddress(emailServidor));
-        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("danieltamargosaiz@gmail.com", false));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(direccionEnvioEmail, false));
         return message;
     }
 

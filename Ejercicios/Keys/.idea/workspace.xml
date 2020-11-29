@@ -19,7 +19,25 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5629faf2-01ce-4b42-bcf8-920e80ed2baa" name="Default Changelist" comment="" />
+    <list default="true" id="5629faf2-01ce-4b42-bcf8-920e80ed2baa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/jaas.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/datos/EscribirFicheros.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/datos/LeerFicheros.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/datos/Pregunta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/datos/Usuario.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/jaas/acciones/AccionEnviarMensaje.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/jaas/modelo/ImplementacionPrincipal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/jaas/modelo/PasswordLoginModule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Proyectos/UD5ProyectoDanielTamargo/src/com/tamargo/jaas/modelo/UserPasswordCallbackHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ServidorCliente/GuiaPracticaFTP.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ServidorCliente/GuiaPracticaFTP.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ServidorCliente/Mini-Guia.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ServidorCliente/PracticaFTP/archivos/cliente/subir/iOS-01-Navegación.mp4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/HiloServidorFTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/HiloServidorFTP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/Servidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/Servidor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/ServidorSMTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../ServidorCliente/PracticaFTP/src/com/tamargo/servidores/ServidorSMTP.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,6 +58,10 @@
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager" selected="Application.Cliente">
     <configuration name="Cliente" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -126,21 +148,29 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="809" y="335" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1606506900223" />
-    <state width="1611" height="277" key="GridCell.Tab.0.bottom" timestamp="1606507847948">
+    <state x="739" y="261" key="FileChooserDialogImpl" timestamp="1606600588158">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1611" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606507847948" />
-    <state width="1611" height="277" key="GridCell.Tab.0.center" timestamp="1606507847948">
+    <state x="739" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1606600588158" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1606602997347">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1611" height="277" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606507847948" />
-    <state width="1611" height="277" key="GridCell.Tab.0.left" timestamp="1606507847948">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606602997347" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1606602997347">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1611" height="277" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606507847948" />
-    <state width="1611" height="277" key="GridCell.Tab.0.right" timestamp="1606507847948">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606602997347" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1606602997347">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1611" height="277" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606507847948" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606602997347" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1606602997347">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606602997347" />
+    <state x="342" y="140" key="new project wizard" timestamp="1606600625037">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="342" y="140" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1606600625037" />
   </component>
 </project>
