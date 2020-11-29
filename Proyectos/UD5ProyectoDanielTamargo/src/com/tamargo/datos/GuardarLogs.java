@@ -16,18 +16,19 @@ public class GuardarLogs {
     public static final Logger logger = inicializarLog();
     private static final int numLogsMaximos = 5;
 
+    /*
     /**
      * Escribe un log en el fichero log que le corresponda (cambiará cada día)
      * @param nivel Level del log a registrar (Level.FINE, Level.SEVERE, etc)
      * @param claseFuente Nombre de la clase donde se ha lanzado el error
      * @param metodoFuente Nombre del método donde se ha lanzado el error
      * @param mensaje Mensaje a mostrar en el log
-     */
+     *//*
     public static void escribirLog(Level nivel, String claseFuente, String metodoFuente, String mensaje) {
         inicializarLog();
         logger.logp(nivel, claseFuente, metodoFuente, mensaje);
         System.out.println("[Log] Log añadido");
-    }
+    }*/
 
     public static Logger inicializarLog() {
         Logger logger = Logger.getLogger("ProyectoUD5");
@@ -71,7 +72,7 @@ public class GuardarLogs {
                 borrado = f.delete();
 
                 if (borrado) {
-                    System.out.println("[Log] Para evitar un excesivo número de logs se ha elimiando el log más antiguo: " + f.getName());
+                    System.out.println("[Log] Para evitar un excesivo número de logs se ha eliminado el log más antiguo: " + f.getName());
                     borrarLogsSobrantes();
                 } else
                     System.out.println("[Log] Se ha intentado eliminar sin éxito");

@@ -19,7 +19,7 @@ public class LeerFicheros {
                 }
             } catch (EOFException ignored) { }
             objIS.close();
-            System.out.println("[Fichero] Usuarios leídos: " + usuarios.size());
+            //System.out.println("[Fichero] Usuarios leídos: " + usuarios.size());
         } catch (IOException | ClassNotFoundException | ClassCastException ignored) {
             System.out.println("[Fichero] Error al leer los usuarios");
         }

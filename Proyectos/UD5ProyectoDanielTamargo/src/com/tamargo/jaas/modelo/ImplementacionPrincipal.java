@@ -39,6 +39,10 @@ public class ImplementacionPrincipal implements Principal, Serializable {
         return nombre;
     }
 
+    public String getContrasenya() {
+        return contrasenya;
+    }
+
     @Override
     public String toString() {
         return "ImplementacionPrincipal{" +

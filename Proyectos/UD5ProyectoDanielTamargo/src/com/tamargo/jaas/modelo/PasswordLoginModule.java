@@ -1,6 +1,9 @@
 package com.tamargo.jaas.modelo;
 
+import com.tamargo.datos.EscribirFicheros;
 import com.tamargo.datos.GuardarLogs;
+import com.tamargo.datos.LeerFicheros;
+import com.tamargo.datos.Usuario;
 
 import javax.security.auth.Subject;
 import javax.security.auth.callback.*;
@@ -8,6 +11,8 @@ import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -47,8 +52,6 @@ public class PasswordLoginModule implements LoginModule {
      * - comprobamos que el usuario existe
      *  + si existe, comprobamos que su contraseña coincide
      *  + si no existe, creamos un nuevo jugador guardando los datos y dando por válido el acceso
-     * @return
-     * @throws LoginException
      */
     public boolean login() throws LoginException {
         if (callbackHandler == null) {
@@ -67,49 +70,50 @@ public class PasswordLoginModule implements LoginModule {
             char[] tempPassword = ((PasswordCallback) callbacks[1]).getPassword();
             contrasenya = new char[tempPassword.length];
             System.arraycopy(tempPassword, 0, contrasenya, 0, tempPassword.length);
+
             // Borrar password en el callback
             ((PasswordCallback) callbacks[1]).clearPassword();
         } catch (IOException ioe) {
-            // TODO PERSONALIZAR EXCEPCIONES
-            throw new LoginException(ioe.toString());
-        } catch (UnsupportedCallbackException uce) {
-            throw new LoginException(uce.toString());
-        }
-
-        // TODO LEER DE FICHERO Y COTEJAR DATOS
-        // Validar usuario y password
-        if (
-                "sco".equals(usuario) &&
-                        contrasenya.length == 6 &&
-                        contrasenya[0] == 's' &&
-                        contrasenya[1] == 'c' &&
-                        contrasenya[2] == 'o' &&
-                        contrasenya[3] == 's' &&
-                        contrasenya[4] == 'c' &&
-                        contrasenya[5] == 'o'
-        ) {
-
-            // Usuario y password son correctos
-            loginExito = true;
-            return true;
-        } else {
-            // TODO SI EL USUARIO EXISTE PERO LA CONTRASEÑA NO ES CORRECTA, DAR FALLO Y DAR MARCHA ATRÁS
-            // TODO SI EL USUARIO NO EXISTE, REGISTRAR NUEVO JUGADOR
-            // Fallo de autentificación. Borrar estado y lanzar excepción
-            loginExito = false;
-            usuario = null;
-            clearPassword();
-
-
-            StackTraceElement[] stackTraceElements = (new Throwable()).getStackTrace();
-            GuardarLogs.escribirLog(Level.WARNING,
-                    this.getClass().getPackageName() + "." + this.getClass().getSimpleName(),
-                    stackTraceElements[0].getMethodName(),
-                    "Intento de inicio de sesión. Contraseña incorrecta");
-            System.out.println("Contraseña incorrecta");
+            GuardarLogs.logger.log(Level.SEVERE, "Error al manejar las credenciales recibidas. Ha habido un error al trabajar con los datos");
             return false;
-            //throw new FailedLoginException("Password Incorrecto");
+            //throw new LoginException(ioe.toString());
+        } catch (UnsupportedCallbackException uce) {
+            GuardarLogs.logger.log(Level.SEVERE, "Error al manejar las credenciales recibidas. El CallbackHandler utilizado no está soportado");
+            return false;
+            //throw new LoginException(uce.toString());
         }
+
+        ArrayList<Usuario> usuarios = LeerFicheros.leerUsuarios();
+        String contrasenyaCotejar = new String(contrasenya);
+
+        boolean usuarioExiste = false;
+
+        // Validar usuario y password
+        for (Usuario usu: usuarios) {
+            if (usu.getNombre().equalsIgnoreCase(usuario)) {
+                usuarioExiste = true;
+                if (usu.getContrasenya().equals(contrasenyaCotejar)) {
+                    GuardarLogs.logger.log(Level.FINE, "Inicio de sesión exitoso");
+                    System.out.println("[PasswordLoginModule] Inicio de sesión correcto");
+                    loginExito = true;
+                    return true;
+                } else {
+                    usuario = null;
+                    clearPassword();
+                    GuardarLogs.logger.log(Level.WARNING, "Intento de inicio de sesión fallido. Contraseña incorrecta.");
+                    System.out.println("[PasswordLoginModule] Contraseña incorrecta");
+                    loginExito = false;
+                    //TODO JOPTION PANE INFORMATIVO
+                    return false;
+                }
+            }
+        }
+
+        EscribirFicheros.addUsuario(new Usuario(usuario, contrasenyaCotejar));
+        loginExito = true;
+        GuardarLogs.logger.log(Level.FINE, "Nuevo usuario registrado en la base de datos: " + usuario);
+        System.out.println("[PasswordLoginModule] Se ha registrado al usuario '" + usuario + "' en la base de datos");
+        return true;
     }
 
     /**
@@ -175,9 +179,7 @@ public class PasswordLoginModule implements LoginModule {
         if (contrasenya == null) {
             return;
         }
-        for (int i = 0; i < contrasenya.length; i++) {
-            contrasenya[i] = ' ';
-        }
+        Arrays.fill(contrasenya, ' ');
         contrasenya = null;
     }
 }

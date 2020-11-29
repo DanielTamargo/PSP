@@ -31,6 +31,9 @@ public class EscribirFicheros {
         return insertado;
     }
 
+    /**
+     * Añade una pregunta al fichero preguntas.dat
+     */
     public static boolean addPregunta(Pregunta pregunta) {
         boolean insertada = true;
 
