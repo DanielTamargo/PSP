@@ -47,11 +47,9 @@ public class HiloServidor extends Thread {
             try {
                 dataOS = new DataOutputStream(socketSSL.getOutputStream());
                 dataIS = new DataInputStream(socketSSL.getInputStream());
-                System.out.println(nombre + "Flujos DATA preparados");
-
                 objOS = new ObjectOutputStream(socketSSL.getOutputStream());
                 objIS = new ObjectInputStream(socketSSL.getInputStream());
-                System.out.println(nombre + "Flujos OBJECT preparados");
+                System.out.println(nombre + "Flujos de datos preparados");
             } catch (IOException ignored) { }
 
             // Enviar clave pública
@@ -102,9 +100,7 @@ public class HiloServidor extends Thread {
                                 );
                                 loginContext.login();
                                 exito = true;
-                            } catch (LoginException ignored) {
-                                ignored.printStackTrace();
-                            }
+                            } catch (LoginException ignored) { }
 
                             objOS.writeObject(exito);
                         }

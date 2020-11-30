@@ -16,7 +16,7 @@ import java.security.PublicKey;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
-public class VentanaCliente {
+public class Cliente {
     private JFrame ventana;
     private JPanel panel;
     private JPanel panelDatos;
@@ -40,7 +40,7 @@ public class VentanaCliente {
 
     private final Dimension dimPanelDatos = new Dimension(600, 500);
 
-    public VentanaCliente(JFrame ventana) {
+    public Cliente(JFrame ventana) {
         this.ventana = ventana;
         String nombre = "[Cliente] ";
         try {
@@ -96,12 +96,12 @@ public class VentanaCliente {
             //objOS.writeObject(encriptarMensaje(claveAES, "Sí, gracias por tanta intimidad"));
 
             // Proceso:
-            // - login
+            //             | registro
+            // - login | <-|
             // - validar reglas
             // - nueva partida | historial
             //       jugar          ver
             ventanaLogin(claveAES, objOS, objIS);
-
 
             this.ventana.addWindowListener(new WindowAdapter() {
                 @Override
@@ -112,7 +112,6 @@ public class VentanaCliente {
                     ventana.dispose();
                 }
             });
-
 
         } catch (IOException | NoSuchAlgorithmException |
                 NoSuchPaddingException | InvalidKeyException | ClassNotFoundException
@@ -503,7 +502,7 @@ public class VentanaCliente {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Login");
-        VentanaCliente vc = new VentanaCliente(frame);
+        Cliente vc = new Cliente(frame);
         frame.setContentPane(vc.getPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
