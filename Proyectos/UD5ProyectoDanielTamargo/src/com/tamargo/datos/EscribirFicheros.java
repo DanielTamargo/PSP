@@ -16,13 +16,21 @@ public class EscribirFicheros {
 
         try {
             ArrayList<Usuario> usuarios = LeerFicheros.leerUsuarios();
-            usuarios.add(usuario);
             ObjectOutputStream objOS = new ObjectOutputStream(new FileOutputStream(new File("./ficheros/usuarios.dat")));
+            boolean nickExiste = false;
             for (Usuario usu : usuarios) {
+                if (usu.getNick().equalsIgnoreCase(usuario.getNick()))
+                    nickExiste = true;
                 objOS.writeObject(usu);
             }
+            if (!nickExiste) {
+                objOS.writeObject(usuario);
+                System.out.println("[Fichero] Usuario con el nick '" + usuario.getNick() + "' guardado con éxito");
+            } else {
+                insertado = false;
+                System.out.println("[Fichero] Ya existe un usuario guardado con el nick '" + usuario.getNick() + "'");
+            }
             objOS.close();
-            System.out.println("[Fichero] Usuario '" + usuario.getNombre() + "' guardado con éxito");
         } catch (IOException ignored) {
             System.out.println("[Fichero] Error al guardar un nuevo usuario");
             insertado = false;

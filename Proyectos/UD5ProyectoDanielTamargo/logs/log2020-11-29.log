@@ -44,3 +44,5 @@ nov. 29, 2020 2:12:24 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
 FINE: Nuevo usuario registrado en la base de datos: prueba
 nov. 29, 2020 2:12:27 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
 FINE: Inicio de sesión exitoso
+nov. 29, 2020 7:45:27 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Contraseña incorrecta.

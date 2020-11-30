@@ -1,6 +1,5 @@
 package com.tamargo.jaas.modelo;
 
-import com.tamargo.datos.EscribirFicheros;
 import com.tamargo.datos.GuardarLogs;
 import com.tamargo.datos.LeerFicheros;
 import com.tamargo.datos.Usuario;
@@ -28,8 +27,8 @@ public class PasswordLoginModule implements LoginModule {
     private boolean loginExito = false;
     private boolean commitExito = false;
 
-    private String usuario;
-    private char[] contrasenya;
+    private String nickUsuario;
+    private char[] contrasenyaUsuario;
 
     private Principal principal;
 
@@ -43,15 +42,15 @@ public class PasswordLoginModule implements LoginModule {
         this.callbackHandler = callbackHandler;
         this.loginExito = false;
         this.commitExito = false;
-        this.usuario = null;
+        this.nickUsuario = null;
         clearPassword();
     }
 
     /**
      * Login
      * - comprobamos que el usuario existe
-     *  + si existe, comprobamos que su contraseña coincide
-     *  + si no existe, creamos un nuevo jugador guardando los datos y dando por válido el acceso
+     * - si existe, cotejamos la contraseña y si es correcta, accederá
+     * - si no existe o la contraseña no es correcta, no accederá
      */
     public boolean login() throws LoginException {
         if (callbackHandler == null) {
@@ -66,54 +65,53 @@ public class PasswordLoginModule implements LoginModule {
         try {
             // Llamar al callbackhandler para rellenar informacion
             callbackHandler.handle(callbacks);
-            usuario = ((NameCallback) callbacks[0]).getName();
+            nickUsuario = ((NameCallback) callbacks[0]).getName();
             char[] tempPassword = ((PasswordCallback) callbacks[1]).getPassword();
-            contrasenya = new char[tempPassword.length];
-            System.arraycopy(tempPassword, 0, contrasenya, 0, tempPassword.length);
+            contrasenyaUsuario = new char[tempPassword.length];
+            System.arraycopy(tempPassword, 0, contrasenyaUsuario, 0, tempPassword.length);
 
             // Borrar password en el callback
             ((PasswordCallback) callbacks[1]).clearPassword();
         } catch (IOException ioe) {
+            System.out.println("Error al manejar las credenciales recibidas. Ha habido un error al trabajar con los datos");
             GuardarLogs.logger.log(Level.SEVERE, "Error al manejar las credenciales recibidas. Ha habido un error al trabajar con los datos");
             return false;
             //throw new LoginException(ioe.toString());
         } catch (UnsupportedCallbackException uce) {
+            System.out.println("Error al manejar las credenciales recibidas. El CallbackHandler utilizado no está soportado");
             GuardarLogs.logger.log(Level.SEVERE, "Error al manejar las credenciales recibidas. El CallbackHandler utilizado no está soportado");
             return false;
             //throw new LoginException(uce.toString());
         }
 
         ArrayList<Usuario> usuarios = LeerFicheros.leerUsuarios();
-        String contrasenyaCotejar = new String(contrasenya);
-
-        boolean usuarioExiste = false;
+        String contrasenyaCotejar = new String(contrasenyaUsuario);
 
         // Validar usuario y password
         for (Usuario usu: usuarios) {
-            if (usu.getNombre().equalsIgnoreCase(usuario)) {
-                usuarioExiste = true;
+            if (usu.getNick().equalsIgnoreCase(nickUsuario)) {
                 if (usu.getContrasenya().equals(contrasenyaCotejar)) {
                     GuardarLogs.logger.log(Level.FINE, "Inicio de sesión exitoso");
                     System.out.println("[PasswordLoginModule] Inicio de sesión correcto");
                     loginExito = true;
                     return true;
                 } else {
-                    usuario = null;
+                    nickUsuario = null;
                     clearPassword();
-                    GuardarLogs.logger.log(Level.WARNING, "Intento de inicio de sesión fallido. Contraseña incorrecta.");
+                    GuardarLogs.logger.log(Level.WARNING, "Intento de inicio de sesión fallido. Contraseña incorrecta");
                     System.out.println("[PasswordLoginModule] Contraseña incorrecta");
                     loginExito = false;
-                    //TODO JOPTION PANE INFORMATIVO
                     return false;
                 }
             }
         }
 
-        EscribirFicheros.addUsuario(new Usuario(usuario, contrasenyaCotejar));
-        loginExito = true;
-        GuardarLogs.logger.log(Level.FINE, "Nuevo usuario registrado en la base de datos: " + usuario);
-        System.out.println("[PasswordLoginModule] Se ha registrado al usuario '" + usuario + "' en la base de datos");
-        return true;
+        nickUsuario = null;
+        clearPassword();
+        GuardarLogs.logger.log(Level.WARNING, "Intento de inicio de sesión fallido. Usuario incorrecto");
+        System.out.println("[PasswordLoginModule] Usuario incorrecto");
+        loginExito = false;
+        return false;
     }
 
     /**
@@ -126,11 +124,11 @@ public class PasswordLoginModule implements LoginModule {
         }
 
         // Login con éxito: crear Principal y añadirlo al Subject
-        principal = new ImplementacionPrincipal(usuario, new String(contrasenya), null);
+        principal = new ImplementacionPrincipal(nickUsuario, new String(contrasenyaUsuario), null);
         sujeto.getPrincipals().add(principal);
 
         // Borrar usuario y password.
-        usuario = null;
+        nickUsuario = null;
         clearPassword();
         commitExito = true;
         return true;
@@ -147,7 +145,7 @@ public class PasswordLoginModule implements LoginModule {
             if (!commitExito) {
                 // Nuestro login tuvo éxito pero otros fallaron
                 loginExito = false;
-                usuario = null;
+                nickUsuario = null;
                 clearPassword();
                 principal = null;
             } else {
@@ -166,20 +164,20 @@ public class PasswordLoginModule implements LoginModule {
         sujeto.getPrincipals().remove(principal);
         loginExito = false;
         commitExito = false;
-        usuario = null;
+        nickUsuario = null;
         clearPassword();
         principal = null;
         return true;
     }
 
     /**
-     * Limpiar la contrasenya
+     * Limpiar la contraseña
      */
     private void clearPassword() {
-        if (contrasenya == null) {
+        if (contrasenyaUsuario == null) {
             return;
         }
-        Arrays.fill(contrasenya, ' ');
-        contrasenya = null;
+        Arrays.fill(contrasenyaUsuario, ' ');
+        contrasenyaUsuario = null;
     }
 }

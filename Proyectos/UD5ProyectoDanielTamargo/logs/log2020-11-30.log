@@ -1,0 +1,172 @@
+nov. 30, 2020 11:05:44 A. M. com.tamargo.servicio.Servidor lanzarServidor
+SEVERE: Error al inicializar el servidor. Error: java.security.NoSuchAlgorithmException: Error constructing implementation (algorithm: Default, provider: SunJSSE, class: sun.security.ssl.SSLContextImpl$DefaultSSLContext)
+nov. 30, 2020 11:06:05 A. M. com.tamargo.servicio.Servidor lanzarServidor
+SEVERE: Error al inicializar el servidor. Error: java.security.NoSuchAlgorithmException: Error constructing implementation (algorithm: Default, provider: SunJSSE, class: sun.security.ssl.SSLContextImpl$DefaultSSLContext)
+nov. 30, 2020 11:52:18 A. M. com.tamargo.servicio.Cliente main
+SEVERE: Error con el servicio del cliente. Error: Connection reset
+nov. 30, 2020 11:52:32 A. M. com.tamargo.servicio.Cliente main
+SEVERE: Error con el servicio del cliente. Error: Connection reset
+nov. 30, 2020 12:51:58 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 12:54:58 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 12:56:14 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 12:56:28 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 12:57:55 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 1:10:14 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 1:15:11 P. M. com.tamargo.ventanas.VentanaCliente <init>
+SEVERE: Error con el servicio del cliente. Error: Connection refused: connect
+nov. 30, 2020 1:16:29 P. M. com.tamargo.ventanas.VentanaCliente <init>
+SEVERE: Error con el servicio del cliente. Error: Connection refused: connect
+nov. 30, 2020 1:19:24 P. M. com.tamargo.ventanas.VentanaCliente <init>
+SEVERE: Error con el servicio del cliente. Error: Connection refused: connect
+nov. 30, 2020 1:27:23 P. M. com.tamargo.ventanas.VentanaCliente <init>
+SEVERE: Error con el servicio del cliente. Error: Connection refused: connect
+nov. 30, 2020 1:27:46 P. M. com.tamargo.ventanas.VentanaCliente <init>
+SEVERE: Error con el servicio del cliente. Error: Connection refused: connect
+nov. 30, 2020 1:28:09 P. M. com.tamargo.ventanas.VentanaCliente <init>
+SEVERE: Error con el servicio del cliente. Error: Connection refused: connect
+nov. 30, 2020 1:28:28 P. M. com.tamargo.ventanas.VentanaCliente <init>
+SEVERE: Error con el servicio del cliente. Error: Connection refused: connect
+nov. 30, 2020 2:47:08 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 2:47:49 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 2:48:21 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 2:48:28 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 2:54:43 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 2:55:26 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 2:55:39 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 2:55:51 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:00:21 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:04:02 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:04:26 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:05:23 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:05:53 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:08:33 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:08:42 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:10:07 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:10:14 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:12:55 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:14:21 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:15:25 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:15:55 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:16:06 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:16:15 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:16:21 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:16:58 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:21:09 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:21:20 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:21:43 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:22:15 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:22:58 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:23:07 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:43:06 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:54:36 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:55:10 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:55:57 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:56:33 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:57:39 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:57:53 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 3:59:20 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:00:43 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:00:52 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:01:13 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:03:46 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:06:19 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:09:17 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:13:43 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:17:12 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:18:40 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:18:47 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:18:56 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:19:06 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:19:55 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:42:50 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:45:45 P. M. com.tamargo.ventanas.VentanaCliente <init>
+SEVERE: Error con el servicio del cliente. Error: Connection refused: connect
+nov. 30, 2020 4:46:13 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:47:20 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:49:41 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:51:50 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:52:40 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:54:26 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 4:58:10 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+nov. 30, 2020 5:06:07 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+nov. 30, 2020 5:06:11 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+nov. 30, 2020 5:06:13 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: invalid type code: 00
+nov. 30, 2020 5:19:02 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+nov. 30, 2020 5:19:33 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+nov. 30, 2020 5:19:59 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+nov. 30, 2020 5:20:02 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: invalid type code: 00
+nov. 30, 2020 5:22:01 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso

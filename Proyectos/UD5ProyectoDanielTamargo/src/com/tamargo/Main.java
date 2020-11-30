@@ -21,7 +21,7 @@ public class Main {
         //TODO Lanzar un servidor y un cliente
         // TODO se podría preguntar en un JOptionPane cuántos clientes quiere lanzar
 
-        new Main().pruebaLoginModule();
+        new Main().pruebaAddUsuario();
     }
 
     public void pruebaLoginModule() {
@@ -52,6 +52,12 @@ public class Main {
 
         }
 
+    }
+
+    public void pruebaAddUsuario() {
+        //String nombre, String apellido, int edad, String nick, String contrasenya, int tipo
+        Usuario usuario = new Usuario("Daniel", "Tamargo", 25, "daniel", "test", 1);
+        EscribirFicheros.addUsuario(usuario);
     }
 
     public void pruebaLog() {
