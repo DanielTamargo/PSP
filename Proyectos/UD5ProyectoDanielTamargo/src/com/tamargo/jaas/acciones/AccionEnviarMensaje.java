@@ -2,6 +2,13 @@ package com.tamargo.jaas.acciones;
 
 import java.security.PrivilegedAction;
 
+/**
+ * Este es un ejemplo de una acción si quisieramos tener acciones posibles a ejecutar
+ * En esta acción accederíamos al Sujeto por el Contexto y podríamos comprobar sus privilegios
+ *
+ * Es similar a cuando trabajábamos con Laravel, cada usuario tenía su rol, y dependiendo de su rol, el listener
+ * de una ruta hacía unas cosas u otras
+ */
 public class AccionEnviarMensaje implements PrivilegedAction {
 
     public AccionEnviarMensaje() { }

@@ -13,9 +13,7 @@ import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 import java.io.*;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
+import java.security.*;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Level;
@@ -74,9 +72,6 @@ public class HiloServidor extends Thread {
             //System.out.println(nombre + "El cliente dice: " + desencriptarMensaje(claveAES, (byte[]) objIS.readObject()));
 
 
-
-            // TODO enviar reglas firmadas, si las valida pasar al bucle, si las rechaza finalizar conexión
-
             // Bucle comunicativo
             // TODO aquí el hilo del server esperará recibir opciones
             try {
@@ -104,6 +99,25 @@ public class HiloServidor extends Thread {
                             } catch (LoginException ignored) { }
 
                             objOS.writeObject(exito);
+
+                            if (exito) {
+                                Signature sigRSA = Signature.getInstance("SHA256withRSA");
+                                sigRSA.initSign(parejaClaves.getPrivate());
+                                String normas = """
+                                        1- Al empezar una partida comenzarás una serie de rondas
+                                        2- Cada ronda recibirás una pregunta y 4 respuestas
+                                        3- Solo una respuesta será correcta
+                                        4- Cada respuesta acertada sumará un punto
+                                        5- Seguirás respondiendo hasta fallar una pregunta, abandonar o terminarlas todas
+                                        6- Se te guardará la puntuación más alta que alcances
+                                        7- Puedes ver la lista de puntuaciones para ver tu clasificación""";
+                                sigRSA.update(normas.getBytes());
+                                byte[] firmaNormas = sigRSA.sign();
+                                System.out.println("Firma normas encriptada: " + new String(firmaNormas));
+
+                                objOS.writeObject(encriptarMensaje(claveAES, normas));
+                                objOS.writeObject(firmaNormas);
+                            }
                         }
                         case 2 -> { // REGISTRO
                             String nombre = desencriptarMensaje(claveAES, (byte[]) objIS.readObject());
@@ -122,6 +136,10 @@ public class HiloServidor extends Thread {
                     }
                 }
             } catch (EOFException ignored) { }
+            catch (SignatureException e) {
+                System.out.println(nombre + "Error al firmar las normas. Error: " + e.getLocalizedMessage());
+                GuardarLogs.logger.log(Level.INFO, "Error al firmar las normas. Error: " + e.getLocalizedMessage());
+            }
 
             // TODO solo mostrar desconexión con éxito si valida reglas y todo va bi en, si no las valida mostrar
             // "El cliente no ha aceptado las reglas, finalizando conexión"

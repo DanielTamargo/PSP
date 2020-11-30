@@ -10,9 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
+import java.security.*;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
@@ -20,7 +18,12 @@ public class Cliente {
     private JFrame ventana;
     private JPanel panel;
     private JPanel panelDatos;
-    private JButton b_finalizarConexion;
+
+    private String nombre = "[Cliente] ";
+
+    private final Dimension dimPanelDatos = new Dimension(600, 500);
+    private PublicKey serverPK;
+
 
     // LOGIN + REGISTRO
     private JTextField tNick;
@@ -34,15 +37,21 @@ public class Cliente {
     private JTextField tNombre;
     private JTextField tApellido;
     private JTextField tEdad;
-
     private JButton b_volver;
     private JButton b_realizarRegistro;
 
-    private final Dimension dimPanelDatos = new Dimension(600, 500);
+    // VALIDACION NORMAS
+    private JTextPane tpNormas;
+    private JLabel hashRecibido;
+    private JLabel hashRealizado;
+    private JLabel confirmacionHash;
+    private JButton b_aceptar;
+
+
+
 
     public Cliente(JFrame ventana) {
         this.ventana = ventana;
-        String nombre = "[Cliente] ";
         try {
             // Configuramos las propiedades para que ""reciba"" el certificado (realmente accede a él)
             System.setProperty("javax.net.ssl.trustStore", "./certificados/clienteAlmacenSSL");
@@ -61,7 +70,7 @@ public class Cliente {
 
             // Recibimos clave pública
             System.out.println(nombre + "Recibiendo clave pública");
-            PublicKey serverPK = (PublicKey) objIS.readObject();
+            serverPK = (PublicKey) objIS.readObject();
             System.out.println(nombre + "Clave pública recibida");
             System.out.println();
 
@@ -113,6 +122,11 @@ public class Cliente {
                 }
             });
 
+
+            //todo quitar
+            tNick.setText("dani");
+            tContrasenya.setText("test");
+
         } catch (IOException | NoSuchAlgorithmException |
                 NoSuchPaddingException | InvalidKeyException | ClassNotFoundException
                 | IllegalBlockSizeException | BadPaddingException e) {
@@ -139,7 +153,7 @@ public class Cliente {
                         //TODO ENCRIPTAR CONTRASEÑA ANTES DE ENCRIPTARLA Y MANDARLA
                         objOS.writeObject(encriptarMensaje(claveAES, String.valueOf(tContrasenya.getPassword())));
                         if ((boolean) objIS.readObject()) {
-                            //TODO INICIO DE SESION CORRECTO -> PASAR A LA VENTANA VALIDAR REGLAS
+                            ventanaValidarNormas(claveAES, objOS, objIS);
                         } else {
                             String titulo = "Credenciales incorrectas";
                             String mensaje = "Usuario y/o contraseña incorrectos";
@@ -199,6 +213,123 @@ public class Cliente {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ventanaLogin(claveAES, objOS, objIS);
+            }
+        });
+    }
+
+    public void ventanaValidarNormas(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
+        try {
+            panelDatos.removeAll();
+            panelDatos.repaint();
+        } catch (Exception ignored) { }
+        panelDatos.setLayout(null);
+
+        ventana.setTitle("Validar Normas");
+
+        String fuenteMYHUI = "MicrosoftYaHeiUI";
+
+        JLabel cabecera = new JLabel("VALIDACIÓN DE LAS NORMAS", SwingConstants.CENTER);
+        configurarLabel(cabecera, fuenteMYHUI, Font.BOLD, 22);
+        panelDatos.add(cabecera);
+        cabecera.setBounds(0, 20, dimPanelDatos.width, 40);
+
+        JPanel linea = new JPanel();
+        linea.setBackground(Color.DARK_GRAY);
+        panelDatos.add(linea);
+        linea.setBounds(0, 55, dimPanelDatos.width, 8);
+
+        JLabel tituloNormas = new JLabel("NORMAS", SwingConstants.CENTER);
+        configurarLabel(tituloNormas, fuenteMYHUI, Font.PLAIN, 15);
+        panelDatos.add(tituloNormas);
+        tituloNormas.setBounds(0, 95, dimPanelDatos.width, 15);
+        
+        int margenPDL = 80;
+        int panelDatosNormasHeight = 150;
+        int panelDatosNormasWidth = dimPanelDatos.width - (margenPDL * 2);
+        JPanel panelDatosNormas = new JPanel();
+        panelDatosNormas.setLayout(null);
+        panelDatosNormas.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3, true));
+        panelDatos.add(panelDatosNormas);
+        panelDatosNormas.setBounds(margenPDL, 110, panelDatosNormasWidth, panelDatosNormasHeight);
+
+        tpNormas = new JTextPane();
+        panelDatosNormas.add(tpNormas);
+        int margenTP = 10;
+        tpNormas.setBounds(margenTP, margenTP, panelDatosNormasWidth - (margenTP * 2), panelDatosNormasHeight - (margenTP * 2));
+        tpNormas.setOpaque(false);
+        tpNormas.setEditable(false);
+        //tpNormas.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        tpNormas.setFont(new Font(fuenteMYHUI, Font.BOLD, 12));
+
+        int espacioEntreDatos = 45;
+        JLabel tituloValidacion = new JLabel("VALIDACIÓN", SwingConstants.CENTER);
+        configurarLabel(tituloValidacion, fuenteMYHUI, Font.PLAIN, 15);
+        panelDatos.add(tituloValidacion);
+        tituloValidacion.setBounds(0, 100 + 50 + panelDatosNormasHeight, dimPanelDatos.width, 15);
+
+        int panelDatosValidacionHeight = 35;
+        int panelDatosValidacionWidth = dimPanelDatos.width - (margenPDL * 2);
+        JPanel panelDatosValidacion = new JPanel();
+        panelDatosValidacion.setLayout(null);
+        panelDatosValidacion.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3, true));
+        panelDatos.add(panelDatosValidacion);
+        panelDatosValidacion.setBounds(margenPDL, 115 + 50 + panelDatosNormasHeight, panelDatosValidacionWidth, panelDatosValidacionHeight);
+
+        hashRecibido = new JLabel("", SwingConstants.CENTER);
+        configurarLabel(hashRecibido, fuenteMYHUI, Font.BOLD, 12);
+        panelDatosValidacion.add(hashRecibido);
+        hashRecibido.setBounds(0, 10, panelDatosValidacionWidth, 15);
+
+        int widthBoton = 110;
+        b_aceptar = new JButton("Adelante");
+        configurarButton(b_aceptar, fuenteMYHUI, Font.BOLD, 15);
+        panelDatos.add(b_aceptar);
+        b_aceptar.setBounds((dimPanelDatos.width / 2) - (widthBoton / 2), 400, widthBoton, 40);
+
+        // Verificar las normas con su firma
+        boolean confirmacion;
+        try {
+            System.out.println(nombre + "Recibiendo las normas y las normas firmadas del servidor");
+            String normas = desencriptarMensaje(claveAES, (byte[]) objIS.readObject());
+            byte[] firmaNormas = (byte[]) objIS.readObject();
+            Signature verRSA = Signature.getInstance("SHA256withRSA");
+            verRSA.initVerify(serverPK);
+            verRSA.update(normas.getBytes());
+            //verRSA.update("a".getBytes()); // <- Forzar fallo en la validación
+            confirmacion = verRSA.verify(firmaNormas);
+
+            tpNormas.setText(normas);
+
+            System.out.println(nombre + "Firma recibida:");
+            System.out.println(new String(firmaNormas));
+            System.out.println(nombre + "La firma es válida: " + (confirmacion ? "Sí": "No"));
+            System.out.println();
+
+        } catch (NoSuchAlgorithmException | SignatureException | ClassNotFoundException | BadPaddingException | InvalidKeyException | NoSuchPaddingException | IOException | IllegalBlockSizeException ignored) {
+            confirmacion = false;
+        }
+
+        String mensaje;
+        if (confirmacion) {
+            mensaje = "Las normas se han validado correctamente, puedes continuar";
+            hashRecibido.setForeground(new Color(30, 148, 53));
+        } else {
+            b_aceptar.setText("Volver");
+            mensaje = "Imposible validar las normas, no podrás jugar sin conexión segura";
+            hashRecibido.setForeground(new Color(150, 35, 23));
+        }
+        hashRecibido.setText(mensaje);
+
+        boolean finalConfirmacion = confirmacion;
+        b_aceptar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (finalConfirmacion) {
+                    //TODO pasar a la ventana principal donde se puede iniciar una partida o ver clasificación
+
+                } else {
+                    ventanaLogin(claveAES, objOS, objIS);
+                }
             }
         });
     }
@@ -422,7 +553,7 @@ public class Cliente {
         if (!contrasenyaPattern.matcher(contrasenya).matches() || contrasenya.contains(" ")) {
             if (!mensaje.equalsIgnoreCase(""))
                 mensaje += "\n";
-            mensaje += "El patrón del contrasenya no es correcto.\nDebe contener entre 3 y 20 letras, números o símbolos (sin espacios).\n";
+            mensaje += "El patrón del contraseña no es correcto.\nDebe contener entre 3 y 20 letras, números o símbolos (sin espacios).\n";
             correcto = false;
         }
 
