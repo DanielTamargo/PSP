@@ -44,6 +44,7 @@ public class HiloServidor extends Thread {
         System.out.println(nombre + "Conexión establecida");
         try {
 
+            // Preparar los flujos de datos
             try {
                 dataOS = new DataOutputStream(socketSSL.getOutputStream());
                 dataIS = new DataInputStream(socketSSL.getInputStream());

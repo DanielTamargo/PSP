@@ -136,7 +136,7 @@ public class Cliente {
                     try {
                         objOS.writeObject(1);
                         objOS.writeObject(encriptarMensaje(claveAES, tNick.getText()));
-                        // TODO ENCRIPTAR CONTRASEÑA ANTES DE ENCRIPTARLA Y MANDARLA
+                        //TODO ENCRIPTAR CONTRASEÑA ANTES DE ENCRIPTARLA Y MANDARLA
                         objOS.writeObject(encriptarMensaje(claveAES, String.valueOf(tContrasenya.getPassword())));
                         if ((boolean) objIS.readObject()) {
                             //TODO INICIO DE SESION CORRECTO -> PASAR A LA VENTANA VALIDAR REGLAS
@@ -170,12 +170,12 @@ public class Cliente {
                         objOS.writeObject(encriptarMensaje(claveAES, tApellido.getText()));
                         objOS.writeObject(encriptarMensaje(claveAES, tEdad.getText()));
                         objOS.writeObject(encriptarMensaje(claveAES, tNick.getText()));
-                        // TODO ENCRIPTAR CONTRASEÑA ANTES DE ENCRIPTARLA Y MANDARLA
+                        //TODO ENCRIPTAR CONTRASEÑA ANTES DE ENCRIPTARLA Y MANDARLA
                         objOS.writeObject(encriptarMensaje(claveAES, String.valueOf(tContrasenya.getPassword())));
                         if ((boolean) objIS.readObject()) {
                             //TODO REGISTRO CORRECTO, VOLVER A LA VENTANA LOGIN
                             String titulo = "Registro realizado";
-                            String mensaje = "Ya estás registrado en la BBDD";
+                            String mensaje = "Te has registrado correctamente";
                             mostrarJOptionPane(titulo, mensaje, 1);
                             ventanaLogin(claveAES, objOS, objIS);
                         } else {
