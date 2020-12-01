@@ -1,0 +1,24 @@
+dic. 01, 2020 1:56:53 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Contraseña incorrecta
+dic. 01, 2020 1:57:26 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Contraseña incorrecta
+dic. 01, 2020 1:59:45 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 01, 2020 1:59:52 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 01, 2020 2:00:13 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 01, 2020 2:01:30 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 01, 2020 2:01:33 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 01, 2020 2:01:49 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 01, 2020 2:03:13 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 01, 2020 2:03:16 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 01, 2020 2:03:24 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 01, 2020 2:04:10 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso

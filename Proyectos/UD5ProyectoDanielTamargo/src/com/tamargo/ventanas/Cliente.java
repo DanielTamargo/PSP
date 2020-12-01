@@ -4,6 +4,8 @@ import com.tamargo.datos.GuardarLogs;
 import com.tamargo.varios.JTextFieldLimit;
 
 import javax.crypto.*;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.swing.*;
@@ -11,6 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.security.*;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
@@ -150,8 +153,14 @@ public class Cliente {
                     try {
                         objOS.writeObject(1);
                         objOS.writeObject(encriptarMensaje(claveAES, tNick.getText()));
-                        //TODO ENCRIPTAR CONTRASEÑA ANTES DE ENCRIPTARLA Y MANDARLA
-                        objOS.writeObject(encriptarMensaje(claveAES, String.valueOf(tContrasenya.getPassword())));
+
+                        byte[] contrasenyaEncriptada = encriptarContrasenya();
+                        //System.out.println(new String(contrasenyaEncriptada));
+
+                        // Encriptar como un mensaje normal y enviar
+                        byte[] contrasenyaEncriptadaEncriptada = encriptarMensajeBytes(claveAES, contrasenyaEncriptada);
+                        objOS.writeObject(contrasenyaEncriptadaEncriptada);
+
                         if ((boolean) objIS.readObject()) {
                             ventanaValidarNormas(claveAES, objOS, objIS);
                         } else {
@@ -166,6 +175,10 @@ public class Cliente {
                     } catch (ClassNotFoundException ex) {
                         String titulo = "Error";
                         String mensaje = "Error al recibir una respuesta del servidor.\nMotivo: " + ex.getLocalizedMessage();
+                        mostrarJOptionPane(titulo, mensaje, 0);
+                    } catch (InvalidAlgorithmParameterException ex) {
+                        String titulo = "Error";
+                        String mensaje = "Error al preparar el encriptador de la contraseña.\nMotivo: " + ex.getLocalizedMessage();
                         mostrarJOptionPane(titulo, mensaje, 0);
                     }
                 }
@@ -184,10 +197,10 @@ public class Cliente {
                         objOS.writeObject(encriptarMensaje(claveAES, tApellido.getText()));
                         objOS.writeObject(encriptarMensaje(claveAES, tEdad.getText()));
                         objOS.writeObject(encriptarMensaje(claveAES, tNick.getText()));
-                        //TODO ENCRIPTAR CONTRASEÑA ANTES DE ENCRIPTARLA Y MANDARLA
-                        objOS.writeObject(encriptarMensaje(claveAES, String.valueOf(tContrasenya.getPassword())));
+                        byte[] contrasenyaEncriptada = encriptarContrasenya();
+                        byte[] contrasenyaEncriptadaEncriptada = encriptarMensajeBytes(claveAES, contrasenyaEncriptada);
+                        objOS.writeObject(contrasenyaEncriptadaEncriptada);
                         if ((boolean) objIS.readObject()) {
-                            //TODO REGISTRO CORRECTO, VOLVER A LA VENTANA LOGIN
                             String titulo = "Registro realizado";
                             String mensaje = "Te has registrado correctamente";
                             mostrarJOptionPane(titulo, mensaje, 1);
@@ -205,6 +218,10 @@ public class Cliente {
                         String titulo = "Error";
                         String mensaje = "Error al recibir una respuesta del servidor.\nMotivo: " + ex.getLocalizedMessage();
                         mostrarJOptionPane(titulo, mensaje, 0);
+                    } catch (InvalidAlgorithmParameterException ex) {
+                        String titulo = "Error";
+                        String mensaje = "Error al preparar el encriptador de la contraseña.\nMotivo: " + ex.getLocalizedMessage();
+                        mostrarJOptionPane(titulo, mensaje, 0);
                     }
                 }
             }
@@ -216,6 +233,35 @@ public class Cliente {
             }
         });
     }
+
+    public byte[] encriptarContrasenya() throws UnsupportedEncodingException, BadPaddingException,
+            IllegalBlockSizeException, InvalidAlgorithmParameterException, InvalidKeyException,
+            NoSuchPaddingException, NoSuchAlgorithmException {
+        // ENCRIPTAMOS LA CONTRASEÑA PARA QUE EL SERVIDOR NO PUEDA SABER CUÁL ES (SEGURIDAD DEL CLIENTE)
+        // Vamos a crear una clave DES que SIEMPRE será la misma para que SIEMPRE dé el mismo resultado
+        // UTF-8 es el por defecto de los algoritmos, pero mejor asegurar la consistencia
+        final String utf8 = "utf-8";
+        String contrasenyaCifradora = "ContraseñaSuperSecretaParaEncriptarContraseñas";
+        byte[] keyBytes = Arrays.copyOf(contrasenyaCifradora.getBytes(utf8), 24);
+        SecretKey claveCifrarContrasenya = new SecretKeySpec(keyBytes, "DESede");
+
+        // El vector debe tener una longitud de 8 bytes
+        String vector = "ABCD1234";
+        IvParameterSpec iv = new IvParameterSpec(vector.getBytes(utf8));
+
+        // Creamos en encriptador
+        Cipher encrypt = Cipher.getInstance("DESede/CBC/PKCS5Padding");
+        encrypt.init(Cipher.ENCRYPT_MODE, claveCifrarContrasenya, iv);
+
+        // Preparamos la contraseña encriptada para que el servidor no pueda saber cuál es la contraseña 'pura'
+        byte[] bytesContrasenya = String.valueOf(tContrasenya.getPassword()).getBytes(utf8);
+        return encrypt.doFinal(bytesContrasenya);
+    }
+
+
+
+
+
 
     public void ventanaValidarNormas(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         try {
@@ -621,6 +667,11 @@ public class Cliente {
         Cipher aesCipher = Cipher.getInstance("AES");
         aesCipher.init(Cipher.ENCRYPT_MODE, claveAES);
         return aesCipher.doFinal(mensaje.getBytes());
+    }
+    public byte[] encriptarMensajeBytes(SecretKey claveAES, byte[] mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.ENCRYPT_MODE, claveAES);
+        return aesCipher.doFinal(mensaje);
     }
 
     public void setVentana(JFrame ventana) {
