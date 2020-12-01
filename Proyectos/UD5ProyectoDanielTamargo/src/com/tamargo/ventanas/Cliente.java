@@ -73,6 +73,7 @@ public class Cliente {
 
     // PUNTUACIONES
     private JTextPane tpPuntuaciones;
+    private ArrayList<String> topPuntuaciones = new ArrayList<>();
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTOR
@@ -150,7 +151,7 @@ public class Cliente {
 
 
             //todo quitar
-            tNick.setText("dani");
+            tNick.setText("tamsky");
             tContrasenya.setText("test");
 
         } catch (IOException | NoSuchAlgorithmException |
@@ -285,6 +286,7 @@ public class Cliente {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO EMPEZAR PARTIDA
+
             }
         });
     }
@@ -348,29 +350,8 @@ public class Cliente {
         tpPuntuaciones.setEditable(false);
         //tpNormas.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         tpPuntuaciones.setFont(new Font("Unispace", Font.BOLD, 14));
-        ArrayList<String> puntuacionesStr = new ArrayList<>();
-        String puntuacion = String.format("%-18s%3d\n", "Irune", 100).replace(' ', '.');
-        puntuacionesStr.add(puntuacion);
-        puntuacionesStr.add(puntuacion);
-        puntuacionesStr.add(puntuacion);
-        puntuacionesStr.add(String.format("%-18s%3d\n", "dani", 80).replace(' ', '.'));
-        puntuacionesStr.add(puntuacion);
-        puntuacionesStr.add(puntuacion);
-        puntuacionesStr.add(puntuacion);
-        puntuacionesStr.add(puntuacion);
-        puntuacionesStr.add(puntuacion);
-        puntuacionesStr.add(puntuacion);
-        puntuacionesStr.add("\n");
-        puntuacionesStr.add("\n");
-        puntuacionesStr.add("\n");
-        puntuacionesStr.add("Tu puntuación: 7 \n" +
-                "Eres el top 4");
 
-        // TODO RECIBIR LAS PUNTUACIONES DEL SERVIDOR
-        //  RRRRRRECIBIIIIIIR LASSSSS PUNTUACIONESSSSSSSS DEL SERVIDOOOOOOOOR
-        //  QUE NO SE ME OLVIDEEEEEEEEE
-
-       volcarDatosTextPane(tpPuntuaciones, puntuacionesStr, 2);
+       volcarDatosTextPane(tpPuntuaciones, topPuntuaciones, 2);
 
 
     }
@@ -551,6 +532,12 @@ public class Cliente {
         } catch (NoSuchAlgorithmException | SignatureException | ClassNotFoundException | BadPaddingException | InvalidKeyException | NoSuchPaddingException | IOException | IllegalBlockSizeException ignored) {
             confirmacion = false;
         }
+
+        try {
+            objOS.writeObject(confirmacion);
+            if (confirmacion)
+                topPuntuaciones = (ArrayList<String>) objIS.readObject();
+        } catch (IOException | ClassNotFoundException ignored) { }
 
         String mensaje;
         if (confirmacion) {

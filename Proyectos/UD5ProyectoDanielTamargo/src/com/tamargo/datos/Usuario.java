@@ -40,6 +40,19 @@ public class Usuario implements Serializable {
         this.puntuacion = 0;
     }
 
+    /**
+     * Para generar datos base
+     */
+    public Usuario(String nombre, String apellido, int edad, String nick, String contrasenya, int tipo, int puntuacion) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+        this.nick = nick;
+        this.contrasenya = contrasenya;
+        this.tipo = tipo;
+        this.puntuacion = puntuacion;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +

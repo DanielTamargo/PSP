@@ -2,6 +2,7 @@ package com.tamargo.servicio;
 
 import com.tamargo.datos.EscribirFicheros;
 import com.tamargo.datos.GuardarLogs;
+import com.tamargo.datos.LeerFicheros;
 import com.tamargo.datos.Usuario;
 import com.tamargo.jaas.modelo.ImplementacionPrincipal;
 import com.tamargo.jaas.modelo.UserPasswordCallbackHandler;
@@ -14,8 +15,7 @@ import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 import java.io.*;
 import java.security.*;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 
 public class HiloServidor extends Thread {
@@ -29,6 +29,8 @@ public class HiloServidor extends Thread {
     private ObjectInputStream objIS;
     private ObjectOutputStream objOS;
 
+    private String nickJugador = "nickDelJugadorLoggeado";
+
     public HiloServidor(int numCliente, SSLSocket socketSSL, KeyPair parejaClaves) {
         this.socketSSL = socketSSL;
         this.parejaClaves = parejaClaves;
@@ -41,7 +43,6 @@ public class HiloServidor extends Thread {
     public void run() {
         System.out.println(nombre + "Conexión establecida");
         try {
-
             // Preparar los flujos de datos
             try {
                 dataOS = new DataOutputStream(socketSSL.getOutputStream());
@@ -96,6 +97,7 @@ public class HiloServidor extends Thread {
                                 );
                                 loginContext.login();
                                 exito = true;
+                                nickJugador = nick;
                             } catch (LoginException ignored) { }
 
                             objOS.writeObject(exito);
@@ -118,6 +120,12 @@ public class HiloServidor extends Thread {
 
                                 objOS.writeObject(encriptarMensaje(claveAES, normas));
                                 objOS.writeObject(firmaNormas);
+
+                                boolean confirmacion;
+                                confirmacion = (boolean) objIS.readObject();
+                                if (confirmacion) {
+                                    enviarTopPuntuaciones(objOS);
+                                }
                             }
                         }
                         case 2 -> { // REGISTRO
@@ -167,6 +175,57 @@ public class HiloServidor extends Thread {
             GuardarLogs.logger.log(Level.INFO, "Error al utilizar el cifrador para encriptar/desencriptar: " + e.getLocalizedMessage());
         }
 
+    }
+
+    public void enviarTopPuntuaciones(ObjectOutputStream objOS) {
+        System.out.println(nombre + "Enviando el TOP Puntuaciones...");
+        try {
+            objOS.writeObject(topPuntuaciones());
+        } catch (IOException e) {
+            System.out.println(nombre + "Error al enviar el top de puntuaciones, la conexión fracasará. Error: " + e.getLocalizedMessage());
+            GuardarLogs.logger.log(Level.INFO, "Error al enviar el top de puntuaciones, la conexión fracasará. Error: " + e.getLocalizedMessage());
+        }
+    }
+
+    public ArrayList<String> topPuntuaciones() {
+        ArrayList<String> lineasTopPuntuaciones = new ArrayList<>();
+
+        ArrayList<Usuario> usuarios = LeerFicheros.leerUsuarios();
+        HashMap<Usuario, Integer> listaSinOrdenar = new HashMap<>();
+
+        for (Usuario usuario: usuarios) {
+            listaSinOrdenar.put(usuario, usuario.getPuntuacion());
+        }
+
+        LinkedHashMap<Usuario, Integer> listaOrdenada = new LinkedHashMap<>();
+        listaSinOrdenar.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .forEachOrdered(x -> listaOrdenada.put(x.getKey(), x.getValue()));
+
+        int n = 0;
+        String tuPuntuacion = "";
+        for (Usuario value : listaOrdenada.keySet()) {
+            if (n < 10) {
+                lineasTopPuntuaciones.add(String.format("%-18s%3d\n", value.getNick(), value.getPuntuacion()).replace(' ', '.'));
+            }
+            if (value.getNick().equalsIgnoreCase(nickJugador)) {
+                tuPuntuacion = "Tu puntuación: " + value.getPuntuacion() + "\n" +
+                        "Eres el top " + (n + 1);
+            }
+            n++;
+        }
+
+        for (int i = 0; i < (10 - n); i++) {
+            lineasTopPuntuaciones.add("\n");
+        }
+        for (int i = 0; i < 3; i++) {
+            lineasTopPuntuaciones.add("\n");
+        }
+
+        lineasTopPuntuaciones.add(tuPuntuacion);
+
+        return lineasTopPuntuaciones;
     }
 
     public byte[] encriptarMensaje(SecretKey claveAES, String mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
