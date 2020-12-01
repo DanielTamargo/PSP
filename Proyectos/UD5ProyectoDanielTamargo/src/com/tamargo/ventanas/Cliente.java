@@ -9,24 +9,34 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.security.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 public class Cliente {
-    private JFrame ventana;
+
+    // PRINCIPALES
+    private final JFrame ventana;
+    private String nickJugador = "nickdeljugador";
     private JPanel panel;
     private JPanel panelDatos;
 
-    private String nombre = "[Cliente] ";
+    private final String nombre = "[Cliente] ";
+    private JLabel cabecera;
 
     private final Dimension dimPanelDatos = new Dimension(600, 500);
+    private final Dimension dimPanelJuego = new Dimension(360, 400);
+    private final Dimension dimPanelPuntuaciones = new Dimension(210, 340);
     private PublicKey serverPK;
-
 
     // LOGIN + REGISTRO
     private JTextField tNick;
@@ -44,15 +54,28 @@ public class Cliente {
     private JButton b_realizarRegistro;
 
     // VALIDACION NORMAS
-    private JTextPane tpNormas;
-    private JLabel hashRecibido;
-    private JLabel hashRealizado;
-    private JLabel confirmacionHash;
     private JButton b_aceptar;
 
+    // MENU
+    private JPanel panelPartida;
+    private JPanel panelPuntuaciones;
 
+    private JButton b_nuevaPartida;
+    private JButton b_actualizarPuntuaciones;
+    private JButton b_cerrarSesion;
 
+    // PARTIDA
+    private JButton b_respuesta1;
+    private JButton b_respuesta2;
+    private JButton b_respuesta3;
+    private JButton b_respuesta4;
+    private JButton b_abandonar;
 
+    // PUNTUACIONES
+    private JTextPane tpPuntuaciones;
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONSTRUCTOR
     public Cliente(JFrame ventana) {
         this.ventana = ventana;
         try {
@@ -139,6 +162,8 @@ public class Cliente {
         }
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // LISTENERS
     public void listenersLogin(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         b_LoginRegistrarse.addActionListener(new ActionListener() {
             @Override
@@ -162,6 +187,7 @@ public class Cliente {
                         objOS.writeObject(contrasenyaEncriptadaEncriptada);
 
                         if ((boolean) objIS.readObject()) {
+                            nickJugador = tNick.getText();
                             ventanaValidarNormas(claveAES, objOS, objIS);
                         } else {
                             String titulo = "Credenciales incorrectas";
@@ -185,7 +211,6 @@ public class Cliente {
             }
         });
     }
-
     public void listenersRegistro(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         b_realizarRegistro.addActionListener(new ActionListener() {
             @Override
@@ -233,36 +258,210 @@ public class Cliente {
             }
         });
     }
-
-    public byte[] encriptarContrasenya() throws UnsupportedEncodingException, BadPaddingException,
-            IllegalBlockSizeException, InvalidAlgorithmParameterException, InvalidKeyException,
-            NoSuchPaddingException, NoSuchAlgorithmException {
-        // ENCRIPTAMOS LA CONTRASEÑA PARA QUE EL SERVIDOR NO PUEDA SABER CUÁL ES (SEGURIDAD DEL CLIENTE)
-        // Vamos a crear una clave DES que SIEMPRE será la misma para que SIEMPRE dé el mismo resultado
-        // UTF-8 es el por defecto de los algoritmos, pero mejor asegurar la consistencia
-        final String utf8 = "utf-8";
-        String contrasenyaCifradora = "ContraseñaSuperSecretaParaEncriptarContraseñas";
-        byte[] keyBytes = Arrays.copyOf(contrasenyaCifradora.getBytes(utf8), 24);
-        SecretKey claveCifrarContrasenya = new SecretKeySpec(keyBytes, "DESede");
-
-        // El vector debe tener una longitud de 8 bytes
-        String vector = "ABCD1234";
-        IvParameterSpec iv = new IvParameterSpec(vector.getBytes(utf8));
-
-        // Creamos en encriptador
-        Cipher encrypt = Cipher.getInstance("DESede/CBC/PKCS5Padding");
-        encrypt.init(Cipher.ENCRYPT_MODE, claveCifrarContrasenya, iv);
-
-        // Preparamos la contraseña encriptada para que el servidor no pueda saber cuál es la contraseña 'pura'
-        byte[] bytesContrasenya = String.valueOf(tContrasenya.getPassword()).getBytes(utf8);
-        return encrypt.doFinal(bytesContrasenya);
+    public void listenersValidacion(Boolean confirmacion, SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
+        boolean finalConfirmacion = confirmacion;
+        b_aceptar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (finalConfirmacion) {
+                    ventanaMenuPrincipal(claveAES, objOS, objIS);
+                } else {
+                    ventanaLogin(claveAES, objOS, objIS);
+                }
+            }
+        });
+    }
+    public void listenersMenuPrincipal(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
+        b_cerrarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nickJugador = "nickdeljugador";
+                ventanaLogin(claveAES, objOS, objIS);
+            }
+        });
+    }
+    public void listenersPanelPartidaMenu(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
+        b_nuevaPartida.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO EMPEZAR PARTIDA
+            }
+        });
     }
 
+    public void volcarDatosTextPane(JTextPane textPane, ArrayList<String> listaStrings, int tipo) {
+        textPane.setText("");
+
+        StyledDocument doc = textPane.getStyledDocument();
+
+        Style style = textPane.addStyle("PlaylistStyle", null);
+        StyleConstants.setForeground(style, Color.DARK_GRAY);
+
+        String nums = "1234567890";
+
+        try {
+            boolean resetearColor = false;
+            for (String str : listaStrings) {
+                if ((tipo == 2 && str.contains(nickJugador)) || (tipo == 2 && str.contains("Tu puntuación"))
+                        || (tipo == 1 && nums.contains(str.substring(0, 1)))) {
+                    StyleConstants.setForeground(style, Color.BLUE);
+                    resetearColor = true;
+                }
+
+                doc.insertString(doc.getLength(), str, style);
+
+                if (resetearColor) {
+                    StyleConstants.setForeground(style, Color.DARK_GRAY);
+                    resetearColor = false;
+                }
+            }
+        } catch (BadLocationException ignored) {}
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // VENTANAS
+    public void ventanaPanelPuntuaciones(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
+        try {
+            panelPuntuaciones.removeAll();
+            panelPuntuaciones.repaint();
+        } catch (Exception ignored) { }
+        panelPuntuaciones.setLayout(null);
+
+        String fuenteMYHUI = "MicrosoftYaHeiUI";
+
+        JLabel cabeceraPuntuaciones = new JLabel("PUNTUACIONES", SwingConstants.CENTER);
+        configurarLabel(cabeceraPuntuaciones, fuenteMYHUI, Font.BOLD, 14);
+        panelPuntuaciones.add(cabeceraPuntuaciones);
+        cabeceraPuntuaciones.setBounds(0, 10, dimPanelPuntuaciones.width, 16);
+
+        JPanel linea = new JPanel();
+        linea.setBackground(Color.DARK_GRAY);
+        panelPuntuaciones.add(linea);
+        linea.setBounds(0, 35, dimPanelPuntuaciones.width, 4);
+
+        tpPuntuaciones = new JTextPane();
+        panelPuntuaciones.add(tpPuntuaciones);
+        int margenX = 8;
+        int margenY = 50;
+        tpPuntuaciones.setBounds(margenX, margenY, dimPanelPuntuaciones.width - (margenX * 2), dimPanelPuntuaciones.height - (margenY + 10));
+        tpPuntuaciones.setOpaque(false);
+        tpPuntuaciones.setEditable(false);
+        //tpNormas.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        tpPuntuaciones.setFont(new Font("Unispace", Font.BOLD, 14));
+        ArrayList<String> puntuacionesStr = new ArrayList<>();
+        String puntuacion = String.format("%-18s%3d\n", "Irune", 100).replace(' ', '.');
+        puntuacionesStr.add(puntuacion);
+        puntuacionesStr.add(puntuacion);
+        puntuacionesStr.add(puntuacion);
+        puntuacionesStr.add(String.format("%-18s%3d\n", "dani", 80).replace(' ', '.'));
+        puntuacionesStr.add(puntuacion);
+        puntuacionesStr.add(puntuacion);
+        puntuacionesStr.add(puntuacion);
+        puntuacionesStr.add(puntuacion);
+        puntuacionesStr.add(puntuacion);
+        puntuacionesStr.add(puntuacion);
+        puntuacionesStr.add("\n");
+        puntuacionesStr.add("\n");
+        puntuacionesStr.add("\n");
+        puntuacionesStr.add("Tu puntuación: 7 \n" +
+                "Eres el top 4");
+
+        // TODO RECIBIR LAS PUNTUACIONES DEL SERVIDOR
+        //  RRRRRRECIBIIIIIIR LASSSSS PUNTUACIONESSSSSSSS DEL SERVIDOOOOOOOOR
+        //  QUE NO SE ME OLVIDEEEEEEEEE
+
+       volcarDatosTextPane(tpPuntuaciones, puntuacionesStr, 2);
+
+
+    }
+    public void ventanaPanelPartidaJugando(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
+        try {
+            panelPartida.removeAll();
+            panelPartida.repaint();
+        } catch (Exception ignored) { }
+        panelPartida.setLayout(null);
+
+        ventana.setTitle("Partida");
+        String fuenteMYHUI = "MicrosoftYaHeiUI";
+
+        //TODO RECIBIR PREGUNTAS Y EMPEZAR A JUGAR
 
 
 
 
 
+    }
+    public void ventanaPanelPartidaMenu(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
+        try {
+            panelPartida.removeAll();
+            panelPartida.repaint();
+        } catch (Exception ignored) { }
+        panelPartida.setLayout(null);
+
+        ventana.setTitle("Menú");
+        String fuenteMYHUI = "MicrosoftYaHeiUI";
+
+        // TODO cargar gif para empezar nueba partida??
+        //  newlabel
+        //  labelseticon
+        //  panel.addlabel
+        //  labelsetbounds
+
+        b_nuevaPartida = new JButton("Nueva Partida");
+        configurarButton(b_nuevaPartida, fuenteMYHUI, Font.BOLD, 15);
+        panelPartida.add(b_nuevaPartida);
+        int npHeight = 40;
+        int npWidth = 120;
+        b_nuevaPartida.setBounds(((dimPanelJuego.width / 2) - (npWidth / 2)),
+                ((dimPanelJuego.height / 2) - (npHeight / 2)), npWidth, npHeight);
+
+        listenersPanelPartidaMenu(claveAES, objOS, objIS);
+    }
+    public void ventanaMenuPrincipal(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
+        try {
+            panelDatos.removeAll();
+            panelDatos.repaint();
+        } catch (Exception ignored) { }
+        panelDatos.setLayout(null);
+
+        ventana.setTitle("Menú");
+        String fuenteMYHUI = "MicrosoftYaHeiUI";
+
+        cabecera = new JLabel("MENÚ", SwingConstants.CENTER);
+        configurarLabel(cabecera, fuenteMYHUI, Font.BOLD, 22);
+        panelDatos.add(cabecera);
+        cabecera.setBounds(0, 20, dimPanelDatos.width, 40);
+
+        JPanel linea = new JPanel();
+        linea.setBackground(Color.DARK_GRAY);
+        panelDatos.add(linea);
+        linea.setBounds(0, 55, dimPanelDatos.width, 8);
+
+        int margenIzq = 10;
+
+        panelPartida = new JPanel();
+        panelPartida.setLayout(null);
+        panelPartida.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3, true));
+        panelDatos.add(panelPartida);
+        panelPartida.setBounds(margenIzq, 80, dimPanelJuego.width, dimPanelJuego.height);
+
+        panelPuntuaciones = new JPanel();
+        panelPuntuaciones.setLayout(null);
+        panelPuntuaciones.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3, true));
+        panelDatos.add(panelPuntuaciones);
+        panelPuntuaciones.setBounds(margenIzq + margenIzq + dimPanelJuego.width, 80, dimPanelPuntuaciones.width, dimPanelPuntuaciones.height);
+
+        b_cerrarSesion = new JButton("Cerrar Sesión");
+        configurarButton(b_cerrarSesion, fuenteMYHUI, Font.BOLD, 15);
+        panelDatos.add(b_cerrarSesion);
+        b_cerrarSesion.setBounds(margenIzq + margenIzq + dimPanelJuego.width, 80 + dimPanelPuntuaciones.height + 20,
+                dimPanelDatos.width - (margenIzq + margenIzq + dimPanelJuego.width + 10), 40);
+
+        listenersMenuPrincipal(claveAES, objOS, objIS);
+
+        ventanaPanelPartidaMenu(claveAES, objOS, objIS);
+        ventanaPanelPuntuaciones(claveAES, objOS, objIS);
+    }
     public void ventanaValidarNormas(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         try {
             panelDatos.removeAll();
@@ -271,10 +470,9 @@ public class Cliente {
         panelDatos.setLayout(null);
 
         ventana.setTitle("Validar Normas");
-
         String fuenteMYHUI = "MicrosoftYaHeiUI";
 
-        JLabel cabecera = new JLabel("VALIDACIÓN DE LAS NORMAS", SwingConstants.CENTER);
+        cabecera = new JLabel("VALIDACIÓN DE LAS NORMAS", SwingConstants.CENTER);
         configurarLabel(cabecera, fuenteMYHUI, Font.BOLD, 22);
         panelDatos.add(cabecera);
         cabecera.setBounds(0, 20, dimPanelDatos.width, 40);
@@ -298,7 +496,7 @@ public class Cliente {
         panelDatos.add(panelDatosNormas);
         panelDatosNormas.setBounds(margenPDL, 110, panelDatosNormasWidth, panelDatosNormasHeight);
 
-        tpNormas = new JTextPane();
+        JTextPane tpNormas = new JTextPane();
         panelDatosNormas.add(tpNormas);
         int margenTP = 10;
         tpNormas.setBounds(margenTP, margenTP, panelDatosNormasWidth - (margenTP * 2), panelDatosNormasHeight - (margenTP * 2));
@@ -307,7 +505,6 @@ public class Cliente {
         //tpNormas.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         tpNormas.setFont(new Font(fuenteMYHUI, Font.BOLD, 12));
 
-        int espacioEntreDatos = 45;
         JLabel tituloValidacion = new JLabel("VALIDACIÓN", SwingConstants.CENTER);
         configurarLabel(tituloValidacion, fuenteMYHUI, Font.PLAIN, 15);
         panelDatos.add(tituloValidacion);
@@ -321,7 +518,7 @@ public class Cliente {
         panelDatos.add(panelDatosValidacion);
         panelDatosValidacion.setBounds(margenPDL, 115 + 50 + panelDatosNormasHeight, panelDatosValidacionWidth, panelDatosValidacionHeight);
 
-        hashRecibido = new JLabel("", SwingConstants.CENTER);
+        JLabel hashRecibido = new JLabel("", SwingConstants.CENTER);
         configurarLabel(hashRecibido, fuenteMYHUI, Font.BOLD, 12);
         panelDatosValidacion.add(hashRecibido);
         hashRecibido.setBounds(0, 10, panelDatosValidacionWidth, 15);
@@ -366,20 +563,8 @@ public class Cliente {
         }
         hashRecibido.setText(mensaje);
 
-        boolean finalConfirmacion = confirmacion;
-        b_aceptar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (finalConfirmacion) {
-                    //TODO pasar a la ventana principal donde se puede iniciar una partida o ver clasificación
-
-                } else {
-                    ventanaLogin(claveAES, objOS, objIS);
-                }
-            }
-        });
+        listenersValidacion(confirmacion, claveAES, objOS, objIS);
     }
-
     public void ventanaLogin(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         try {
             panelDatos.removeAll();
@@ -388,10 +573,9 @@ public class Cliente {
         panelDatos.setLayout(null);
 
         ventana.setTitle("Login");
-
         String fuenteMYHUI = "MicrosoftYaHeiUI";
 
-        JLabel cabecera = new JLabel("INICIAR SESIÓN", SwingConstants.CENTER);
+        cabecera = new JLabel("INICIAR SESIÓN", SwingConstants.CENTER);
         configurarLabel(cabecera, fuenteMYHUI, Font.BOLD, 22);
         panelDatos.add(cabecera);
         cabecera.setBounds(0, 20, dimPanelDatos.width, 40);
@@ -450,7 +634,6 @@ public class Cliente {
 
         listenersLogin(claveAES, objOS, objIS);
     }
-
     public void ventanaRegistro(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         try {
             panelDatos.removeAll();
@@ -459,10 +642,9 @@ public class Cliente {
         panelDatos.setLayout(null);
 
         ventana.setTitle("Registro");
-
         String fuenteMYHUI = "MicrosoftYaHeiUI";
 
-        JLabel cabecera = new JLabel("REGISTRO", SwingConstants.CENTER);
+        cabecera = new JLabel("REGISTRO", SwingConstants.CENTER);
         configurarLabel(cabecera, fuenteMYHUI, Font.BOLD, 22);
         panelDatos.add(cabecera);
         cabecera.setBounds(0, 20, dimPanelDatos.width, 40);
@@ -554,7 +736,63 @@ public class Cliente {
 
         listenersRegistro(claveAES, objOS, objIS);
     }
+    public void ventanaErrorConexion() {
+        JButton okButton = new JButton("Entendido");
+        okButton.setFocusPainted(false);
+        Object[] options = {okButton};
+        final JOptionPane pane = new JOptionPane("""
+                Error al conectar con el servidor. Posibles motivos:
+                1. El servidor no está en marcha / no arranca debidamente
+                2. No están generados la claveSSL del Servidor ni/o su certificado
+                3. No está correctamente configurada la confianza con el certificado
+                
+                Comprueba los posibles errores y vuelve a iniciar el cliente.""", JOptionPane.ERROR_MESSAGE, JOptionPane.YES_NO_OPTION, null, options);
+        JDialog dialog = pane.createDialog("Imposible conectar");
+        okButton.addActionListener(e -> System.exit(0));
+        dialog.setVisible(true);
+    }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // MÉTODOS ENCRIPTACIÓN
+    public String desencriptarMensaje(SecretKey claveAES, byte[] mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.DECRYPT_MODE, claveAES);
+        return new String(aesCipher.doFinal(mensaje));
+    }
+    public byte[] encriptarMensaje(SecretKey claveAES, String mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.ENCRYPT_MODE, claveAES);
+        return aesCipher.doFinal(mensaje.getBytes());
+    }
+    public byte[] encriptarMensajeBytes(SecretKey claveAES, byte[] mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.ENCRYPT_MODE, claveAES);
+        return aesCipher.doFinal(mensaje);
+    }
+    public byte[] encriptarContrasenya() throws UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException, InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException {
+        // ENCRIPTAMOS LA CONTRASEÑA PARA QUE EL SERVIDOR NO PUEDA SABER CUÁL ES (SEGURIDAD DEL CLIENTE)
+        // Vamos a crear una clave DES que SIEMPRE será la misma para que SIEMPRE dé el mismo resultado
+        // UTF-8 es el por defecto de los algoritmos, pero mejor asegurar la consistencia
+        final String utf8 = "utf-8";
+        String contrasenyaCifradora = "ContraseñaSuperSecretaParaEncriptarContraseñas";
+        byte[] keyBytes = Arrays.copyOf(contrasenyaCifradora.getBytes(utf8), 24);
+        SecretKey claveCifrarContrasenya = new SecretKeySpec(keyBytes, "DESede");
+
+        // El vector debe tener una longitud de 8 bytes
+        String vector = "ABCD1234";
+        IvParameterSpec iv = new IvParameterSpec(vector.getBytes(utf8));
+
+        // Creamos en encriptador
+        Cipher encrypt = Cipher.getInstance("DESede/CBC/PKCS5Padding");
+        encrypt.init(Cipher.ENCRYPT_MODE, claveCifrarContrasenya, iv);
+
+        // Preparamos la contraseña encriptada para que el servidor no pueda saber cuál es la contraseña 'pura'
+        byte[] bytesContrasenya = String.valueOf(tContrasenya.getPassword()).getBytes(utf8);
+        return encrypt.doFinal(bytesContrasenya);
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // MÉTODOS VARIOS
     public boolean comprobarPatrones(int tipo) {
         boolean correcto = true;
         String titulo = "Error al recoger datos";
@@ -608,7 +846,6 @@ public class Cliente {
         
         return correcto;
     }
-
     public void mostrarJOptionPane(String titulo, String mensaje, int tipo) {
         JButton okButton = new JButton("Ok");
         okButton.setFocusPainted(false);
@@ -634,54 +871,15 @@ public class Cliente {
         boton.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         boton.setFocusPainted(false);
     }
-    public void configurarPasswordField(JPasswordField tField, String fuente, int tipo, int size, int maxCaracteres) {
-        tField.setFont(new Font(fuente, tipo, size));
-        tField.setForeground(Color.DARK_GRAY);
-        tField.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
-        tField.setDocument(new JTextFieldLimit(maxCaracteres));
-    }
-    public void ventanaErrorConexion() {
-        JButton okButton = new JButton("Entendido");
-        okButton.setFocusPainted(false);
-        Object[] options = {okButton};
-        final JOptionPane pane = new JOptionPane("""
-                Error al conectar con el servidor. Posibles motivos:
-                1. El servidor no está en marcha / no arranca debidamente
-                2. No están generados la claveSSL del Servidor ni/o su certificado
-                3. No está correctamente configurada la confianza con el certificado
-                
-                Comprueba los posibles errores y vuelve a iniciar el cliente.""", JOptionPane.ERROR_MESSAGE, JOptionPane.YES_NO_OPTION, null, options);
-        JDialog dialog = pane.createDialog("Imposible conectar");
-        okButton.addActionListener(e -> {
-            System.exit(0);
-        });
-        dialog.setVisible(true);
-    }
 
-    public String desencriptarMensaje(SecretKey claveAES, byte[] mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        Cipher aesCipher = Cipher.getInstance("AES");
-        aesCipher.init(Cipher.DECRYPT_MODE, claveAES);
-        return new String(aesCipher.doFinal(mensaje));
-    }
-    public byte[] encriptarMensaje(SecretKey claveAES, String mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        Cipher aesCipher = Cipher.getInstance("AES");
-        aesCipher.init(Cipher.ENCRYPT_MODE, claveAES);
-        return aesCipher.doFinal(mensaje.getBytes());
-    }
-    public byte[] encriptarMensajeBytes(SecretKey claveAES, byte[] mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        Cipher aesCipher = Cipher.getInstance("AES");
-        aesCipher.init(Cipher.ENCRYPT_MODE, claveAES);
-        return aesCipher.doFinal(mensaje);
-    }
-
-    public void setVentana(JFrame ventana) {
-        this.ventana = ventana;
-    }
-
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // GETTERS Y SETTERS
     public JPanel getPanel() {
         return panel;
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // MAIN
     public static void main(String[] args) {
         JFrame frame = new JFrame("Login");
         Cliente vc = new Cliente(frame);

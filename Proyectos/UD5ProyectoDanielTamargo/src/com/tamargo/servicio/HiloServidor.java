@@ -113,7 +113,8 @@ public class HiloServidor extends Thread {
                                         7- Puedes ver la lista de puntuaciones para ver tu clasificación""";
                                 sigRSA.update(normas.getBytes());
                                 byte[] firmaNormas = sigRSA.sign();
-                                System.out.println("Firma normas encriptada: " + new String(firmaNormas));
+                                System.out.println(nombre + "Enviando firma normas encriptada:");
+                                System.out.println(new String(firmaNormas));
 
                                 objOS.writeObject(encriptarMensaje(claveAES, normas));
                                 objOS.writeObject(firmaNormas);
