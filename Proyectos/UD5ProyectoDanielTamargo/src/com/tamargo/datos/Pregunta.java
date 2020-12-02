@@ -9,15 +9,33 @@ public class Pregunta implements Serializable {
     private String opcion2;
     private String opcion3;
     private String opcion4;
+    private String tipo; // Gaming, Historia, Programación...
     private int opcionCorrecta;
 
-    public Pregunta(String titulo, String opcion1, String opcion2, String opcion3, String opcion4, int opcionCorrecta) {
+    /**
+     * Constructor donde se definirán todos los atributos, incluído seleccionar cuál es la opción correcta
+     */
+    public Pregunta(String titulo, String opcion1, String opcion2, String opcion3, String opcion4, String tipo, int opcionCorrecta) {
         this.titulo = titulo;
         this.opcion1 = opcion1;
         this.opcion2 = opcion2;
         this.opcion3 = opcion3;
         this.opcion4 = opcion4;
+        this.tipo = tipo;
         this.opcionCorrecta = opcionCorrecta;
+    }
+
+    /**
+     * Constructor donde por defecto la opción correcta será la primera opción introducida
+     */
+    public Pregunta(String titulo, String opcion1, String opcion2, String opcion3, String opcion4, String tipo) {
+        this.titulo = titulo;
+        this.opcion1 = opcion1;
+        this.opcion2 = opcion2;
+        this.opcion3 = opcion3;
+        this.opcion4 = opcion4;
+        this.tipo = tipo;
+        this.opcionCorrecta = 1;
     }
 
     /**
@@ -44,12 +62,13 @@ public class Pregunta implements Serializable {
     @Override
     public String toString() {
         return "Pregunta{" +
-                "\ntitulo='" + titulo + '\'' +
-                "\nopcion1='" + opcion1 + '\'' +
-                "\nopcion2='" + opcion2 + '\'' +
-                "\nopcion3='" + opcion3 + '\'' +
-                "\nopcion4='" + opcion4 + '\'' +
-                "\nopcionCorrecta=\n" + opcionCorrecta +
+                "titulo='" + titulo + '\'' +
+                ", opcion1='" + opcion1 + '\'' +
+                ", opcion2='" + opcion2 + '\'' +
+                ", opcion3='" + opcion3 + '\'' +
+                ", opcion4='" + opcion4 + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", opcionCorrecta=" + opcionCorrecta +
                 '}';
     }
 
@@ -91,6 +110,14 @@ public class Pregunta implements Serializable {
 
     public void setOpcion4(String opcion4) {
         this.opcion4 = opcion4;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public int getOpcionCorrecta() {

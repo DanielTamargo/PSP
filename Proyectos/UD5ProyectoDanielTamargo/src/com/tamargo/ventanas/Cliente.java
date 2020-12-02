@@ -9,10 +9,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
+import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -34,7 +31,7 @@ public class Cliente {
     private JLabel cabecera;
 
     private final Dimension dimPanelDatos = new Dimension(600, 500);
-    private final Dimension dimPanelJuego = new Dimension(360, 400);
+    private final Dimension dimPanelPartida = new Dimension(360, 400);
     private final Dimension dimPanelPuntuaciones = new Dimension(210, 340);
     private PublicKey serverPK;
 
@@ -65,11 +62,16 @@ public class Cliente {
     private JButton b_cerrarSesion;
 
     // PARTIDA
+    private JTextPane tpPregunta;
     private JButton b_respuesta1;
     private JButton b_respuesta2;
     private JButton b_respuesta3;
     private JButton b_respuesta4;
+    private JLabel puntuacionPartida;
+    private JLabel tipoPreguntaPartida;
     private JButton b_abandonar;
+    private ArrayList<String> textoRespuestas = new ArrayList<>();
+    private ArrayList<String> datosPregunta = new ArrayList<>();
 
     // PUNTUACIONES
     private JTextPane tpPuntuaciones;
@@ -285,10 +287,198 @@ public class Cliente {
         b_nuevaPartida.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                b_cerrarSesion.setEnabled(false);
                 // TODO EMPEZAR PARTIDA
+                // TODO CARGAR VENTANAPANELPARTIDA
+                // TODO EJECUTAR UN MÉTODO QUE PIDA LA SIGUIENTE PREGUNTA
+                try {
+                    objOS.writeObject(3); // 3 = nueva partida
+                    boolean existenPreguntas = (boolean) objIS.readObject();
+                    if (existenPreguntas) {
+                        ventanaPanelPartidaJugando(claveAES, objOS, objIS);
+                        datosPregunta = desencriptarArrayListString(claveAES, (byte[]) objIS.readObject());
+                        volcarDatosPregunta();
+                    } else {
+                        mostrarJOptionPane("Oops!", "Parece que el servidor no tiene preguntas registradas\n" +
+                                "en la BBDD ahora mismo. ¡Prueba a jugar más tarde!", 2);
+                    }
+                } catch (IOException | ClassNotFoundException | NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException | BadPaddingException | IllegalBlockSizeException ignored) { }
+
 
             }
         });
+    }
+    public void listenersPanelPartidaInGame(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
+        //TODO LISTENER BOTONES RESPUESTAS + BOTON ABANDONAR PARTIDA + ¿BOTÓN COMODÍN?
+        b_abandonar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                b_cerrarSesion.setEnabled(true);
+                inGameEnviarRespuestaAlServidor(2, "", claveAES, objOS, objIS);
+                ventanaPanelPartidaMenu(claveAES, objOS, objIS);
+                ventanaPanelPuntuaciones(claveAES, objOS, objIS);
+            }
+        });
+        b_respuesta1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String texto = "";
+                try {
+                    texto = textoRespuestas.get(0);
+                } catch (NullPointerException | IndexOutOfBoundsException ignored) {
+                    mostrarJOptionPane("Error", "Error al responder al servidor", 0);
+                    ventanaPanelPartidaMenu(claveAES, objOS, objIS);
+                }
+
+                inGameEnviarRespuestaAlServidor(1, texto, claveAES, objOS, objIS);
+            }
+        });
+        b_respuesta2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String texto = "";
+                try {
+                    texto = textoRespuestas.get(1);
+                } catch (NullPointerException | IndexOutOfBoundsException ignored) {
+                    mostrarJOptionPane("Error", "Error al responder al servidor", 0);
+                    ventanaPanelPartidaMenu(claveAES, objOS, objIS);
+                }
+
+                inGameEnviarRespuestaAlServidor(1, texto, claveAES, objOS, objIS);
+            }
+        });
+        b_respuesta3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String texto = "";
+                try {
+                    texto = textoRespuestas.get(2);
+                } catch (NullPointerException | IndexOutOfBoundsException ignored) {
+                    mostrarJOptionPane("Error", "Error al responder al servidor", 0);
+                    ventanaPanelPartidaMenu(claveAES, objOS, objIS);
+                }
+
+                inGameEnviarRespuestaAlServidor(1, texto, claveAES, objOS, objIS);
+            }
+        });
+        b_respuesta4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String texto = "";
+                try {
+                    texto = textoRespuestas.get(3);
+                } catch (NullPointerException | IndexOutOfBoundsException ignored) {
+                    mostrarJOptionPane("Error", "Error al responder al servidor", 0);
+                    ventanaPanelPartidaMenu(claveAES, objOS, objIS);
+                }
+
+                inGameEnviarRespuestaAlServidor(1, texto, claveAES, objOS, objIS);
+            }
+        });
+
+
+    }
+    public void inGameEnviarRespuestaAlServidor(int tipo, String textoRespuesta, SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
+        int respuesta = -1;
+        try {
+            // RESPONDER
+            objOS.writeObject(tipo); // tipo = 1 -> comprobarRespuesta, tipo = 2 -> abandonar
+            if (tipo == 1) { // Si hemos mandado el tipo 1, está esperando a recibir la respuesta para comprobar si es válida
+                objOS.writeObject(encriptarMensaje(claveAES, textoRespuesta));
+            }
+            // AGUARDAR RESPUESTA
+            respuesta = (Integer) objIS.readObject();
+        } catch (IOException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException
+                | NoSuchPaddingException | IllegalBlockSizeException | ClassNotFoundException ignored) { }
+
+        switch (respuesta) {
+            case -2 -> { // TODO ABANDONO CON NUEVA MÁXIMA PUNTUACIÓN
+                mostrarJOptionPane("Máx Puntuación", "Una pena que hayas abandonado :( pero aún así...\n¡Enhorabuena! ¡Has logrado una nueva máxima puntuación!", 1);
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // TODO EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+            }
+            case -1 -> {
+                mostrarJOptionPane("Abandono", "Una pena que hayas abandonado :(\n¡Vuelve a jugar cuando quieras!", 1);
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // TODO EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+            }
+            case 0 -> { // TODO SIGUIENTE PREGUNTA
+                try {
+                    datosPregunta = desencriptarArrayListString(claveAES, (byte[]) objIS.readObject());
+                    volcarDatosPregunta();
+                } catch (IOException | ClassNotFoundException | NoSuchAlgorithmException | InvalidKeyException |
+                        NoSuchPaddingException | BadPaddingException |
+                        IllegalBlockSizeException ignored) { }
+            }
+            case 1 -> { // TODO HAS ACERTADO TODAS LAS PREGUNTAS FIN DE LA PARTIDA
+                mostrarJOptionPane("Pleno!", "¡Pleno! Has acertado todas las preguntas que hay en el servidor\n¡Impresionante!", 1);
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // TODO EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+            }
+            case 2 -> { // TODO PREGUNTA FALLADA, FIN DE LA PARTIDA
+                mostrarJOptionPane("Fallaste", "Fin de la partida, ¡inténtalo de nuevo a ver si consigues \nsuperar tu máxima puntuación!", 1);
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // TODO EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+            }
+            case 3 -> { // TODO PREGUNTA FALLADA, FIN DE LA PARTIDA CON NUEVA MÁXIMA PUNTUACIÓN
+                mostrarJOptionPane("Fallaste", "Fin de la partida, ¡has logrado tu máxima puntuación!", 1);
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // TODO EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+            }
+            default -> { // CUALQUIER RESPUESTA NO CONTEMPLADA O ENTENDIDA CONTARÁ COMO ABANDONO SIN NOTIFICACIÓN
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // TODO EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+            }
+        }
+    }
+
+    public void volcarDatosPregunta() {
+        try {
+            System.out.println(datosPregunta);
+            textoRespuestas = new ArrayList<>();
+
+            tpPregunta.setText(datosPregunta.get(0));
+            textoRespuestas.add(datosPregunta.get(1));
+            textoRespuestas.add(datosPregunta.get(2));
+            textoRespuestas.add(datosPregunta.get(3));
+            textoRespuestas.add(datosPregunta.get(4));
+
+            b_respuesta1.setText("<html><head><style>p{text-align: center;}</style></head><body><p>" + saltoLineaBoton(textoRespuestas.get(0)) + "</p></body></html>".replaceAll("\n", "<br>"));
+            b_respuesta2.setText("<html><head><style>p{text-align: center;}</style></head><body><p>" + saltoLineaBoton(textoRespuestas.get(1)) + "</p></body></html>".replaceAll("\n", "<br>"));
+            b_respuesta3.setText("<html><head><style>p{text-align: center;}</style></head><body><p>" + saltoLineaBoton(textoRespuestas.get(2)) + "</p></body></html>".replaceAll("\n", "<br>"));
+            b_respuesta4.setText("<html><head><style>p{text-align: center;}</style></head><body><p>" + saltoLineaBoton(textoRespuestas.get(3)) + "</p></body></html>".replaceAll("\n", "<br>"));
+
+            tipoPreguntaPartida.setText(datosPregunta.get(5));
+            puntuacionPartida.setText(datosPregunta.get(6));
+        } catch (NullPointerException | IndexOutOfBoundsException ignored) {
+            ignored.printStackTrace();
+        }
+    }
+
+    public String saltoLineaBoton(String texto) {
+        String devolver = "";
+        int numCaracteres = 16;
+        boolean saltoLinea = true;
+        if (texto.length() > numCaracteres) {
+            try {
+                while (texto.length() > numCaracteres) {
+                    for (int i = numCaracteres; i > 0; i++) {
+                        if (texto.charAt(i) == ' ') {
+                            devolver += texto.substring(0, i);
+                            texto = texto.substring(i + 1);
+                            break;
+                        }
+                        if (i == 1) {
+                            devolver = texto;
+                            saltoLinea = false;
+                            break;
+                        }
+                    }
+                    if (saltoLinea)
+                        devolver += "\n";
+                }
+            } catch (StringIndexOutOfBoundsException ignored) {}
+            if (texto.length() > 0)
+                devolver += texto;
+        } else {
+            devolver += texto;
+        }
+
+        return devolver;
     }
 
     public void volcarDatosTextPane(JTextPane textPane, ArrayList<String> listaStrings, int tipo) {
@@ -351,9 +541,7 @@ public class Cliente {
         //tpNormas.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         tpPuntuaciones.setFont(new Font("Unispace", Font.BOLD, 14));
 
-       volcarDatosTextPane(tpPuntuaciones, topPuntuaciones, 2);
-
-
+        volcarDatosTextPane(tpPuntuaciones, topPuntuaciones, 2);
     }
     public void ventanaPanelPartidaJugando(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         try {
@@ -365,12 +553,76 @@ public class Cliente {
         ventana.setTitle("Partida");
         String fuenteMYHUI = "MicrosoftYaHeiUI";
 
-        //TODO RECIBIR PREGUNTAS Y EMPEZAR A JUGAR
+
+        JLabel cabeceraPreg = new JLabel("PREGUNTA", SwingConstants.CENTER);
+        configurarLabel(cabeceraPreg, fuenteMYHUI, Font.BOLD, 12);
+        panelPartida.add(cabeceraPreg);
+        cabeceraPreg.setBounds(0, 20, dimPanelPartida.width, 20);
+        cabeceraPreg.setForeground(Color.GRAY);
+
+        int margenX = 10;
+        tpPregunta =  new JTextPane();
+        panelPartida.add(tpPregunta);
+        tpPregunta.setBounds(margenX, 40, dimPanelPartida.width - (margenX * 2), 80);
+        tpPregunta.setOpaque(false);
+        tpPregunta.setEditable(false);
+        tpPregunta.setFont(new Font(fuenteMYHUI, Font.BOLD, 14));
+        tpPregunta.setForeground(Color.DARK_GRAY);
+        StyledDocument doc = tpPregunta.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
+
+        int posYboton = 130;
+        int espaciadoEntreBotones = 10;
+        int heightBoton = 80;
+        int widthBoton = (dimPanelPartida.width - ((margenX * 2) + espaciadoEntreBotones)) / 2 ;
+
+        b_respuesta1 = new JButton("<html>Respuesta1<br>Linea 2</html>");
+        configurarButton(b_respuesta1, fuenteMYHUI, Font.BOLD, 12);
+        panelPartida.add(b_respuesta1);
+        b_respuesta1.setBounds(margenX, posYboton, widthBoton, heightBoton);
+
+        b_respuesta2 = new JButton("<html>Respuesta2<br>Linea 2</html>");
+        configurarButton(b_respuesta2, fuenteMYHUI, Font.BOLD, 12);
+        panelPartida.add(b_respuesta2);
+        b_respuesta2.setBounds(margenX + widthBoton + espaciadoEntreBotones, posYboton, widthBoton, heightBoton);
+
+        b_respuesta3 = new JButton("<html>Respuesta3<br>Linea 2</html>");
+        configurarButton(b_respuesta3, fuenteMYHUI, Font.BOLD, 12);
+        panelPartida.add(b_respuesta3);
+        b_respuesta3.setBounds(margenX, posYboton + heightBoton + espaciadoEntreBotones, widthBoton, heightBoton);
+
+        b_respuesta4 = new JButton("<html>Respuesta4<br>Linea 2</html>");
+        configurarButton(b_respuesta4, fuenteMYHUI, Font.BOLD, 12);
+        panelPartida.add(b_respuesta4);
+        b_respuesta4.setBounds(margenX + widthBoton + espaciadoEntreBotones,
+                posYboton + heightBoton + espaciadoEntreBotones,
+                widthBoton, heightBoton);
 
 
+        puntuacionPartida = new JLabel("Puntos: 0");
+        configurarLabel(puntuacionPartida, fuenteMYHUI, Font.BOLD, 12);
+        panelPartida.add(puntuacionPartida);
+        puntuacionPartida.setBounds(margenX, dimPanelPartida.height - 40, 250, 20);
+
+        tipoPreguntaPartida = new JLabel("Tipo pregunta: Gaming");
+        configurarLabel(tipoPreguntaPartida, fuenteMYHUI, Font.BOLD, 12);
+        panelPartida.add(tipoPreguntaPartida);
+        tipoPreguntaPartida.setBounds(margenX, dimPanelPartida.height - 60, 250, 20);
+
+        int widthAbandonar = 120;
+        b_abandonar = new JButton("Abandonar");
+        configurarButton(b_abandonar, fuenteMYHUI, Font.BOLD, 14);
+        panelPartida.add(b_abandonar);
+        b_abandonar.setBounds((dimPanelPartida.width - margenX) - widthAbandonar, dimPanelPartida.height - 60,
+                widthAbandonar, 40);
 
 
+        String ejemploPreg = "Pregunta de Ejemplo\nAquí se cargarán las\nfuturas preguntas que recibiremos";
+        tpPregunta.setText(ejemploPreg);
 
+        listenersPanelPartidaInGame(claveAES, objOS, objIS);
     }
     public void ventanaPanelPartidaMenu(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         try {
@@ -393,8 +645,8 @@ public class Cliente {
         panelPartida.add(b_nuevaPartida);
         int npHeight = 40;
         int npWidth = 120;
-        b_nuevaPartida.setBounds(((dimPanelJuego.width / 2) - (npWidth / 2)),
-                ((dimPanelJuego.height / 2) - (npHeight / 2)), npWidth, npHeight);
+        b_nuevaPartida.setBounds(((dimPanelPartida.width / 2) - (npWidth / 2)),
+                ((dimPanelPartida.height / 2) - (npHeight / 2)), npWidth, npHeight);
 
         listenersPanelPartidaMenu(claveAES, objOS, objIS);
     }
@@ -424,19 +676,23 @@ public class Cliente {
         panelPartida.setLayout(null);
         panelPartida.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3, true));
         panelDatos.add(panelPartida);
-        panelPartida.setBounds(margenIzq, 80, dimPanelJuego.width, dimPanelJuego.height);
+        panelPartida.setBounds(margenIzq, 80, dimPanelPartida.width, dimPanelPartida.height);
 
         panelPuntuaciones = new JPanel();
         panelPuntuaciones.setLayout(null);
         panelPuntuaciones.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3, true));
         panelDatos.add(panelPuntuaciones);
-        panelPuntuaciones.setBounds(margenIzq + margenIzq + dimPanelJuego.width, 80, dimPanelPuntuaciones.width, dimPanelPuntuaciones.height);
+        panelPuntuaciones.setBounds(margenIzq + margenIzq + dimPanelPartida.width, 80, dimPanelPuntuaciones.width, dimPanelPuntuaciones.height);
 
         b_cerrarSesion = new JButton("Cerrar Sesión");
         configurarButton(b_cerrarSesion, fuenteMYHUI, Font.BOLD, 15);
         panelDatos.add(b_cerrarSesion);
-        b_cerrarSesion.setBounds(margenIzq + margenIzq + dimPanelJuego.width, 80 + dimPanelPuntuaciones.height + 20,
-                dimPanelDatos.width - (margenIzq + margenIzq + dimPanelJuego.width + 10), 40);
+        b_cerrarSesion.setBounds(margenIzq + margenIzq + dimPanelPartida.width, 80 + dimPanelPuntuaciones.height + 20,
+                dimPanelDatos.width - (margenIzq + margenIzq + dimPanelPartida.width + 10), 40);
+
+        try {
+            topPuntuaciones = desencriptarArrayListString(claveAES, (byte[]) objIS.readObject());
+        } catch (IOException | ClassNotFoundException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException ignored) { }
 
         listenersMenuPrincipal(claveAES, objOS, objIS);
 
@@ -535,9 +791,7 @@ public class Cliente {
 
         try {
             objOS.writeObject(confirmacion);
-            if (confirmacion)
-                topPuntuaciones = (ArrayList<String>) objIS.readObject();
-        } catch (IOException | ClassNotFoundException ignored) { }
+        } catch (IOException ignored) { }
 
         String mensaje;
         if (confirmacion) {
@@ -741,6 +995,21 @@ public class Cliente {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MÉTODOS ENCRIPTACIÓN
+    public ArrayList<String> desencriptarArrayListString(SecretKey claveAES, byte[] mensaje) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        ArrayList<String> datos = new ArrayList<>();
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.DECRYPT_MODE, claveAES);
+        byte[] bytes = aesCipher.doFinal(mensaje);
+
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        DataInputStream in = new DataInputStream(bais);
+        while (in.available() > 0) {
+            String element = in.readUTF();
+            datos.add(element);
+        }
+
+        return datos;
+    }
     public String desencriptarMensaje(SecretKey claveAES, byte[] mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         Cipher aesCipher = Cipher.getInstance("AES");
         aesCipher.init(Cipher.DECRYPT_MODE, claveAES);

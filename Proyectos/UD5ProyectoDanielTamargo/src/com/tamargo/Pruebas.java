@@ -2,6 +2,7 @@ package com.tamargo;
 
 import com.tamargo.datos.EscribirFicheros;
 import com.tamargo.datos.LeerFicheros;
+import com.tamargo.datos.Pregunta;
 import com.tamargo.datos.Usuario;
 
 import javax.crypto.*;
@@ -16,27 +17,33 @@ import java.util.*;
 public class Pruebas {
 
     public static void main(String[] args) throws UnsupportedEncodingException, NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException, InvalidKeyException {
-        Usuario usuario1 = new Usuario("Irune", "Mendez", 12, "irune", "test", 1, 150);
-        EscribirFicheros.addUsuario(usuario1);
 
-        ArrayList<Usuario> usuarios = LeerFicheros.leerUsuarios();
-        HashMap<Usuario, Integer> listaSinOrdenar = new HashMap<>();
+        String comprobando = "hola que tal como estais bienvenidos a mi gameplay intensisimo holaaa holaaa hola que taal";
+        System.out.println(comprobando);
+        System.out.println();
+        System.out.println(saltoLineaBoton(comprobando));
 
-        for (Usuario usuario: usuarios) {
-            listaSinOrdenar.put(usuario, usuario.getPuntuacion());
+    }
+
+    public static String saltoLineaBoton(String texto) {
+        String devolver = "";
+        if (texto.length() > 20) {
+            while (texto.length() > 20) {
+                for (int i = 20; i > 0; i++) {
+                    if (texto.charAt(i) == ' ') {
+                        devolver += texto.substring(0, i);
+                        texto = texto.substring(i + 1);
+                        break;
+                    }
+                }
+                devolver += "\n";
+            }
+            if (texto.length() > 0)
+                devolver += texto;
+        } else {
+            devolver = texto;
         }
-
-        LinkedHashMap<Usuario, Integer> listaOrdenada = new LinkedHashMap<>();
-        listaSinOrdenar.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .forEachOrdered(x -> listaOrdenada.put(x.getKey(), x.getValue()));
-
-        for (Usuario value : listaOrdenada.keySet()) {
-
-        }
-
-
+        return devolver;
     }
 
 }

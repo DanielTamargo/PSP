@@ -1,0 +1,138 @@
+dic. 02, 2020 10:44:14 A. M. com.tamargo.ventanas.Cliente <init>
+SEVERE: Error con el servicio del cliente. Error: Connection refused: connect
+dic. 02, 2020 10:44:58 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 10:47:49 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 10:47:52 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 10:48:01 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 10:48:04 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 10:48:22 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 10:48:25 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 10:49:12 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 10:49:14 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 10:49:21 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 10:49:24 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 10:49:28 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 10:49:30 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 10:49:42 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 10:49:44 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 10:55:27 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 10:55:32 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 10:56:09 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 10:56:17 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 10:56:19 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 10:59:07 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 10:59:10 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 11:01:29 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 11:01:32 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 11:02:44 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 11:06:27 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 11:06:29 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 11:06:44 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 11:06:47 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 11:15:17 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 11:15:20 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 11:41:19 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 11:41:22 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 11:46:50 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 12:21:01 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 12:22:43 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 12:23:13 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 12:25:39 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 12:30:07 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 12:30:09 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 1:43:19 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 1:46:07 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:10:49 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:19:28 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 2:19:31 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:20:27 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 2:20:29 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:22:06 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 2:22:10 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:31:48 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:32:07 P. M. com.tamargo.datos.EscribirFicheros modificarPuntuacionUsuario
+FINE: Error al editar la puntuación del usuario -> tamsky
+dic. 02, 2020 2:40:47 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:42:36 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 2:42:39 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:43:56 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 2:43:59 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:44:22 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 2:44:25 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:46:15 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 2:46:18 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:46:32 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 2:46:35 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:49:52 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 2:49:59 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:50:41 P. M. com.tamargo.datos.EscribirFicheros modificarPuntuacionUsuario
+FINE: Error al editar la puntuación del usuario -> tamsky
+dic. 02, 2020 2:51:01 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:51:12 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 2:51:22 P. M. com.tamargo.datos.EscribirFicheros modificarPuntuacionUsuario
+FINE: Error al editar la puntuación del usuario -> test

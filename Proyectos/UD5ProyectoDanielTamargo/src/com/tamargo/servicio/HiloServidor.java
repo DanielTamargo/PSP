@@ -1,9 +1,6 @@
 package com.tamargo.servicio;
 
-import com.tamargo.datos.EscribirFicheros;
-import com.tamargo.datos.GuardarLogs;
-import com.tamargo.datos.LeerFicheros;
-import com.tamargo.datos.Usuario;
+import com.tamargo.datos.*;
 import com.tamargo.jaas.modelo.ImplementacionPrincipal;
 import com.tamargo.jaas.modelo.UserPasswordCallbackHandler;
 
@@ -115,7 +112,7 @@ public class HiloServidor extends Thread {
                                         7- Puedes ver la lista de puntuaciones para ver tu clasificación""";
                                 sigRSA.update(normas.getBytes());
                                 byte[] firmaNormas = sigRSA.sign();
-                                System.out.println(nombre + "Enviando firma normas encriptada:");
+                                System.out.println(nombre + "Enviando normas firmadas:");
                                 System.out.println(new String(firmaNormas));
 
                                 objOS.writeObject(encriptarMensaje(claveAES, normas));
@@ -124,7 +121,7 @@ public class HiloServidor extends Thread {
                                 boolean confirmacion;
                                 confirmacion = (boolean) objIS.readObject();
                                 if (confirmacion) {
-                                    enviarTopPuntuaciones(objOS);
+                                    enviarTopPuntuaciones(claveAES, objOS);
                                 }
                             }
                         }
@@ -141,6 +138,9 @@ public class HiloServidor extends Thread {
                             System.out.println(this.nombre + "Registro -> Datos recibidos: "  + nombre + ", " + apellido + ", " + edad + ", " + nick + ", " + contrasenya);
                             Usuario usuario = new Usuario(nombre, apellido, edad, nick, contrasenya);
                             objOS.writeObject(EscribirFicheros.addUsuario(usuario));
+                        }
+                        case 3 -> { // PARTIDA
+                            buclePartida(claveAES, objOS, objIS);
                         }
                     }
                 }
@@ -177,14 +177,107 @@ public class HiloServidor extends Thread {
 
     }
 
-    public void enviarTopPuntuaciones(ObjectOutputStream objOS) {
-        System.out.println(nombre + "Enviando el TOP Puntuaciones...");
-        try {
-            objOS.writeObject(topPuntuaciones());
-        } catch (IOException e) {
-            System.out.println(nombre + "Error al enviar el top de puntuaciones, la conexión fracasará. Error: " + e.getLocalizedMessage());
-            GuardarLogs.logger.log(Level.INFO, "Error al enviar el top de puntuaciones, la conexión fracasará. Error: " + e.getLocalizedMessage());
+    public void buclePartida(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) throws IOException, ClassNotFoundException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
+        ArrayList<Pregunta> preguntas = LeerFicheros.leerPreguntas();
+
+        if (preguntas.size() > 0) {
+            Collections.shuffle(preguntas); // Las barajamos para que salgan en distinto orden
+            int pos = 0;
+            int puntuacion = 0;
+            objOS.writeObject(true); // Existen preguntas, lo notificamos
+            enviarPregunta(datosPreguntaYRespuestas(preguntas.get(pos), puntuacion), claveAES, objOS);
+            boolean bucle = true;
+            int opcion = -1;
+            while (bucle) {
+                opcion = (Integer) objIS.readObject();
+                switch (opcion) {
+                    case 1 -> {
+                        // TODO RECIBIR TEXTO RESPUESTA
+                        //  SI ACIERTA, SIGUIENTE PREGUNTA
+                        //  SI FALLA, COTEJAR PUNTUACIONES Y RESPONDER
+                        String textoRespuesta = desencriptarMensaje(claveAES, (byte[]) objIS.readObject());
+                        boolean acierto = preguntas.get(pos).esCorrecta(textoRespuesta);
+                        if (acierto) {
+                            puntuacion += 10;
+                            pos++;
+                            if (pos < preguntas.size()) { // NUEVA PREGUNTA
+                                objOS.writeObject(0);
+                                enviarPregunta(datosPreguntaYRespuestas(preguntas.get(pos), puntuacion), claveAES, objOS);
+                            } else { // HAS ACERTADO TODAS Y NO QUEDAN MÁS
+                                cotejarPuntuaciones(puntuacion);
+                                objOS.writeObject(1);
+                                bucle = false;
+                            }
+                        } else {
+                            if (!cotejarPuntuaciones(puntuacion)) { // HAS FALLADO SIN SUPERAR TU PUNTUACIÓN
+                                objOS.writeObject(2);
+                            } else { // HAS FALLADO PERO HAS SUPERADO TU PUNTUACIÓN
+                                objOS.writeObject(3);
+                            }
+                            bucle = false;
+                        }
+                    }
+                    case 2 -> {
+                        // TODO ABANDONO, COTEJAR PUNTUACIONES Y RESPONDER
+                        if (!cotejarPuntuaciones(puntuacion)) {
+                            objOS.writeObject(-1);
+                        } else {
+                            objOS.writeObject(-2);
+                        }
+                        bucle = false;
+                    }
+                }
+            }
+
+            enviarTopPuntuaciones(claveAES, objOS);
+        } else {
+            objOS.writeObject(false); // No existen preguntas, lo notificamos
         }
+    }
+
+    /**
+     * Devuelve true si la puntuación es mayor que la que ya tenía el usuario
+     */
+    public boolean cotejarPuntuaciones(int puntuacion) {
+        boolean mayorPuntuacion = false;
+        ArrayList<Usuario> usuarios = LeerFicheros.leerUsuarios();
+        for (Usuario usu: usuarios) {
+            if (usu.getNick().equalsIgnoreCase(nickJugador)) {
+                if (usu.getPuntuacion() < puntuacion) {
+                    EscribirFicheros.modificarPuntuacionUsuario(nickJugador, puntuacion);
+                    mayorPuntuacion = true;
+                }
+            }
+        }
+        return mayorPuntuacion;
+    }
+
+    public void enviarPregunta(ArrayList<String> datos, SecretKey claveAES, ObjectOutputStream objOS) throws NoSuchPaddingException, NoSuchAlgorithmException, IOException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
+        objOS.writeObject(encriptarArrayListString(claveAES, datos));
+    }
+
+    public ArrayList<String> datosPreguntaYRespuestas(Pregunta pregunta, int puntuacion) {
+        ArrayList<String> datos = new ArrayList<>();
+
+        // Cogemos el título
+        datos.add(pregunta.getTitulo());
+
+        // Cogemos las respuestas y las barajamos
+        ArrayList<String> respuestas = new ArrayList<>();
+        respuestas.add(pregunta.getOpcion1());
+        respuestas.add(pregunta.getOpcion2());
+        respuestas.add(pregunta.getOpcion3());
+        respuestas.add(pregunta.getOpcion4());
+        Collections.shuffle(respuestas);
+
+        // Las añadimos
+        datos.addAll(respuestas);
+
+        // Cogemos el tipo
+        datos.add("Tipo: " + pregunta.getTipo());
+        datos.add("Tu puntuación: " + puntuacion);
+
+        return datos;
     }
 
     public ArrayList<String> topPuntuaciones() {
@@ -224,8 +317,30 @@ public class HiloServidor extends Thread {
         }
 
         lineasTopPuntuaciones.add(tuPuntuacion);
-
         return lineasTopPuntuaciones;
+    }
+
+    public void enviarTopPuntuaciones(SecretKey claveAES, ObjectOutputStream objOS) {
+        System.out.println(nombre + "Enviando el TOP Puntuaciones...");
+        try {
+            objOS.writeObject(encriptarArrayListString(claveAES, topPuntuaciones()));
+        } catch (IOException | NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
+            System.out.println(nombre + "Error al enviar el top de puntuaciones, la conexión fracasará. Error: " + e.getLocalizedMessage());
+            GuardarLogs.logger.log(Level.INFO, "Error al enviar el top de puntuaciones, la conexión fracasará. Error: " + e.getLocalizedMessage());
+        }
+    }
+
+    public byte[] encriptarArrayListString(SecretKey claveAES, ArrayList<String> arrayList) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(baos);
+        for (String element : arrayList) {
+            out.writeUTF(element);
+        }
+
+        byte[] bytes = baos.toByteArray();
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.ENCRYPT_MODE, claveAES);
+        return aesCipher.doFinal(bytes);
     }
 
     public byte[] encriptarMensaje(SecretKey claveAES, String mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
