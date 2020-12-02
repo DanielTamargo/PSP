@@ -162,3 +162,273 @@ dic. 02, 2020 3:52:32 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
 FINE: Inicio de sesión exitoso
 dic. 02, 2020 3:55:41 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
 FINE: Inicio de sesión exitoso
+dic. 02, 2020 7:17:41 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> test
+dic. 02, 2020 7:17:41 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> admin
+dic. 02, 2020 7:17:41 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: ¿Qué asignatura impartió Ekaitz Martinez Cordero en el segundo curso del ciclo nocturno Desarrollo de Aplicaciones Multiplataforma?
+dic. 02, 2020 7:17:41 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: Si ejecutamos el método .stop() de un hilo, ¿podremos reanudarlo con el método .start()?
+dic. 02, 2020 7:17:41 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: ¿Quién puede descifrar mi mensaje si lo he cifrado con mi clave privada?
+dic. 02, 2020 7:17:41 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: Si intentamos hacer el siguiente comando:
+User us = (User) fileIS.readObject();
+¿cuál o cuáles serían las excepciones?
+dic. 02, 2020 7:17:41 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: En Python, ¿podemos guardar un int en una variable donde teníamos guardado un String?
+dic. 02, 2020 7:17:41 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: Hemos usado el método .acquire(). con...
+dic. 02, 2020 7:17:41 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: Si queremos esperar a que un hilo termine tendremos que...
+dic. 02, 2020 7:17:41 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Cuál de estas Bases de Datos es una BBDD embebida?
+dic. 02, 2020 7:17:41 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: El año pasado Ekaitz nos comentó que había un concurso de programación ¿Qué lenguaje o lenguajes estaban admitidos en el concurso?
+dic. 02, 2020 7:17:41 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Cómo hay que llamar a la variable Exception dentro de los try catch para que el IDE de IntelliJ no te lo señale si no haces nada con dicha variable?
+dic. 02, 2020 7:17:41 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Cuál es la combinación de teclas para, donde tengamos puesto el cursor para escribir, seleccionar el bloque progresivamente?
+dic. 02, 2020 7:17:41 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Qué asignatura no se imparte en el tercer curso del ciclo nocturno Desarrollo de Aplicaciones Multiplataforma?
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> test
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> admin
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> dani
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> irune
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> alberto
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> lucia
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> maria
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> gloria
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> andres
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> 
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> 
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: ¿Qué asignatura impartió Ekaitz Martinez Cordero en el segundo curso del ciclo nocturno Desarrollo de Aplicaciones Multiplataforma?
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: Si ejecutamos el método .stop() de un hilo, ¿podremos reanudarlo con el método .start()?
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: ¿Quién puede descifrar mi mensaje si lo he cifrado con mi clave privada?
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: Si intentamos hacer el siguiente comando:
+User us = (User) fileIS.readObject();
+¿cuál o cuáles serían las excepciones?
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: En Python, ¿podemos guardar un int en una variable donde teníamos guardado un String?
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: Hemos usado el método .acquire(). con...
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: Si queremos esperar a que un hilo termine tendremos que...
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: ¿Cuál de estas Bases de Datos es una BBDD embebida?
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: El año pasado Ekaitz nos comentó que había un concurso de programación ¿Qué lenguaje o lenguajes estaban admitidos en el concurso?
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: ¿Cómo hay que llamar a la variable Exception dentro de los try catch para que el IDE de IntelliJ no te lo señale si no haces nada con dicha variable?
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: ¿Cuál es la combinación de teclas para, donde tengamos puesto el cursor para escribir, seleccionar el bloque progresivamente?
+dic. 02, 2020 7:18:08 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+WARNING: Ya existe la pregunta: ¿Qué asignatura no se imparte en el tercer curso del ciclo nocturno Desarrollo de Aplicaciones Multiplataforma?
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> test
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> admin
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> dani
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> irune
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> chase
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> lucia
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> maria
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> gloria
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> andres
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> phildunphy
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> cameron
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Qué asignatura impartió Ekaitz Martinez Cordero en el segundo curso del ciclo nocturno Desarrollo de Aplicaciones Multiplataforma?
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: Si ejecutamos el método .stop() de un hilo, ¿podremos reanudarlo con el método .start()?
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Quién puede descifrar mi mensaje si lo he cifrado con mi clave privada?
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: Si intentamos hacer el siguiente comando:
+User us = (User) fileIS.readObject();
+¿cuál o cuáles serían las excepciones?
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: En Python, ¿podemos guardar un int en una variable donde teníamos guardado un String?
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: Hemos usado el método .acquire(). con...
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: Si queremos esperar a que un hilo termine tendremos que...
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Cuál de estas Bases de Datos es una BBDD embebida?
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: El año pasado Ekaitz nos comentó que había un concurso de programación ¿Qué lenguaje o lenguajes estaban admitidos en el concurso?
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Cómo hay que llamar a la variable Exception dentro de los try catch para que el IDE de IntelliJ no te lo señale si no haces nada con dicha variable?
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Cuál es la combinación de teclas para, donde tengamos puesto el cursor para escribir, seleccionar el bloque progresivamente?
+dic. 02, 2020 7:19:27 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Qué asignatura no se imparte en el tercer curso del ciclo nocturno Desarrollo de Aplicaciones Multiplataforma?
+dic. 02, 2020 7:19:46 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 02, 2020 7:21:26 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 7:21:32 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 7:21:46 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 7:37:22 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 7:37:32 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 7:38:14 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 7:38:17 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 7:38:19 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> test
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> admin
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> dani
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> irune
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> chase
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> lucia
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> maria
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> gloria
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> andres
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> phildunphy
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+WARNING: No se pudo registrar, ya existe un usuario con el nick -> cameron
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Qué asignatura impartió Ekaitz Martinez Cordero en el segundo curso del ciclo nocturno Desarrollo de Aplicaciones Multiplataforma?
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: Si ejecutamos el método .stop() de un hilo, ¿podremos reanudarlo con el método .start()?
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Quién puede descifrar mi mensaje si lo he cifrado con mi clave privada?
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: Si intentamos hacer el siguiente comando:
+User us = (User) fileIS.readObject();
+¿cuál o cuáles serían las excepciones?
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: En Python, ¿podemos guardar un int en una variable donde teníamos guardado un String?
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: Hemos usado el método .acquire(). con...
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: Si queremos esperar a que un hilo termine tendremos que...
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Cuál de estas Bases de Datos es una BBDD embebida?
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: El año pasado Ekaitz nos comentó que había un concurso de programación ¿Qué lenguaje o lenguajes estaban admitidos en el concurso?
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Cómo hay que llamar a la variable Exception dentro de los try catch para que el IDE de IntelliJ no te lo señale si no haces nada con dicha variable?
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Cuál es la combinación de teclas para, donde tengamos puesto el cursor para escribir, seleccionar el bloque progresivamente?
+dic. 02, 2020 7:40:43 P. M. com.tamargo.datos.EscribirFicheros addPregunta
+FINE: Pregunta guardada con éxito. Pregunta: ¿Qué asignatura no se imparte en el tercer curso del ciclo nocturno Desarrollo de Aplicaciones Multiplataforma?
+dic. 02, 2020 7:54:14 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 7:54:36 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 7:55:21 P. M. com.tamargo.datos.EscribirFicheros modificarPuntuacionUsuario
+FINE: Error al editar la puntuación del usuario -> dani
+dic. 02, 2020 7:59:58 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 8:00:33 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 8:00:46 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 8:10:30 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 8:11:56 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 8:11:57 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 8:11:59 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 8:41:10 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 8:41:13 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 8:41:36 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 8:41:39 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 8:42:58 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 8:42:59 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 8:43:14 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 8:43:15 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 8:43:33 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 8:43:37 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 8:48:04 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 8:48:22 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 8:49:46 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 8:49:47 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 8:50:16 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 8:50:24 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 8:50:26 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario test
+dic. 02, 2020 8:50:28 P. M. com.tamargo.datos.EscribirFicheros modificarPuntuacionUsuario
+FINE: Error al editar la puntuación del usuario -> test
+dic. 02, 2020 8:51:58 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 9:02:45 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 9:02:46 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 9:03:24 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 9:03:26 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 9:03:40 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 9:09:50 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 02, 2020 9:09:56 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 9:09:57 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 02, 2020 9:10:47 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 02, 2020 9:10:49 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani

@@ -21,6 +21,9 @@ import java.util.regex.Pattern;
 
 public class Cliente {
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // VARIABLES
+
     // PRINCIPALES
     private final JFrame ventana;
     private String nickJugador = "nickdeljugador";
@@ -81,8 +84,15 @@ public class Cliente {
     // CONSTRUCTOR
     public Cliente(JFrame ventana) {
         this.ventana = ventana;
+        //iniciarCliente();
+
+        ventanaAdmin(null, null, null);
+    }
+
+    // LANZAR VENTANA
+    public void iniciarCliente() {
         try {
-            // Configuramos las propiedades para que ""reciba"" el certificado (realmente accede a él)
+            // Configuramos las propiedades para que confié en el certificado que hemos ""recibido"" (realmente está en local)
             System.setProperty("javax.net.ssl.trustStore", "./certificados/clienteAlmacenSSL");
             System.setProperty("javax.net.ssl.trustStorePassword", "890123");
 
@@ -97,13 +107,13 @@ public class Cliente {
             ObjectInputStream objIS = new ObjectInputStream(socketSSL.getInputStream());
             ObjectOutputStream objOS = new ObjectOutputStream(socketSSL.getOutputStream());
 
-            // Recibimos clave pública
+            // Recibimos la clave pública del servidor
             System.out.println(nombre + "Recibiendo clave pública");
             serverPK = (PublicKey) objIS.readObject();
             System.out.println(nombre + "Clave pública recibida");
             System.out.println();
 
-            // Enviarremos una clave simétrica que generemos cifrándola con la clave pública recibida
+            // Enviaremos una clave simétrica que generemos cifrándola con la clave pública recibida
             //      Generamos la clave simétrica
             System.out.println(nombre + "Generando clave simétrica");
             KeyGenerator keygen = KeyGenerator.getInstance("AES");
@@ -112,7 +122,7 @@ public class Cliente {
             System.out.println(nombre + "Clave simétrica generada: " + claveAES.toString());
             System.out.println();
 
-            // Generar cifrador/descifrador
+            //      Creamos cifrador/descifrador
             //      Primero generamos el cifrador para cifrar la clave simétrica que mandaremos,
             //      y luego el cifrador/descifrador para el túnel
             System.out.println(nombre + "Generando Cipher para encriptar/desencriptar");
@@ -146,27 +156,26 @@ public class Cliente {
                 public void windowClosing(WindowEvent e) {
                     try {
                         objOS.writeObject(0);
-                    } catch (IOException ignored) {}
+                    } catch (IOException ignored) { }
                     ventana.dispose();
                 }
             });
 
-
             //todo quitar
-            tNick.setText("tamsky");
+            tNick.setText("dani");
             tContrasenya.setText("test");
 
         } catch (IOException | NoSuchAlgorithmException |
                 NoSuchPaddingException | InvalidKeyException | ClassNotFoundException
                 | IllegalBlockSizeException | BadPaddingException e) {
             System.out.println("[Cliente] El cliente ha fallado o el server ha rechazado la conexión. Motivo:\n" + e.getLocalizedMessage());
-            GuardarLogs.logger.log(Level.SEVERE, "Error con el servicio del cliente. Error: " + e.getLocalizedMessage());
             ventanaErrorConexion();
         }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // LISTENERS
+    // LOGIN
     public void listenersLogin(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         b_LoginRegistrarse.addActionListener(new ActionListener() {
             @Override
@@ -214,6 +223,7 @@ public class Cliente {
             }
         });
     }
+    // REGISTRO
     public void listenersRegistro(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         b_realizarRegistro.addActionListener(new ActionListener() {
             @Override
@@ -261,6 +271,7 @@ public class Cliente {
             }
         });
     }
+    // VALIDACIÓN
     public void listenersValidacion(Boolean confirmacion, SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         boolean finalConfirmacion = confirmacion;
         b_aceptar.addActionListener(new ActionListener() {
@@ -274,6 +285,7 @@ public class Cliente {
             }
         });
     }
+    // MENÚ PRINCIPAL
     public void listenersMenuPrincipal(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         b_cerrarSesion.addActionListener(new ActionListener() {
             @Override
@@ -283,6 +295,7 @@ public class Cliente {
             }
         });
     }
+    // PANEL PARTIDA - VERSIÓN MENÚ
     public void listenersPanelPartidaMenu(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         b_nuevaPartida.addActionListener(new ActionListener() {
             @Override
@@ -305,6 +318,7 @@ public class Cliente {
             }
         });
     }
+    // PANEL PARTIDA - VERSIÓN IN GAME
     public void listenersPanelPartidaInGame(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         b_abandonar.addActionListener(new ActionListener() {
             @Override
@@ -371,139 +385,82 @@ public class Cliente {
                 inGameEnviarRespuestaAlServidor(1, texto, claveAES, objOS, objIS);
             }
         });
-
-    }
-    public void inGameEnviarRespuestaAlServidor(int tipo, String textoRespuesta, SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
-        int respuesta = -1;
-        try {
-            // RESPONDER
-            objOS.writeObject(tipo); // tipo = 1 -> comprobarRespuesta, tipo = 2 -> abandonar
-            if (tipo == 1) { // Si hemos mandado el tipo 1, está esperando a recibir la respuesta para comprobar si es válida
-                objOS.writeObject(encriptarMensaje(claveAES, textoRespuesta));
-            }
-            // AGUARDAR RESPUESTA
-            respuesta = (Integer) objIS.readObject();
-        } catch (IOException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException
-                | NoSuchPaddingException | IllegalBlockSizeException | ClassNotFoundException ignored) { }
-
-        switch (respuesta) {
-            case -2 -> { // ABANDONO CON NUEVA MÁXIMA PUNTUACIÓN
-                mostrarJOptionPane("Máx Puntuación", "Una pena que hayas abandonado :( pero aún así...\n¡Enhorabuena! ¡Has logrado una nueva máxima puntuación!", 1);
-                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
-            }
-            case -1 -> {
-                mostrarJOptionPane("Abandono", "Una pena que hayas abandonado :(\n¡Vuelve a jugar cuando quieras!", 1);
-                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
-            }
-            case 0 -> { // SIGUIENTE PREGUNTA
-                try {
-                    datosPregunta = desencriptarArrayListString(claveAES, (byte[]) objIS.readObject());
-                    volcarDatosPregunta();
-                } catch (IOException | ClassNotFoundException | NoSuchAlgorithmException | InvalidKeyException |
-                        NoSuchPaddingException | BadPaddingException |
-                        IllegalBlockSizeException ignored) { }
-            }
-            case 1 -> { // HAS ACERTADO TODAS LAS PREGUNTAS FIN DE LA PARTIDA
-                mostrarJOptionPane("Pleno", "¡Pleno! Has acertado todas las preguntas que hay en el servidor\n¡Impresionante!", 1);
-                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
-            }
-            case 2 -> { // PREGUNTA FALLADA, FIN DE LA PARTIDA
-                mostrarJOptionPane("Fallaste", "Fin de la partida, ¡inténtalo de nuevo a ver si consigues \nsuperar tu máxima puntuación!", 1);
-                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
-            }
-            case 3 -> { // PREGUNTA FALLADA, FIN DE LA PARTIDA CON NUEVA MÁXIMA PUNTUACIÓN
-                mostrarJOptionPane("Fallaste", "Fin de la partida, ¡has logrado tu máxima puntuación!", 1);
-                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
-            }
-            default -> { // CUALQUIER RESPUESTA NO CONTEMPLADA O ENTENDIDA CONTARÁ COMO ABANDONO SIN NOTIFICACIÓN
-                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
-            }
-        }
-    }
-
-    public void volcarDatosPregunta() {
-        try {
-            textoRespuestas = new ArrayList<>();
-
-            tpPregunta.setText(datosPregunta.get(0));
-            textoRespuestas.add(datosPregunta.get(1));
-            textoRespuestas.add(datosPregunta.get(2));
-            textoRespuestas.add(datosPregunta.get(3));
-            textoRespuestas.add(datosPregunta.get(4));
-
-            b_respuesta1.setText("<html><head><style>p{text-align: center;}</style></head><body><p>" + saltoLineaBoton(textoRespuestas.get(0)) + "</p></body></html>".replaceAll("\n", "<br>"));
-            b_respuesta2.setText("<html><head><style>p{text-align: center;}</style></head><body><p>" + saltoLineaBoton(textoRespuestas.get(1)) + "</p></body></html>".replaceAll("\n", "<br>"));
-            b_respuesta3.setText("<html><head><style>p{text-align: center;}</style></head><body><p>" + saltoLineaBoton(textoRespuestas.get(2)) + "</p></body></html>".replaceAll("\n", "<br>"));
-            b_respuesta4.setText("<html><head><style>p{text-align: center;}</style></head><body><p>" + saltoLineaBoton(textoRespuestas.get(3)) + "</p></body></html>".replaceAll("\n", "<br>"));
-
-            tipoPreguntaPartida.setText(datosPregunta.get(5));
-            puntuacionPartida.setText(datosPregunta.get(6));
-        } catch (NullPointerException | IndexOutOfBoundsException ignored) { }
-    }
-
-    public String saltoLineaBoton(String texto) {
-        String devolver = "";
-        int numCaracteres = 16;
-        boolean saltoLinea = true;
-        if (texto.length() > numCaracteres) {
-            try {
-                while (texto.length() > numCaracteres) {
-                    for (int i = numCaracteres; i > 0; i++) {
-                        if (texto.charAt(i) == ' ') {
-                            devolver += texto.substring(0, i);
-                            texto = texto.substring(i + 1);
-                            break;
-                        }
-                        if (i == 1) {
-                            devolver = texto;
-                            saltoLinea = false;
-                            break;
-                        }
-                    }
-                    if (saltoLinea)
-                        devolver += "\n";
-                }
-            } catch (StringIndexOutOfBoundsException ignored) {}
-            if (texto.length() > 0)
-                devolver += texto;
-        } else {
-            devolver += texto;
-        }
-
-        return devolver;
-    }
-
-    public void volcarDatosTextPane(JTextPane textPane, ArrayList<String> listaStrings, int tipo) {
-        textPane.setText("");
-
-        StyledDocument doc = textPane.getStyledDocument();
-
-        Style style = textPane.addStyle("PlaylistStyle", null);
-        StyleConstants.setForeground(style, Color.DARK_GRAY);
-
-        String nums = "1234567890";
-
-        try {
-            boolean resetearColor = false;
-            for (String str : listaStrings) {
-                if ((tipo == 2 && str.contains(nickJugador)) || (tipo == 2 && str.contains("Tu puntuación"))
-                        || (tipo == 1 && nums.contains(str.substring(0, 1)))) {
-                    StyleConstants.setForeground(style, Color.BLUE);
-                    resetearColor = true;
-                }
-
-                doc.insertString(doc.getLength(), str, style);
-
-                if (resetearColor) {
-                    StyleConstants.setForeground(style, Color.DARK_GRAY);
-                    resetearColor = false;
-                }
-            }
-        } catch (BadLocationException ignored) {}
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // VENTANAS
+    public void ventanaAdmin(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
+        try {
+            panelDatos.removeAll();
+            panelDatos.repaint();
+        } catch (Exception ignored) { }
+        panelDatos.setLayout(null);
+
+        ventana.setTitle("Administrador");
+        String fuenteMYHUI = "MicrosoftYaHeiUI";
+
+        cabecera = new JLabel("COMPROBAR LOGS", SwingConstants.CENTER);
+        configurarLabel(cabecera, fuenteMYHUI, Font.BOLD, 22);
+        panelDatos.add(cabecera);
+        cabecera.setBounds(0, 20, dimPanelDatos.width, 40);
+
+        JPanel linea = new JPanel();
+        linea.setBackground(Color.DARK_GRAY);
+        panelDatos.add(linea);
+        linea.setBounds(0, 55, dimPanelDatos.width, 8);
+
+        int margenPDL = 10;
+        int posYDatosLogs = 120;
+        int panelDatosNormasHeight = dimPanelDatos.height - posYDatosLogs - 10;
+        int panelDatosNormasWidth = dimPanelDatos.width - (margenPDL * 2);
+        JPanel panelDatosLogs = new JPanel();
+        panelDatosLogs.setLayout(null);
+        panelDatosLogs.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3, true));
+        panelDatos.add(panelDatosLogs);
+        panelDatosLogs.setBounds(margenPDL, posYDatosLogs, panelDatosNormasWidth, panelDatosNormasHeight);
+
+        JTextPane tpNormas = new JTextPane();
+        int margenTP = 10;
+        tpNormas.setBounds(margenTP, margenTP, panelDatosNormasWidth - (margenTP * 2), panelDatosNormasHeight - (margenTP * 2));
+        tpNormas.setOpaque(false);
+        tpNormas.setEditable(false);
+        //tpNormas.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        tpNormas.setFont(new Font(fuenteMYHUI, Font.BOLD, 12));
+
+        JScrollPane scrollPane = new JScrollPane(tpNormas);
+        panelDatosLogs.add(scrollPane);
+        scrollPane.setBounds(0, 0, panelDatosNormasWidth, panelDatosNormasHeight);
+        scrollPane.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+
+        posYDatosLogs -= 50;
+        int widthBoton = 100;
+        int heightBoton = 40;
+        int distanciaEntreBotones = 10;
+
+        JButton b_fine = new JButton("Fine");
+        configurarButton(b_fine, fuenteMYHUI, Font.BOLD, 14);
+        panelDatos.add(b_fine);
+        b_fine.setBounds(margenPDL, posYDatosLogs, widthBoton, heightBoton);
+
+        JButton b_warning = new JButton("Warning");
+        configurarButton(b_warning, fuenteMYHUI, Font.BOLD, 14);
+        panelDatos.add(b_warning);
+        b_warning.setBounds(margenPDL + distanciaEntreBotones + widthBoton, posYDatosLogs, widthBoton, heightBoton);
+
+        JButton b_severe = new JButton("Severe");
+        configurarButton(b_severe, fuenteMYHUI, Font.BOLD, 14);
+        panelDatos.add(b_severe);
+        b_severe.setBounds(margenPDL + (distanciaEntreBotones + widthBoton) * 2, posYDatosLogs, widthBoton, heightBoton);
+
+        JButton b_cerrarSesion = new JButton("Cerrar Sesión");
+        configurarButton(b_cerrarSesion, fuenteMYHUI, Font.BOLD, 14);
+        panelDatos.add(b_cerrarSesion);
+        b_cerrarSesion.setBounds(440, posYDatosLogs, 150, heightBoton);
+
+
+
+
+    }
     public void ventanaPanelPuntuaciones(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         try {
             panelPuntuaciones.removeAll();
@@ -973,18 +930,26 @@ public class Cliente {
         listenersRegistro(claveAES, objOS, objIS);
     }
     public void ventanaErrorConexion() {
-        JButton okButton = new JButton("Entendido");
-        okButton.setFocusPainted(false);
-        Object[] options = {okButton};
+        JButton salir = new JButton("Salir");
+        JButton volverIntentar = new JButton("Volver a Intentar");
+        salir.setFocusPainted(false);
+        Object[] options = {salir, volverIntentar};
         final JOptionPane pane = new JOptionPane("""
                 Error al conectar con el servidor. Posibles motivos:
                 1. El servidor no está en marcha / no arranca debidamente
-                2. No están generados la claveSSL del Servidor ni/o su certificado
+                2. No están generados la claveSSL del Servidor o su certificado
                 3. No está correctamente configurada la confianza con el certificado
                 
                 Comprueba los posibles errores y vuelve a iniciar el cliente.""", JOptionPane.ERROR_MESSAGE, JOptionPane.YES_NO_OPTION, null, options);
         JDialog dialog = pane.createDialog("Imposible conectar");
-        okButton.addActionListener(e -> System.exit(0));
+        salir.addActionListener(e -> System.exit(0));
+        volverIntentar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose();
+                iniciarCliente();
+            }
+        });
         dialog.setVisible(true);
     }
 
@@ -1044,6 +1009,135 @@ public class Cliente {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MÉTODOS VARIOS
+
+    public void inGameEnviarRespuestaAlServidor(int tipo, String textoRespuesta, SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
+        int respuesta = -1;
+        try {
+            // RESPONDER
+            objOS.writeObject(tipo); // tipo = 1 -> comprobarRespuesta, tipo = 2 -> abandonar
+            if (tipo == 1) { // Si hemos mandado el tipo 1, está esperando a recibir la respuesta para comprobar si es válida
+                objOS.writeObject(encriptarMensaje(claveAES, textoRespuesta));
+            }
+            // AGUARDAR RESPUESTA
+            respuesta = (Integer) objIS.readObject();
+        } catch (IOException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException
+                | NoSuchPaddingException | IllegalBlockSizeException | ClassNotFoundException ignored) { }
+
+        switch (respuesta) {
+            case -2 -> { // ABANDONO CON NUEVA MÁXIMA PUNTUACIÓN
+                mostrarJOptionPane("Máx Puntuación", "Una pena que hayas abandonado :( pero aún así...\n¡Enhorabuena! ¡Has logrado una nueva máxima puntuación!", 1);
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+            }
+            case -1 -> {
+                mostrarJOptionPane("Abandono", "Una pena que hayas abandonado :(\n¡Vuelve a jugar cuando quieras!", 1);
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+            }
+            case 0 -> { // SIGUIENTE PREGUNTA
+                try {
+                    datosPregunta = desencriptarArrayListString(claveAES, (byte[]) objIS.readObject());
+                    volcarDatosPregunta();
+                } catch (IOException | ClassNotFoundException | NoSuchAlgorithmException | InvalidKeyException |
+                        NoSuchPaddingException | BadPaddingException |
+                        IllegalBlockSizeException ignored) { }
+            }
+            case 1 -> { // HAS ACERTADO TODAS LAS PREGUNTAS FIN DE LA PARTIDA
+                mostrarJOptionPane("Pleno", "¡Pleno! Has acertado todas las preguntas que hay en el servidor\n¡Impresionante!", 1);
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+            }
+            case 2 -> { // PREGUNTA FALLADA, FIN DE LA PARTIDA
+                mostrarJOptionPane("Fallaste", "Fin de la partida, ¡inténtalo de nuevo a ver si consigues \nsuperar tu máxima puntuación!", 1);
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+            }
+            case 3 -> { // PREGUNTA FALLADA, FIN DE LA PARTIDA CON NUEVA MÁXIMA PUNTUACIÓN
+                mostrarJOptionPane("Fallaste", "Fin de la partida, ¡has logrado tu máxima puntuación!", 1);
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+            }
+            default -> { // CUALQUIER RESPUESTA NO CONTEMPLADA O ENTENDIDA CONTARÁ COMO ABANDONO SIN NOTIFICACIÓN
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+            }
+        }
+    }
+
+    public void volcarDatosPregunta() {
+        try {
+            textoRespuestas = new ArrayList<>();
+
+            tpPregunta.setText(datosPregunta.get(0));
+            textoRespuestas.add(datosPregunta.get(1));
+            textoRespuestas.add(datosPregunta.get(2));
+            textoRespuestas.add(datosPregunta.get(3));
+            textoRespuestas.add(datosPregunta.get(4));
+
+            b_respuesta1.setText("<html><head><style>p{text-align: center;}</style></head><body><p>" + saltoLineaBoton(textoRespuestas.get(0)) + "</p></body></html>".replaceAll("\n", "<br>"));
+            b_respuesta2.setText("<html><head><style>p{text-align: center;}</style></head><body><p>" + saltoLineaBoton(textoRespuestas.get(1)) + "</p></body></html>".replaceAll("\n", "<br>"));
+            b_respuesta3.setText("<html><head><style>p{text-align: center;}</style></head><body><p>" + saltoLineaBoton(textoRespuestas.get(2)) + "</p></body></html>".replaceAll("\n", "<br>"));
+            b_respuesta4.setText("<html><head><style>p{text-align: center;}</style></head><body><p>" + saltoLineaBoton(textoRespuestas.get(3)) + "</p></body></html>".replaceAll("\n", "<br>"));
+
+            tipoPreguntaPartida.setText(datosPregunta.get(5));
+            puntuacionPartida.setText(datosPregunta.get(6));
+        } catch (NullPointerException | IndexOutOfBoundsException ignored) { }
+    }
+    public String saltoLineaBoton(String texto) {
+        String devolver = "";
+        int numCaracteres = 22;
+        boolean saltoLinea = true;
+        String ultimaPlabra = texto.substring(texto.lastIndexOf(' ') + 1);
+
+        if (texto.length() > numCaracteres) {
+            try {
+                while (texto.length() > numCaracteres) {
+                    for (int i = numCaracteres; i > 0; i--) {
+                        if (texto.charAt(i) == ' ') {
+                            devolver += texto.substring(0, i);
+                            texto = texto.substring(i + 1);
+                            break;
+                        }
+                        if (i == 1) {
+                            devolver = texto;
+                            saltoLinea = false;
+                            break;
+                        }
+                    }
+                    if (saltoLinea)
+                        devolver += "\n";
+                }
+            } catch (StringIndexOutOfBoundsException ignored) {}
+            if (texto.length() > 0)
+                devolver += texto;
+        } else {
+            devolver += texto;
+        }
+
+        return devolver;
+    }
+    public void volcarDatosTextPane(JTextPane textPane, ArrayList<String> listaStrings, int tipo) {
+        textPane.setText("");
+
+        StyledDocument doc = textPane.getStyledDocument();
+
+        Style style = textPane.addStyle("PlaylistStyle", null);
+        StyleConstants.setForeground(style, Color.DARK_GRAY);
+
+        String nums = "1234567890";
+
+        try {
+            boolean resetearColor = false;
+            for (String str : listaStrings) {
+                if ((tipo == 2 && str.contains(nickJugador)) || (tipo == 2 && str.contains("Tu puntuación"))
+                        || (tipo == 1 && nums.contains(str.substring(0, 1)))) {
+                    StyleConstants.setForeground(style, Color.BLUE);
+                    resetearColor = true;
+                }
+
+                doc.insertString(doc.getLength(), str, style);
+
+                if (resetearColor) {
+                    StyleConstants.setForeground(style, Color.DARK_GRAY);
+                    resetearColor = false;
+                }
+            }
+        } catch (BadLocationException ignored) {}
+    }
     public boolean comprobarPatrones(int tipo) {
         boolean correcto = true;
         String titulo = "Error al recoger datos";
@@ -1138,6 +1232,7 @@ public class Cliente {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 }
