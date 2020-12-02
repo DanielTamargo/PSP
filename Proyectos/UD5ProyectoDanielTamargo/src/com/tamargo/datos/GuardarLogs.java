@@ -16,20 +16,6 @@ public class GuardarLogs {
     public static final Logger logger = inicializarLog();
     private static final int numLogsMaximos = 5;
 
-    /*
-    /**
-     * Escribe un log en el fichero log que le corresponda (cambiará cada día)
-     * @param nivel Level del log a registrar (Level.FINE, Level.SEVERE, etc)
-     * @param claseFuente Nombre de la clase donde se ha lanzado el error
-     * @param metodoFuente Nombre del método donde se ha lanzado el error
-     * @param mensaje Mensaje a mostrar en el log
-     *//*
-    public static void escribirLog(Level nivel, String claseFuente, String metodoFuente, String mensaje) {
-        inicializarLog();
-        logger.logp(nivel, claseFuente, metodoFuente, mensaje);
-        System.out.println("[Log] Log añadido");
-    }*/
-
     public static Logger inicializarLog() {
         Logger logger = Logger.getLogger("ProyectoUD5");
         FileHandler fh;
@@ -61,9 +47,12 @@ public class GuardarLogs {
         try {
             File path = new File("./logs");
             ArrayList<File> logs = new ArrayList<>();
+            ArrayList<File> logsLCK = new ArrayList<>();
             for (File f : Objects.requireNonNull(path.listFiles())) {
                 if (!f.getName().contains("lck"))
                     logs.add(f);
+                else
+                    logsLCK.add(f);
             }
 
             if (logs.size() > numLogsMaximos) {
@@ -77,6 +66,13 @@ public class GuardarLogs {
                 } else
                     System.out.println("[Log] Se ha intentado eliminar sin éxito");
             }
+
+            if (logsLCK.size() > 1) {
+                while (logsLCK.size() > 1) {
+                    logsLCK.get(0).delete();
+                }
+            }
+
         } catch (Exception ignored) { }
     }
 

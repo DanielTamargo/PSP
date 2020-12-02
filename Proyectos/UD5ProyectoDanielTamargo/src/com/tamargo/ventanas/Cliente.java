@@ -288,9 +288,6 @@ public class Cliente {
             @Override
             public void actionPerformed(ActionEvent e) {
                 b_cerrarSesion.setEnabled(false);
-                // TODO EMPEZAR PARTIDA
-                // TODO CARGAR VENTANAPANELPARTIDA
-                // TODO EJECUTAR UN MÉTODO QUE PIDA LA SIGUIENTE PREGUNTA
                 try {
                     objOS.writeObject(3); // 3 = nueva partida
                     boolean existenPreguntas = (boolean) objIS.readObject();
@@ -309,7 +306,6 @@ public class Cliente {
         });
     }
     public void listenersPanelPartidaInGame(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
-        //TODO LISTENER BOTONES RESPUESTAS + BOTON ABANDONAR PARTIDA + ¿BOTÓN COMODÍN?
         b_abandonar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -376,7 +372,6 @@ public class Cliente {
             }
         });
 
-
     }
     public void inGameEnviarRespuestaAlServidor(int tipo, String textoRespuesta, SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         int respuesta = -1;
@@ -392,15 +387,15 @@ public class Cliente {
                 | NoSuchPaddingException | IllegalBlockSizeException | ClassNotFoundException ignored) { }
 
         switch (respuesta) {
-            case -2 -> { // TODO ABANDONO CON NUEVA MÁXIMA PUNTUACIÓN
+            case -2 -> { // ABANDONO CON NUEVA MÁXIMA PUNTUACIÓN
                 mostrarJOptionPane("Máx Puntuación", "Una pena que hayas abandonado :( pero aún así...\n¡Enhorabuena! ¡Has logrado una nueva máxima puntuación!", 1);
-                ventanaMenuPrincipal(claveAES, objOS, objIS); // TODO EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
             }
             case -1 -> {
                 mostrarJOptionPane("Abandono", "Una pena que hayas abandonado :(\n¡Vuelve a jugar cuando quieras!", 1);
-                ventanaMenuPrincipal(claveAES, objOS, objIS); // TODO EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
             }
-            case 0 -> { // TODO SIGUIENTE PREGUNTA
+            case 0 -> { // SIGUIENTE PREGUNTA
                 try {
                     datosPregunta = desencriptarArrayListString(claveAES, (byte[]) objIS.readObject());
                     volcarDatosPregunta();
@@ -408,27 +403,26 @@ public class Cliente {
                         NoSuchPaddingException | BadPaddingException |
                         IllegalBlockSizeException ignored) { }
             }
-            case 1 -> { // TODO HAS ACERTADO TODAS LAS PREGUNTAS FIN DE LA PARTIDA
-                mostrarJOptionPane("Pleno!", "¡Pleno! Has acertado todas las preguntas que hay en el servidor\n¡Impresionante!", 1);
-                ventanaMenuPrincipal(claveAES, objOS, objIS); // TODO EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+            case 1 -> { // HAS ACERTADO TODAS LAS PREGUNTAS FIN DE LA PARTIDA
+                mostrarJOptionPane("Pleno", "¡Pleno! Has acertado todas las preguntas que hay en el servidor\n¡Impresionante!", 1);
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
             }
-            case 2 -> { // TODO PREGUNTA FALLADA, FIN DE LA PARTIDA
+            case 2 -> { // PREGUNTA FALLADA, FIN DE LA PARTIDA
                 mostrarJOptionPane("Fallaste", "Fin de la partida, ¡inténtalo de nuevo a ver si consigues \nsuperar tu máxima puntuación!", 1);
-                ventanaMenuPrincipal(claveAES, objOS, objIS); // TODO EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
             }
-            case 3 -> { // TODO PREGUNTA FALLADA, FIN DE LA PARTIDA CON NUEVA MÁXIMA PUNTUACIÓN
+            case 3 -> { // PREGUNTA FALLADA, FIN DE LA PARTIDA CON NUEVA MÁXIMA PUNTUACIÓN
                 mostrarJOptionPane("Fallaste", "Fin de la partida, ¡has logrado tu máxima puntuación!", 1);
-                ventanaMenuPrincipal(claveAES, objOS, objIS); // TODO EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
             }
             default -> { // CUALQUIER RESPUESTA NO CONTEMPLADA O ENTENDIDA CONTARÁ COMO ABANDONO SIN NOTIFICACIÓN
-                ventanaMenuPrincipal(claveAES, objOS, objIS); // TODO EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
+                ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
             }
         }
     }
 
     public void volcarDatosPregunta() {
         try {
-            System.out.println(datosPregunta);
             textoRespuestas = new ArrayList<>();
 
             tpPregunta.setText(datosPregunta.get(0));
@@ -444,9 +438,7 @@ public class Cliente {
 
             tipoPreguntaPartida.setText(datosPregunta.get(5));
             puntuacionPartida.setText(datosPregunta.get(6));
-        } catch (NullPointerException | IndexOutOfBoundsException ignored) {
-            ignored.printStackTrace();
-        }
+        } catch (NullPointerException | IndexOutOfBoundsException ignored) { }
     }
 
     public String saltoLineaBoton(String texto) {
@@ -553,6 +545,7 @@ public class Cliente {
         ventana.setTitle("Partida");
         String fuenteMYHUI = "MicrosoftYaHeiUI";
 
+        cabecera.setText("JUGANDO PARTIDA");
 
         JLabel cabeceraPreg = new JLabel("PREGUNTA", SwingConstants.CENTER);
         configurarLabel(cabeceraPreg, fuenteMYHUI, Font.BOLD, 12);
@@ -630,6 +623,8 @@ public class Cliente {
             panelPartida.repaint();
         } catch (Exception ignored) { }
         panelPartida.setLayout(null);
+
+        cabecera.setText("MENÚ");
 
         ventana.setTitle("Menú");
         String fuenteMYHUI = "MicrosoftYaHeiUI";

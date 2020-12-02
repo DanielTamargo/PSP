@@ -14,6 +14,7 @@ import java.io.*;
 import java.security.*;
 import java.util.*;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class HiloServidor extends Thread {
     private final String nombre;
@@ -140,6 +141,8 @@ public class HiloServidor extends Thread {
                             objOS.writeObject(EscribirFicheros.addUsuario(usuario));
                         }
                         case 3 -> { // PARTIDA
+                            System.out.println(this.nombre + "Comenzando una nueva partida con " + nickJugador);
+                            GuardarLogs.logger.log(Level.FINE, "Comenzando una nueva partida con el usuario " + nickJugador);
                             buclePartida(claveAES, objOS, objIS);
                         }
                     }
@@ -150,8 +153,6 @@ public class HiloServidor extends Thread {
                 GuardarLogs.logger.log(Level.INFO, "Error al firmar las normas. Error: " + e.getLocalizedMessage());
             }
 
-            // TODO solo mostrar desconexión con éxito si valida reglas y todo va bi en, si no las valida mostrar
-            // "El cliente no ha aceptado las reglas, finalizando conexión"
             System.out.println(nombre + "Cliente desconectado con éxito. ¡Adiós!");
             objIS.close();
             objOS.close();
@@ -185,6 +186,7 @@ public class HiloServidor extends Thread {
             int pos = 0;
             int puntuacion = 0;
             objOS.writeObject(true); // Existen preguntas, lo notificamos
+            System.out.println(nombre + "Enviando la primera pregunta: " + preguntas.get(pos).getTitulo());
             enviarPregunta(datosPreguntaYRespuestas(preguntas.get(pos), puntuacion), claveAES, objOS);
             boolean bucle = true;
             int opcion = -1;
@@ -192,9 +194,6 @@ public class HiloServidor extends Thread {
                 opcion = (Integer) objIS.readObject();
                 switch (opcion) {
                     case 1 -> {
-                        // TODO RECIBIR TEXTO RESPUESTA
-                        //  SI ACIERTA, SIGUIENTE PREGUNTA
-                        //  SI FALLA, COTEJAR PUNTUACIONES Y RESPONDER
                         String textoRespuesta = desencriptarMensaje(claveAES, (byte[]) objIS.readObject());
                         boolean acierto = preguntas.get(pos).esCorrecta(textoRespuesta);
                         if (acierto) {
@@ -203,13 +202,16 @@ public class HiloServidor extends Thread {
                             if (pos < preguntas.size()) { // NUEVA PREGUNTA
                                 objOS.writeObject(0);
                                 enviarPregunta(datosPreguntaYRespuestas(preguntas.get(pos), puntuacion), claveAES, objOS);
+                                System.out.println(nombre + "Enviando otra pregunta: " + preguntas.get(pos).getTitulo());
                             } else { // HAS ACERTADO TODAS Y NO QUEDAN MÁS
+                                System.out.println(nombre + "Ha acertado todas las preguntas");
                                 cotejarPuntuaciones(puntuacion);
                                 objOS.writeObject(1);
                                 bucle = false;
                             }
                         } else {
                             if (!cotejarPuntuaciones(puntuacion)) { // HAS FALLADO SIN SUPERAR TU PUNTUACIÓN
+                                System.out.println(nombre + "Ha acertado todas las preguntas");
                                 objOS.writeObject(2);
                             } else { // HAS FALLADO PERO HAS SUPERADO TU PUNTUACIÓN
                                 objOS.writeObject(3);
