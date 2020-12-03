@@ -254,12 +254,17 @@ public class HiloServidor extends Thread {
                             pos++;
                             if (pos < preguntas.size()) { // NUEVA PREGUNTA
                                 objOS.writeObject(0);
+                                System.out.println(nombre + "¡Ha acertado!");
                                 enviarPregunta(datosPreguntaYRespuestas(preguntas.get(pos), puntuacion), claveAES, objOS);
                                 System.out.println(nombre + "Enviando otra pregunta: " + preguntas.get(pos).getTitulo());
                             } else { // HAS ACERTADO TODAS Y NO QUEDAN MÁS
                                 System.out.println(nombre + "Ha acertado todas las preguntas");
-                                cotejarPuntuaciones(puntuacion);
+                                boolean maxPuntuacion = cotejarPuntuaciones(puntuacion);
                                 objOS.writeObject(1);
+                                if (maxPuntuacion)
+                                    objOS.writeObject(encriptarMensaje(claveAES, String.valueOf(puntuacion + "max")));
+                                else
+                                    objOS.writeObject(encriptarMensaje(claveAES, String.valueOf(puntuacion)));
                                 bucle = false;
                             }
                         } else {
@@ -270,11 +275,11 @@ public class HiloServidor extends Thread {
                                 System.out.println(nombre + "Ha fallado pero ha logrado superar su puntuación máxima");
                                 objOS.writeObject(3);
                             }
+                            objOS.writeObject(encriptarMensaje(claveAES, String.valueOf(puntuacion)));
                             bucle = false;
                         }
                     }
                     case 2 -> {
-                        // TODO ABANDONO, COTEJAR PUNTUACIONES Y RESPONDER
                         if (!cotejarPuntuaciones(puntuacion)) {
                             System.out.println(nombre + "Ha abandonado sin lograr superar su puntuación máxima");
                             objOS.writeObject(-1);
@@ -282,6 +287,7 @@ public class HiloServidor extends Thread {
                             System.out.println(nombre + "Ha abandonado pero ha logrado superar su puntuación máxima");
                             objOS.writeObject(-2);
                         }
+                        objOS.writeObject(encriptarMensaje(claveAES, String.valueOf(puntuacion)));
                         bucle = false;
                     }
                 }

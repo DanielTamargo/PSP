@@ -83,8 +83,8 @@ public class Cliente {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTOR
     public Cliente(JFrame ventana) {
-        // TODO RECIBIR LA PUNTUACIÓN (EN STRING) AL ACABAR LA PARTIDA Y MOSTRARLA EN LOS JOPTIONPANES
-        //  CALCULAR TIEMPO QUE HA TARDADO EN RESPONDER Y SUMAR UN PLUS SI ES NECESARIO
+        // check RECIBIR LA PUNTUACIÓN (EN STRING) AL ACABAR LA PARTIDA Y MOSTRARLA EN LOS JOPTIONPANES
+        // TODO CALCULAR TIEMPO QUE HA TARDADO EN RESPONDER Y SUMAR UN PLUS SI ES NECESARIO
         //  TERMINAR VENTANA ADMIN
         //  UTILIZAR LA COLECCIÓN GETPRINCIPALS Y SACAR DE AHÍ EL USUARIO LOGGEADO Y EL TIPO (LOGIN GET CONTEXT)
         //  PREPARAR DOCUMENTACIÓN
@@ -1027,13 +1027,24 @@ public class Cliente {
         } catch (IOException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException
                 | NoSuchPaddingException | IllegalBlockSizeException | ClassNotFoundException ignored) { }
 
+        String puntuacion = "0";
+        if (respuesta != 0) {
+            try {
+                puntuacion = desencriptarMensaje(claveAES, (byte[]) objIS.readObject());
+            } catch (IOException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException
+                    | NoSuchPaddingException | IllegalBlockSizeException | ClassNotFoundException ignored) { }
+
+        }
+
         switch (respuesta) {
-            case -2 -> { // ABANDONO CON NUEVA MÁXIMA PUNTUACIÓN
-                mostrarJOptionPane("Máx Puntuación", "Una pena que hayas abandonado :( pero aún así...\n¡Enhorabuena! ¡Has logrado una nueva máxima puntuación!", 1);
+            case -2 -> { // ABANDONO PERO CON NUEVA MÁXIMA PUNTUACIÓN
+                puntuacionPartida.setText("Tu puntuación: " + puntuacion);
+                mostrarJOptionPane("Máx Puntuación", "Una pena que hayas abandonado :( pero aún así...\n¡Enhorabuena! ¡Has logrado una nueva máxima puntuación!\n\nPuntuación obtenida: " + puntuacion, 1);
                 ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
             }
-            case -1 -> {
-                mostrarJOptionPane("Abandono", "Una pena que hayas abandonado :(\n¡Vuelve a jugar cuando quieras!", 1);
+            case -1 -> { // ABANDONO
+                puntuacionPartida.setText("Tu puntuación: " + puntuacion);
+                mostrarJOptionPane("Abandono", "Una pena que hayas abandonado :(\n¡Vuelve a jugar cuando quieras!\n\nPuntuación obtenida: " + puntuacion, 1);
                 ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
             }
             case 0 -> { // SIGUIENTE PREGUNTA
@@ -1045,15 +1056,25 @@ public class Cliente {
                         IllegalBlockSizeException ignored) { }
             }
             case 1 -> { // HAS ACERTADO TODAS LAS PREGUNTAS FIN DE LA PARTIDA
-                mostrarJOptionPane("Pleno", "¡Pleno! Has acertado todas las preguntas que hay en el servidor\n¡Impresionante!", 1);
+                String mensaje;
+                if (puntuacion.contains("max")) {
+                    puntuacion = puntuacion.substring(0, puntuacion.length() - 3);
+                    mensaje = "¡Pleno! Has acertado todas las preguntas que hay en el servidor\n¡Impresionante!\n\nHas logrado una nueva máxima puntuación: " + puntuacion;
+                } else {
+                    mensaje = "¡Pleno! Has acertado todas las preguntas que hay en el servidor\n¡Impresionante!\n\nPuntuación obtenida: " + puntuacion;
+                }
+                puntuacionPartida.setText("Tu puntuación: " + puntuacion);
+                mostrarJOptionPane("Pleno", mensaje, 1);
                 ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
             }
             case 2 -> { // PREGUNTA FALLADA, FIN DE LA PARTIDA
-                mostrarJOptionPane("Fallaste", "Fin de la partida, ¡inténtalo de nuevo a ver si consigues \nsuperar tu máxima puntuación!", 1);
+                puntuacionPartida.setText("Tu puntuación: " + puntuacion);
+                mostrarJOptionPane("Fallaste", "¡Has fallado! Fin de la partida, ¡inténtalo de nuevo a ver si consigues \nsuperar tu máxima puntuación!\n\nPuntuación obtenida: " + puntuacion, 1);
                 ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
             }
             case 3 -> { // PREGUNTA FALLADA, FIN DE LA PARTIDA CON NUEVA MÁXIMA PUNTUACIÓN
-                mostrarJOptionPane("Fallaste", "Fin de la partida, ¡has logrado tu máxima puntuación!", 1);
+                puntuacionPartida.setText("Tu puntuación: " + puntuacion);
+                mostrarJOptionPane("Fallaste", "¡Has fallado! Fin de la partida, pero... \n¡has logrado tu máxima puntuación!\n\nPuntuación obtenida: " + puntuacion, 1);
                 ventanaMenuPrincipal(claveAES, objOS, objIS); // EL SERVER TIENE QUE VOLVER A MANDAR EL TOP PUNTUACIONES
             }
             default -> { // CUALQUIER RESPUESTA NO CONTEMPLADA O ENTENDIDA CONTARÁ COMO ABANDONO SIN NOTIFICACIÓN
