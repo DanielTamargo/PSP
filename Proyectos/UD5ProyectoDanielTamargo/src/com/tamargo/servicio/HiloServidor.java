@@ -15,7 +15,6 @@ import java.nio.ByteBuffer;
 import java.security.*;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class HiloServidor extends Thread {
     private final String nombre;
@@ -28,6 +27,7 @@ public class HiloServidor extends Thread {
     private ObjectInputStream objIS;
     private ObjectOutputStream objOS;
 
+    private LoginContext loginContext = null;
     private String nickJugador = "nickDelJugadorLoggeado";
 
     public HiloServidor(int numCliente, SSLSocket socketSSL, KeyPair parejaClaves) {
@@ -120,7 +120,7 @@ public class HiloServidor extends Thread {
                             String nick = desencriptarMensaje(claveAES, (byte[]) objIS.readObject());
                             String contrasenya = desencriptarMensaje(claveAES, (byte[]) objIS.readObject());
                             System.out.println(nombre + "Login -> Credenciales recibidas: " + nick + ", " + contrasenya);
-                            LoginContext loginContext = null;
+                            loginContext = null;
 
                             char[] password = contrasenya.toCharArray();
                             boolean exito = false;
@@ -133,7 +133,9 @@ public class HiloServidor extends Thread {
                                 loginContext.login();
                                 exito = true;
                                 nickJugador = nick;
-                            } catch (LoginException ignored) { }
+                            } catch (LoginException ignored) {
+                                loginContext = null;
+                            }
 
                             objOS.writeObject(exito);
 
@@ -241,19 +243,27 @@ public class HiloServidor extends Thread {
             System.out.println(nombre + "Enviando la primera pregunta: " + preguntas.get(pos).getTitulo());
             enviarPregunta(datosPreguntaYRespuestas(preguntas.get(pos), puntuacion), claveAES, objOS);
             boolean bucle = true;
+            boolean extra = false;
             int opcion = -1;
             while (bucle) {
                 opcion = (Integer) objIS.readObject();
                 switch (opcion) {
                     case 1 -> {
                         String textoRespuesta = desencriptarMensaje(claveAES, (byte[]) objIS.readObject());
+                        int tiempo = desencriptarInt(claveAES, (byte[]) objIS.readObject());
                         boolean acierto = preguntas.get(pos).esCorrecta(textoRespuesta);
                         if (acierto) {
-                            puntuacion += 10;
-
+                            if (tiempo < 4) {
+                                puntuacion += 30;
+                                extra = true;
+                            } else {
+                                puntuacion += 10;
+                                extra = false;
+                            }
                             pos++;
                             if (pos < preguntas.size()) { // NUEVA PREGUNTA
                                 objOS.writeObject(0);
+                                objOS.writeObject(extra);
                                 System.out.println(nombre + "¡Ha acertado!");
                                 enviarPregunta(datosPreguntaYRespuestas(preguntas.get(pos), puntuacion), claveAES, objOS);
                                 System.out.println(nombre + "Enviando otra pregunta: " + preguntas.get(pos).getTitulo());
@@ -261,6 +271,7 @@ public class HiloServidor extends Thread {
                                 System.out.println(nombre + "Ha acertado todas las preguntas");
                                 boolean maxPuntuacion = cotejarPuntuaciones(puntuacion);
                                 objOS.writeObject(1);
+                                objOS.writeObject(extra);
                                 if (maxPuntuacion)
                                     objOS.writeObject(encriptarMensaje(claveAES, String.valueOf(puntuacion + "max")));
                                 else
@@ -301,15 +312,31 @@ public class HiloServidor extends Thread {
 
     /**
      * Devuelve true si la puntuación es mayor que la que ya tenía el usuario
+     *
+     * Utilizará getPrincipals() sacando el sujeto que realizó el login (JAAS)
+     * Por si acaso hubiera un problema con el loginContext (que no me ha ocurrido aún, pero más
+     * vale prevenir que curar)
      */
     public boolean cotejarPuntuaciones(int puntuacion) {
         boolean mayorPuntuacion = false;
-        ArrayList<Usuario> usuarios = LeerFicheros.leerUsuarios();
-        for (Usuario usu: usuarios) {
-            if (usu.getNick().equalsIgnoreCase(nickJugador)) {
-                if (usu.getPuntuacion() < puntuacion) {
-                    EscribirFicheros.modificarPuntuacionUsuario(nickJugador, puntuacion);
+        if (loginContext != null) {
+            Subject sujeto = loginContext.getSubject();
+            Set principales = sujeto.getPrincipals();
+            Iterator iterador = principales.iterator();
+            while (iterador.hasNext()) {
+                ImplementacionPrincipal principal = (ImplementacionPrincipal) iterador.next();
+                if (principal.getUsuario().getPuntuacion() < puntuacion) {
                     mayorPuntuacion = true;
+                }
+            }
+        } else {
+            ArrayList<Usuario> usuarios = LeerFicheros.leerUsuarios();
+            for (Usuario usu: usuarios) {
+                if (usu.getNick().equalsIgnoreCase(nickJugador)) {
+                    if (usu.getPuntuacion() < puntuacion) {
+                        EscribirFicheros.modificarPuntuacionUsuario(nickJugador, puntuacion);
+                        mayorPuntuacion = true;
+                    }
                 }
             }
         }
@@ -449,7 +476,7 @@ public class HiloServidor extends Thread {
     /**
      * Método para desencriptar un int
      */
-    public int fromByteArray(SecretKey claveAES, byte[] mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+    public int desencriptarInt(SecretKey claveAES, byte[] mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         Cipher aesCipher = Cipher.getInstance("AES");
         aesCipher.init(Cipher.DECRYPT_MODE, claveAES);
         return ByteBuffer.wrap(aesCipher.doFinal(mensaje)).getInt();

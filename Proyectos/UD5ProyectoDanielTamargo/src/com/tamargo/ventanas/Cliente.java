@@ -1,6 +1,7 @@
 package com.tamargo.ventanas;
 
-import com.tamargo.datos.GuardarLogs;
+import com.tamargo.varios.AnimacionPuntosExtra;
+import com.tamargo.varios.Contador;
 import com.tamargo.varios.JTextFieldLimit;
 
 import javax.crypto.*;
@@ -16,7 +17,7 @@ import java.io.*;
 import java.security.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.logging.Level;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class Cliente {
@@ -76,6 +77,16 @@ public class Cliente {
     private ArrayList<String> textoRespuestas = new ArrayList<>();
     private ArrayList<String> datosPregunta = new ArrayList<>();
 
+    private JLabel lContador;
+    private JLabel puntosExtra;
+    private AnimacionPuntosExtra puntosExtraAnim = null;
+    private Contador contador = null;
+
+    boolean primeraPregunta = true;
+
+    private long tiempoInicio;
+    private long tiempoFin;
+
     // PUNTUACIONES
     private JTextPane tpPuntuaciones;
     private ArrayList<String> topPuntuaciones = new ArrayList<>();
@@ -83,11 +94,11 @@ public class Cliente {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTOR
     public Cliente(JFrame ventana) {
-        // check RECIBIR LA PUNTUACIÓN (EN STRING) AL ACABAR LA PARTIDA Y MOSTRARLA EN LOS JOPTIONPANES
-        // TODO CALCULAR TIEMPO QUE HA TARDADO EN RESPONDER Y SUMAR UN PLUS SI ES NECESARIO
-        //  TERMINAR VENTANA ADMIN
-        //  UTILIZAR LA COLECCIÓN GETPRINCIPALS Y SACAR DE AHÍ EL USUARIO LOGGEADO Y EL TIPO (LOGIN GET CONTEXT)
-        //  PREPARAR DOCUMENTACIÓN
+        // ✓ RECIBIR LA PUNTUACIÓN (EN STRING) AL ACABAR LA PARTIDA Y MOSTRARLA EN LOS JOPTIONPANES
+        // ✓ CALCULAR TIEMPO QUE HA TARDADO EN RESPONDER Y SUMAR UN PLUS SI ES NECESARIO
+        // ✓ UTILIZAR LA COLECCIÓN GETPRINCIPALS Y SACAR DE AHÍ EL USUARIO LOGGEADO Y EL TIPO (LOGIN GET CONTEXT)
+        // TODO TERMINAR VENTANA ADMIN
+        //  PREPARAR DOCUMENTACIÓN (mini check)
 
         this.ventana = ventana;
         iniciarCliente();
@@ -306,6 +317,7 @@ public class Cliente {
             @Override
             public void actionPerformed(ActionEvent e) {
                 b_cerrarSesion.setEnabled(false);
+                primeraPregunta = true;
                 try {
                     objOS.writeObject(3); // 3 = nueva partida
                     boolean existenPreguntas = (boolean) objIS.readObject();
@@ -337,6 +349,7 @@ public class Cliente {
         b_respuesta1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                tiempoFin = new Date().getTime();
                 String texto = "";
                 try {
                     texto = textoRespuestas.get(0);
@@ -351,6 +364,7 @@ public class Cliente {
         b_respuesta2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                tiempoFin = new Date().getTime();
                 String texto = "";
                 try {
                     texto = textoRespuestas.get(1);
@@ -365,6 +379,7 @@ public class Cliente {
         b_respuesta3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                tiempoFin = new Date().getTime();
                 String texto = "";
                 try {
                     texto = textoRespuestas.get(2);
@@ -379,6 +394,7 @@ public class Cliente {
         b_respuesta4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                tiempoFin = new Date().getTime();
                 String texto = "";
                 try {
                     texto = textoRespuestas.get(3);
@@ -514,6 +530,18 @@ public class Cliente {
         panelPartida.add(cabeceraPreg);
         cabeceraPreg.setBounds(0, 20, dimPanelPartida.width, 20);
         cabeceraPreg.setForeground(Color.GRAY);
+
+        puntosExtra = new JLabel();
+        configurarLabel(puntosExtra, fuenteMYHUI, Font.BOLD, 12);
+        puntosExtra.setForeground(new Color(0, 140, 37));
+        panelPartida.add(puntosExtra);
+        puntosExtra.setBounds(10, 8, 150, 20);
+
+        lContador = new JLabel("", SwingConstants.RIGHT);
+        configurarLabel(lContador, fuenteMYHUI, Font.BOLD, 12);
+        lContador.setForeground(new Color(110, 110, 110));
+        panelPartida.add(lContador);
+        lContador.setBounds(dimPanelPartida.width - 10 - 150, 8, 150, 20);
 
         int margenX = 10;
         tpPregunta =  new JTextPane();
@@ -753,7 +781,7 @@ public class Cliente {
         String mensaje;
         if (confirmacion) {
             mensaje = "Las normas se han validado correctamente, puedes continuar";
-            hashRecibido.setForeground(new Color(30, 148, 53));
+            hashRecibido.setForeground(new Color(0, 140, 37));
         } else {
             b_aceptar.setText("Volver");
             mensaje = "Imposible validar las normas, no podrás jugar sin conexión segura";
@@ -980,6 +1008,11 @@ public class Cliente {
         aesCipher.init(Cipher.DECRYPT_MODE, claveAES);
         return new String(aesCipher.doFinal(mensaje));
     }
+    public byte[] encriptarInt(SecretKey claveAES, int dato) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.ENCRYPT_MODE, claveAES);
+        return aesCipher.doFinal(intToByteArray(dato));
+    }
     public byte[] encriptarMensaje(SecretKey claveAES, String mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         Cipher aesCipher = Cipher.getInstance("AES");
         aesCipher.init(Cipher.ENCRYPT_MODE, claveAES);
@@ -1021,6 +1054,13 @@ public class Cliente {
             objOS.writeObject(tipo); // tipo = 1 -> comprobarRespuesta, tipo = 2 -> abandonar
             if (tipo == 1) { // Si hemos mandado el tipo 1, está esperando a recibir la respuesta para comprobar si es válida
                 objOS.writeObject(encriptarMensaje(claveAES, textoRespuesta));
+                int tiempo;
+                try {
+                    tiempo = (int) ((tiempoFin - tiempoInicio) / 1000);
+                } catch (NumberFormatException | ClassCastException ignored) {
+                    tiempo = 9999; // Si da error, pasamos
+                }
+                objOS.writeObject(encriptarInt(claveAES, tiempo));
             }
             // AGUARDAR RESPUESTA
             respuesta = (Integer) objIS.readObject();
@@ -1049,13 +1089,24 @@ public class Cliente {
             }
             case 0 -> { // SIGUIENTE PREGUNTA
                 try {
+                    boolean extra = (boolean) objIS.readObject();
                     datosPregunta = desencriptarArrayListString(claveAES, (byte[]) objIS.readObject());
+                    if (extra) {
+                        animacionPuntosExtra();
+                    }
                     volcarDatosPregunta();
                 } catch (IOException | ClassNotFoundException | NoSuchAlgorithmException | InvalidKeyException |
                         NoSuchPaddingException | BadPaddingException |
                         IllegalBlockSizeException ignored) { }
             }
             case 1 -> { // HAS ACERTADO TODAS LAS PREGUNTAS FIN DE LA PARTIDA
+                boolean extra = false;
+                try {
+                   extra = (boolean) objIS.readObject();
+                } catch (IOException | ClassNotFoundException ignored) { }
+                if (extra) {
+                    animacionPuntosExtra();
+                }
                 String mensaje;
                 if (puntuacion.contains("max")) {
                     puntuacion = puntuacion.substring(0, puntuacion.length() - 3);
@@ -1082,6 +1133,21 @@ public class Cliente {
             }
         }
     }
+    public void animacionPuntosExtra() {
+        System.out.println("¡Puntos Extra!");
+        if (puntosExtraAnim != null && puntosExtraAnim.isAlive()) {
+            puntosExtraAnim.parar();
+        }
+        puntosExtraAnim = new AnimacionPuntosExtra(puntosExtra);
+        puntosExtraAnim.start();
+    }
+    public void iniciarContador() {
+        if (contador != null && contador.isAlive()) {
+            contador.parar();
+        }
+        contador = new Contador(lContador);
+        contador.start();
+    }
     public void volcarDatosPregunta() {
         try {
             textoRespuestas = new ArrayList<>();
@@ -1099,6 +1165,8 @@ public class Cliente {
 
             tipoPreguntaPartida.setText(datosPregunta.get(5));
             puntuacionPartida.setText(datosPregunta.get(6));
+            tiempoInicio = new Date().getTime();
+            iniciarContador();
         } catch (NullPointerException | IndexOutOfBoundsException ignored) { }
     }
     public String saltoLineaBoton(String texto) {
@@ -1131,6 +1199,14 @@ public class Cliente {
         }
 
         return devolver;
+    }
+    public byte[] intToByteArray(int dato) {
+        byte[] resultado = new byte[4];
+        resultado[0] = (byte) ((dato & 0xFF000000) >> 24);
+        resultado[1] = (byte) ((dato & 0x00FF0000) >> 16);
+        resultado[2] = (byte) ((dato & 0x0000FF00) >> 8);
+        resultado[3] = (byte) ((dato & 0x000000FF));
+        return resultado;
     }
     public void volcarDatosTextPane(JTextPane textPane, ArrayList<String> listaStrings, int tipo) {
         textPane.setText("");

@@ -26,3 +26,133 @@ dic. 03, 2020 4:01:40 P. M. com.tamargo.servicio.HiloServidor run
 FINE: Comenzando una nueva partida con el usuario dani
 dic. 03, 2020 4:02:37 P. M. com.tamargo.servicio.HiloServidor run
 INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 03, 2020 9:03:17 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 9:03:19 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:03:28 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:03:32 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:05:39 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 9:05:41 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:08:09 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 9:08:11 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario test
+dic. 03, 2020 9:08:16 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario test
+dic. 03, 2020 9:08:20 P. M. com.tamargo.datos.EscribirFicheros modificarPuntuacionUsuario
+FINE: Error al editar la puntuación del usuario -> test
+dic. 03, 2020 9:08:25 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario test
+dic. 03, 2020 9:08:33 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario test
+dic. 03, 2020 9:08:41 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario test
+dic. 03, 2020 9:08:47 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario test
+dic. 03, 2020 9:08:56 P. M. com.tamargo.datos.EscribirFicheros modificarPuntuacionUsuario
+FINE: Error al editar la puntuación del usuario -> test
+dic. 03, 2020 9:09:03 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario test
+dic. 03, 2020 9:09:48 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 9:09:50 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:09:54 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:11:27 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:11:29 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 03, 2020 9:11:32 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 9:11:34 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:11:46 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:11:59 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:12:10 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:50:19 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 9:50:21 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:51:01 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 03, 2020 9:51:04 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 9:51:05 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:51:26 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:51:37 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 03, 2020 9:51:39 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 9:51:40 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:52:48 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 03, 2020 9:52:51 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 9:52:52 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 9:53:12 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 03, 2020 10:00:43 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 10:00:44 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 10:04:59 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 10:05:00 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 10:05:10 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 03, 2020 10:05:49 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 10:05:50 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 10:06:15 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 03, 2020 10:06:32 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 10:06:33 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 10:15:14 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 10:15:19 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 10:15:47 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 10:15:48 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 10:16:43 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 10:17:41 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 03, 2020 10:17:43 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 10:17:44 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 10:17:56 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 03, 2020 10:18:43 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 10:18:44 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 03, 2020 10:19:14 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 03, 2020 10:34:05 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 10:34:11 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 03, 2020 10:34:13 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario test
+dic. 03, 2020 10:34:19 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario test

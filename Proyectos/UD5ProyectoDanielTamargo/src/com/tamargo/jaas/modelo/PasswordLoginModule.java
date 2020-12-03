@@ -29,7 +29,7 @@ public class PasswordLoginModule implements LoginModule {
 
     private String nickUsuario;
     private char[] contrasenyaUsuario;
-    private int tipoUsuario = 0;
+    private Usuario usuario;
 
     private Principal principal;
 
@@ -95,10 +95,12 @@ public class PasswordLoginModule implements LoginModule {
                     GuardarLogs.logger.log(Level.FINE, "Inicio de sesión exitoso");
                     System.out.println("[PasswordLoginModule] Inicio de sesión correcto");
                     loginExito = true;
-                    tipoUsuario = usu.getTipo();
+                    //tipoUsuario = usu.getTipo();
+                    usuario = usu;
                     return true;
                 } else {
                     nickUsuario = null;
+                    usuario = null;
                     clearPassword();
                     GuardarLogs.logger.log(Level.WARNING, "Intento de inicio de sesión fallido. Contraseña incorrecta");
                     System.out.println("[PasswordLoginModule] Contraseña incorrecta");
@@ -126,8 +128,7 @@ public class PasswordLoginModule implements LoginModule {
         }
 
         // Login con éxito: crear Principal y añadirlo al Subject
-        // TODO RECOGER TIPO AL LEER Y VOLCARLO AQUI
-        principal = new ImplementacionPrincipal(nickUsuario, new String(contrasenyaUsuario), tipoUsuario);
+        principal = new ImplementacionPrincipal(usuario);
         sujeto.getPrincipals().add(principal);
 
         // Borrar usuario y password.

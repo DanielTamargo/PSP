@@ -16,12 +16,13 @@ import java.util.*;
 
 public class Pruebas {
 
-    public static void main(String[] args) throws UnsupportedEncodingException, NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException, InvalidKeyException {
+    public static void main(String[] args) throws UnsupportedEncodingException, NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException, InvalidKeyException, InterruptedException {
 
-        String comprobando = "hola que tal como estais bienvenidos a mi gameplay intensisimo holaaa holaaa hola que taal";
-        System.out.println(comprobando);
-        System.out.println();
-        System.out.println(saltoLineaBoton(comprobando));
+        long timeMilli = new Date().getTime();
+        Thread.sleep(1001);
+        long timeMilli2 = new Date().getTime();
+
+        System.out.println(timeMilli2 - timeMilli);
 
     }
 

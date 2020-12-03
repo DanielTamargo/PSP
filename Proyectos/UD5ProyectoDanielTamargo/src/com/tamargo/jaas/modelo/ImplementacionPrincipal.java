@@ -1,5 +1,7 @@
 package com.tamargo.jaas.modelo;
 
+import com.tamargo.datos.Usuario;
+
 import java.io.Serializable;
 import java.security.Principal;
 
@@ -8,14 +10,10 @@ import java.security.Principal;
  */
 public class ImplementacionPrincipal implements Principal, Serializable {
 
-    private final String nombre;
-    private final String contrasenya;
-    private final int tipo;
+    private final Usuario usuario;
 
-    public ImplementacionPrincipal(String nombre, String contrasenya, int tipo) {
-        this.nombre = nombre;
-        this.contrasenya = contrasenya;
-        this.tipo = tipo;
+    public ImplementacionPrincipal(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override
@@ -24,36 +22,40 @@ public class ImplementacionPrincipal implements Principal, Serializable {
             return false;
         }
         ImplementacionPrincipal otro = (ImplementacionPrincipal) obj;
-        return nombre.equals(otro.getName());
+        return usuario.getNick().equals(otro.getName());
     }
 
     @Override
     public int hashCode() {
-        return nombre.hashCode();
+        return usuario.getNick().hashCode();
     }
 
     public String getName() {
-        return nombre;
+        return usuario.getNick();
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNick() {
+        return usuario.getNick();
     }
 
     public String getContrasenya() {
-        return contrasenya;
+        return usuario.getContrasenya();
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     public int getTipo() {
-        return tipo;
+        return usuario.getTipo();
     }
 
     @Override
     public String toString() {
         return "ImplementacionPrincipal{" +
-                "nombre='" + nombre + '\'' +
-                ", contrasenya='" + contrasenya + '\'' +
-                ", tipo='" + tipo + '\'' +
+                "usuario='" + usuario.getNick() + '\'' +
+                ", contrasenya='" + usuario.getContrasenya() + '\'' +
+                ", tipo='" + usuario.getTipo() + '\'' +
                 '}';
     }
 }
