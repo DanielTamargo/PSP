@@ -10,15 +10,12 @@ public class ImplementacionPrincipal implements Principal, Serializable {
 
     private final String nombre;
     private final String contrasenya;
-    private final String tipo;
+    private final int tipo;
 
-    public ImplementacionPrincipal(String nombre, String contrasenya, String tipo) {
+    public ImplementacionPrincipal(String nombre, String contrasenya, int tipo) {
         this.nombre = nombre;
         this.contrasenya = contrasenya;
-        if (tipo == null)
-            this.tipo = "Invitado";
-        else
-            this.tipo = tipo;
+        this.tipo = tipo;
     }
 
     @Override
@@ -39,8 +36,16 @@ public class ImplementacionPrincipal implements Principal, Serializable {
         return nombre;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
     public String getContrasenya() {
         return contrasenya;
+    }
+
+    public int getTipo() {
+        return tipo;
     }
 
     @Override

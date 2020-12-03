@@ -11,6 +11,7 @@ import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 import java.io.*;
+import java.nio.ByteBuffer;
 import java.security.*;
 import java.util.*;
 import java.util.logging.Level;
@@ -37,6 +38,42 @@ public class HiloServidor extends Thread {
     }
 
 
+    /**
+     * Inicio del hilo, arrancará cuando un cliente se conecte al servidor, este hilo se encargará de la comunicación
+     * con dicho cliente, así, otro cliente podrá conectarse al servidor y ser atendido por otro hilo, permitiendo la
+     * capacidad multicliente del servidor
+     *
+     * Al conectarse, el servidor le mandará la clave pública al cliente (sin encriptar), el cliente la recibirá y generará
+     * una clave simétrica, la cual encriptará con la clave pública que ha recibido y nos la enviará. Desencriptaremos esa
+     * clave simétrica que ha generado utilizando nuestra clave privada, y a partir de entonces ambos tendremos dicha clave
+     * simétrica para poder comunicarnos de manera rápida, segura y eficaz
+     *
+     * Según el cliente vaya seleccionando opciones en la aplicación, iremos recibiendo un int para determinar cómo
+     * nos comunicaremos
+     *
+     * (nota 1: el cliente generará una segunda clave simétrica, la cual será siempre igual, para así encriptar su
+     *      * contraseña y nadie a parte del propio cliente podrá saber cuál es dicha contraseña que haya introducido para
+     *      * registrarse)
+     *
+     * Las opciones son:
+     * 1 = iniciar sesión, recibiremos el nick y contraseña y realizaremos el proceso de login a través del JAAS implementado
+     * notificaremos si el login es válido o no con un boolean
+     * (nota 2: si es un login válido, le mandaremos al usuario su nick para poder mostrar colores personalizados en el top
+     * puntuaciones, pero sólo recibirá su nick, así evitamos mover información confidencial o de posible interés ajeno)
+     * si el login es válido le mandaremos las normas del juego en puro + las normas firmadas para que el cliente las coteje
+     * si las comprueba correctamente, podrá pasar a la ventana del juego
+     *
+     * 2 = registro, recibiremos los datos del usuario a registrar y comprobaremos que el nick indicado no esté en uso
+     * no tendremos que comprobar los datos puesto que el cliente tiene establecido unos patrones para afianzar el buen
+     * uso de los datos
+     * notificaremos si rel registro es válido o no con un boolean
+     *
+     * 3 = si el usuario consiguió iniciar sesión, podrá iniciar una nueva partida, a través de esta opción pasarémos al método
+     * buclePartida() comentado más adelante
+     *
+     * (nota 3: si hay errores o notificaciones importantes o de interés, se almacenarán en el log correspondiente a su fecha,
+     * el server solo almacenará hasta 5 logs, por lo que el sexto día de uso consecutivo borrará el log más antiguo)
+     */
     @Override
     public void run() {
         System.out.println(nombre + "Conexión establecida");
@@ -178,6 +215,21 @@ public class HiloServidor extends Thread {
 
     }
 
+    /**
+     * Bucle de la partida, donde se irán mostrando las preguntas y cotejando las respuestas y puntuaciones
+     *
+     * Respuestas que recibe el servidor:
+     * Si el server lee un 1, significará que el cliente ha respondido, y si lee un 2, significará
+     * que el usuario ha abandonado.
+     *
+     * Respuestas que puede dar el servidor:
+     * 0 = el cliente ha acertado y pasa a la siguiente pregunta
+     * 1 = el cliente ha acertado pero ya ha acertado todas las preguntas y ha realizado un "pleno"
+     * 2 = el cliente ha fallado y no ha conseguido superar su puntuación máxima
+     * 3 = el cliente ha fallado pero sí ha conseguido superar su puntuación máxima
+     * -1 = el cliente ha abandonado y no ha superado su puntuación máxima
+     * -2 = el cliente ha abandonado pero ha conseguido superar su puntuación máxima
+     */
     public void buclePartida(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) throws IOException, ClassNotFoundException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
         ArrayList<Pregunta> preguntas = LeerFicheros.leerPreguntas();
 
@@ -198,6 +250,7 @@ public class HiloServidor extends Thread {
                         boolean acierto = preguntas.get(pos).esCorrecta(textoRespuesta);
                         if (acierto) {
                             puntuacion += 10;
+
                             pos++;
                             if (pos < preguntas.size()) { // NUEVA PREGUNTA
                                 objOS.writeObject(0);
@@ -211,9 +264,10 @@ public class HiloServidor extends Thread {
                             }
                         } else {
                             if (!cotejarPuntuaciones(puntuacion)) { // HAS FALLADO SIN SUPERAR TU PUNTUACIÓN
-                                System.out.println(nombre + "Ha acertado todas las preguntas");
+                                System.out.println(nombre + "Ha fallado y no ha superado su puntuación máxima");
                                 objOS.writeObject(2);
                             } else { // HAS FALLADO PERO HAS SUPERADO TU PUNTUACIÓN
+                                System.out.println(nombre + "Ha fallado pero ha logrado superar su puntuación máxima");
                                 objOS.writeObject(3);
                             }
                             bucle = false;
@@ -222,8 +276,10 @@ public class HiloServidor extends Thread {
                     case 2 -> {
                         // TODO ABANDONO, COTEJAR PUNTUACIONES Y RESPONDER
                         if (!cotejarPuntuaciones(puntuacion)) {
+                            System.out.println(nombre + "Ha abandonado sin lograr superar su puntuación máxima");
                             objOS.writeObject(-1);
                         } else {
+                            System.out.println(nombre + "Ha abandonado pero ha logrado superar su puntuación máxima");
                             objOS.writeObject(-2);
                         }
                         bucle = false;
@@ -254,10 +310,17 @@ public class HiloServidor extends Thread {
         return mayorPuntuacion;
     }
 
+    /**
+     * Método que enviará al cliente el ArrayList de Strings que le indiquemos
+     */
     public void enviarPregunta(ArrayList<String> datos, SecretKey claveAES, ObjectOutputStream objOS) throws NoSuchPaddingException, NoSuchAlgorithmException, IOException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
         objOS.writeObject(encriptarArrayListString(claveAES, datos));
     }
 
+    /**
+     * Método utilizado para cargar y devolver un ArrayList de Strings que contendrá información de una
+     * pregunta (el título, las 4 respuestas y el tipo) y la puntuación del jugador para mostrarlo en el cliente
+     */
     public ArrayList<String> datosPreguntaYRespuestas(Pregunta pregunta, int puntuacion) {
         ArrayList<String> datos = new ArrayList<>();
 
@@ -282,6 +345,10 @@ public class HiloServidor extends Thread {
         return datos;
     }
 
+    /**
+     * Método utilizado para cargar y devolver un ArrayList de Strings que
+     * contendrá el top 10 de puntuaciones + el top y la puntuación del jugador loggeado
+     */
     public ArrayList<String> topPuntuaciones() {
         ArrayList<String> lineasTopPuntuaciones = new ArrayList<>();
 
@@ -322,6 +389,10 @@ public class HiloServidor extends Thread {
         return lineasTopPuntuaciones;
     }
 
+    /**
+     * Método para, a través del método topPuntuaciones(), cargar un ArrayList de Strings la información del top de
+     * puntuaciones y mandárselo al cliente
+     */
     public void enviarTopPuntuaciones(SecretKey claveAES, ObjectOutputStream objOS) {
         System.out.println(nombre + "Enviando el TOP Puntuaciones...");
         try {
@@ -332,6 +403,21 @@ public class HiloServidor extends Thread {
         }
     }
 
+    /**
+     * Utilizaremos este método para pasar de un int a un array de bytes para luego mandarlo encriptado
+     */
+    public byte[] intToByteArray(int data) {
+        byte[] result = new byte[4];
+        result[0] = (byte) ((data & 0xFF000000) >> 24);
+        result[1] = (byte) ((data & 0x00FF0000) >> 16);
+        result[2] = (byte) ((data & 0x0000FF00) >> 8);
+        result[3] = (byte) ((data & 0x000000FF));
+        return result;
+    }
+
+    /**
+     * Método para encriptar un ArrayList de Strings
+     */
     public byte[] encriptarArrayListString(SecretKey claveAES, ArrayList<String> arrayList) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(baos);
@@ -345,12 +431,27 @@ public class HiloServidor extends Thread {
         return aesCipher.doFinal(bytes);
     }
 
+    /**
+     * Método para encriptar un String
+     */
     public byte[] encriptarMensaje(SecretKey claveAES, String mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         Cipher aesCipher = Cipher.getInstance("AES");
         aesCipher.init(Cipher.ENCRYPT_MODE, claveAES);
         return aesCipher.doFinal(mensaje.getBytes());
     }
 
+    /**
+     * Método para desencriptar un int
+     */
+    public int fromByteArray(SecretKey claveAES, byte[] mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.DECRYPT_MODE, claveAES);
+        return ByteBuffer.wrap(aesCipher.doFinal(mensaje)).getInt();
+    }
+
+    /**
+     * Método para desencriptar un String
+     */
     public String desencriptarMensaje(SecretKey claveAES, byte[] mensaje) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         Cipher aesCipher = Cipher.getInstance("AES");
         aesCipher.init(Cipher.DECRYPT_MODE, claveAES);

@@ -83,12 +83,17 @@ public class Cliente {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTOR
     public Cliente(JFrame ventana) {
+        // TODO RECIBIR LA PUNTUACIÓN (EN STRING) AL ACABAR LA PARTIDA Y MOSTRARLA EN LOS JOPTIONPANES
+        //  CALCULAR TIEMPO QUE HA TARDADO EN RESPONDER Y SUMAR UN PLUS SI ES NECESARIO
+        //  TERMINAR VENTANA ADMIN
+        //  UTILIZAR LA COLECCIÓN GETPRINCIPALS Y SACAR DE AHÍ EL USUARIO LOGGEADO Y EL TIPO (LOGIN GET CONTEXT)
+        //  PREPARAR DOCUMENTACIÓN
+
         this.ventana = ventana;
-        //iniciarCliente();
+        iniciarCliente();
 
-        ventanaAdmin(null, null, null);
+        //ventanaAdmin(null, null, null);
     }
-
     // LANZAR VENTANA
     public void iniciarCliente() {
         try {
@@ -1009,7 +1014,6 @@ public class Cliente {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MÉTODOS VARIOS
-
     public void inGameEnviarRespuestaAlServidor(int tipo, String textoRespuesta, SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         int respuesta = -1;
         try {
@@ -1057,7 +1061,6 @@ public class Cliente {
             }
         }
     }
-
     public void volcarDatosPregunta() {
         try {
             textoRespuestas = new ArrayList<>();
@@ -1081,8 +1084,6 @@ public class Cliente {
         String devolver = "";
         int numCaracteres = 22;
         boolean saltoLinea = true;
-        String ultimaPlabra = texto.substring(texto.lastIndexOf(' ') + 1);
-
         if (texto.length() > numCaracteres) {
             try {
                 while (texto.length() > numCaracteres) {
