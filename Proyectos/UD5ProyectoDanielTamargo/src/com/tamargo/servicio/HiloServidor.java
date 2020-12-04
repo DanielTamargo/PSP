@@ -276,7 +276,7 @@ public class HiloServidor extends Thread {
             while (bucle) {
                 opcion = (Integer) objIS.readObject();
                 switch (opcion) {
-                    case 1 -> {
+                    case 1 -> { // RESPONDE
                         String textoRespuesta = desencriptarMensaje(claveAES, (byte[]) objIS.readObject());
                         int tiempo = desencriptarInt(claveAES, (byte[]) objIS.readObject());
                         boolean acierto = preguntas.get(pos).esCorrecta(textoRespuesta);
@@ -318,7 +318,7 @@ public class HiloServidor extends Thread {
                             bucle = false;
                         }
                     }
-                    case 2 -> {
+                    case 2 -> { // ABANDONA
                         if (!cotejarPuntuaciones(puntuacion)) {
                             System.out.println(nombre + "Ha abandonado sin lograr superar su puntuación máxima");
                             objOS.writeObject(-1);
@@ -353,7 +353,8 @@ public class HiloServidor extends Thread {
             for (Principal principale : principales) {
                 ImplementacionPrincipal principal = (ImplementacionPrincipal) principale;
                 if (principal.getUsuario().getPuntuacion() < puntuacion) {
-                    EscribirFicheros.modificarPuntuacionUsuario(nickJugador, puntuacion);
+                    EscribirFicheros.modificarPuntuacionUsuario(principal.getUsuario().getNick(), puntuacion);
+                    principal.getUsuario().setPuntuacion(puntuacion);
                     mayorPuntuacion = true;
                     break;
                 }

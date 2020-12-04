@@ -2,13 +2,10 @@ package com.tamargo.servicio;
 
 import com.tamargo.datos.GuardarLogs;
 
-import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import java.io.IOException;
-import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;

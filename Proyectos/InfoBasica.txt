@@ -1,0 +1,61 @@
+// Specs
+IDE Utilizado: IntelliJ Idea
+JDK Usado: open JDK 15 (predeterminado que descarga intelliJ)
+Libs añadidos: ninguno
+
+
+// Importante
+Ejecutar el Servidor configurando las VM Options añadiendo:
+-Djava.security.auth.login.config=jaas.config
+Foto de ilustración: https://gyazo.com/a899018939d3e2c66ac1a9ab2ac17ef2
+
+Sin esa configuración, el server no podrá funcionar el sistema de Login al utilizar jaas pero no señalarle cuál es su fichero de configuración
+
+
+// Premisa de la aplicación
+Un juego donde clientes se conectarán a un servidor y podrán responder preguntas que este le vaya mandando, pudiendo ver al final su puntuación
+
+
+// Cómo arrancar la aplicación
+Ejecutar el método Main de los archivos:
+- Servidor (ruta: src/com/tamargo/servicio/Servidor)
+- Cliente (ruta: src/com/tamargo/ventanas/Cliente) (admite la ejecución de múltiples instancias)
+
+
+// Cómo funciona
+Un cliente se conecta al servidor y se comunican a través de mensajes cifrados
+Dependiendo de las opciones que seleccione el cliente en la aplicación, le mandará y pedirá al servidor unos datos u otros
+
+De esta manera, el servidor proveerá los datos y permisos necesarios al clientes para poder acceder a las distintas funciones de la aplicación
+
+
+// Datos base:
+Hay 12 preguntas base insertadas en el fichero preguntas.dat y varios usuarios insertados en el fichero usuarios.dat
+Ambos están dentro de la carpeta ficheros
+
+Si cualquiera de los dos archivos se corrompe, o vacía o elimina, puedes ejecutar el método Main del archivo InsertarDatosBase (ruta: src/com/tamargo/datos) y este insertará los datos base de nuevo
+
+
+// Datos para probar la aplicación:
+Algunos usuarios para que puedas iniciar sesión sin necesidad de registrarte:
+  usuario	contraseña	tipo
+- dani 		test		jugador
+- test		test		jugador
+- admin		test		admin <- puede ver los logs en una ventana especial
+
+
+// Patrones
+Al iniciar sesión o registrarse se comprobarán una serie de patrones para afianzar que los datos han sido introducidos correctamente
+
+
+// Extras:
+- JAAS implementado
+- SSL implementado
+- Logs en el servidor notificando tanto errores y registros como avisos
+- Cada día que pase, se generará un fichero Log distinto y sólo se almacenan 8 distintos, evitando así que se acabe por saturar a la hora de llenarlo de más y más ficheros con más y más información antigua
+- Ventana especial donde el administrador podrá ver los logs y filtrarlos
+- Utilización de 2 hilos por parte del cliente para llevar un contador del tiempo que tarda en responder y notificar si ha ganado puntos extra al responder en menos de 4 segundos
+- Inserción de datos base si se desea
+- El cliente cuenta con una clave simétrica que sólo conoce él y que siempre será la misma para poder encriptar la contraseña y así el servidor no sabrá cuál es la contraseña (proporciona más seguridad)
+- TOP puntuaciones visible en la ventana
+- Si el cliente no se puede conectar al servidor porque este no está en marcha, lo detecta, avisa, y permite la opción de volver a intentar conectar

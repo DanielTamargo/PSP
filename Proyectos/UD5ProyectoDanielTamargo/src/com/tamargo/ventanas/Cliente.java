@@ -106,9 +106,6 @@ public class Cliente {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTOR
     public Cliente(JFrame ventana) {
-        // TODO PREPARAR DOCUMENTACIÓN (mini check)
-        //  preparar inserción de datos base si no los detecta
-
         this.ventana = ventana;
         iniciarCliente();
     }
@@ -183,10 +180,6 @@ public class Cliente {
                     ventana.dispose();
                 }
             });
-
-            //todo quitar
-            tNick.setText("admin");
-            tContrasenya.setText("test");
 
         } catch (IOException | NoSuchAlgorithmException |
                 NoSuchPaddingException | InvalidKeyException | ClassNotFoundException
@@ -1452,12 +1445,17 @@ public class Cliente {
         try {
             boolean resetearColor = false;
             for (String str : listaStrings) {
-                if ((tipo == 2 && str.toLowerCase().contains(nickJugador.toLowerCase())) || (tipo == 2 && str.contains("Tu puntuación"))
+                if (str.contains(".")) {
+                    if ((tipo == 2 && str.substring(0, str.indexOf('.')).equalsIgnoreCase(nickJugador))) {
+                        StyleConstants.setForeground(style, Color.BLUE);
+                        resetearColor = true;
+                    }
+                }
+                if ((tipo == 2 && str.contains("Tu puntuación"))
                         || (tipo == 1 && nums.contains(str.substring(0, 1)))) {
                     StyleConstants.setForeground(style, Color.BLUE);
                     resetearColor = true;
                 }
-
                 doc.insertString(doc.getLength(), str, style);
 
                 if (resetearColor) {
