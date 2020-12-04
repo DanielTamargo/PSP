@@ -1,4 +1,4 @@
-package com.tamargo;
+package com.tamargo.varios;
 
 import com.tamargo.datos.EscribirFicheros;
 import com.tamargo.datos.LeerFicheros;

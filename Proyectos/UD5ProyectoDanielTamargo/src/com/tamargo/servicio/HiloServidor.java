@@ -36,8 +36,7 @@ public class HiloServidor extends Thread {
 
         this.nombre = "[Servidor Cliente " + numCliente + "] ";
     }
-
-
+    
     /**
      * Inicio del hilo, arrancará cuando un cliente se conecte al servidor, este hilo se encargará de la comunicación
      * con dicho cliente, así, otro cliente podrá conectarse al servidor y ser atendido por otro hilo, permitiendo la
@@ -140,28 +139,57 @@ public class HiloServidor extends Thread {
                             objOS.writeObject(exito);
 
                             if (exito) {
-                                Signature sigRSA = Signature.getInstance("SHA256withRSA");
-                                sigRSA.initSign(parejaClaves.getPrivate());
-                                String normas = """
-                                        1- Al empezar una partida comenzarás una serie de rondas
-                                        2- Cada ronda recibirás una pregunta y 4 respuestas
-                                        3- Solo una respuesta será correcta
-                                        4- Cada respuesta acertada sumará un punto
-                                        5- Seguirás respondiendo hasta fallar una pregunta, abandonar o terminarlas todas
-                                        6- Se te guardará la puntuación más alta que alcances
-                                        7- Puedes ver la lista de puntuaciones para ver tu clasificación""";
-                                sigRSA.update(normas.getBytes());
-                                byte[] firmaNormas = sigRSA.sign();
-                                System.out.println(nombre + "Enviando normas firmadas:");
-                                System.out.println(new String(firmaNormas));
+                                int tipoUsuario = 0;
 
-                                objOS.writeObject(encriptarMensaje(claveAES, normas));
-                                objOS.writeObject(firmaNormas);
+                                if (loginContext != null) {
+                                    Subject sujeto = loginContext.getSubject();
+                                    Set<Principal> principales = sujeto.getPrincipals();
+                                    for (Principal principale : principales) {
+                                        ImplementacionPrincipal principal = (ImplementacionPrincipal) principale;
+                                        tipoUsuario = principal.getTipo();
+                                    }
+                                }
 
-                                boolean confirmacion;
-                                confirmacion = (boolean) objIS.readObject();
-                                if (confirmacion) {
-                                    enviarTopPuntuaciones(claveAES, objOS);
+                                objOS.writeObject(tipoUsuario);
+
+                                if (tipoUsuario != 1) { // JUGADOR
+                                    Signature sigRSA = Signature.getInstance("SHA256withRSA");
+                                    sigRSA.initSign(parejaClaves.getPrivate());
+                                    String normas = """
+                                            1- Al empezar una partida comenzarás una serie de rondas
+                                            2- Cada ronda recibirás una pregunta y 4 respuestas
+                                            3- Solo una respuesta será correcta
+                                            4- Cada respuesta acertada sumará un punto
+                                            5- Seguirás respondiendo hasta fallar una pregunta, abandonar o terminarlas todas
+                                            6- Se te guardará la puntuación más alta que alcances
+                                            7- Puedes ver la lista de puntuaciones para ver tu clasificación""";
+                                    sigRSA.update(normas.getBytes());
+                                    byte[] firmaNormas = sigRSA.sign();
+                                    System.out.println(nombre + "Enviando normas firmadas:");
+                                    System.out.println(new String(firmaNormas));
+
+                                    objOS.writeObject(encriptarMensaje(claveAES, normas));
+                                    objOS.writeObject(firmaNormas);
+
+                                    boolean confirmacion;
+                                    confirmacion = (boolean) objIS.readObject();
+                                    if (confirmacion) {
+                                        enviarTopPuntuaciones(claveAES, objOS);
+                                    }
+                                } else { // ADMIN
+                                    System.out.println(this.nombre + "Mandándole los logs al administrador loggeado -> " + nickJugador);
+                                    GuardarLogs.logger.log(Level.FINE, "Mandando logs al administrador loggeado -> " + nickJugador);
+                                    ArrayList<ArrayList<String>> todosLosLogs = LeerFicheros.contenidoTodosLosLogs();
+
+                                    // MANDAMOS EL TOTAL DE LOGS LEIDOS Y LUEGO EL CONTENIDO
+                                    objOS.writeObject(todosLosLogs.size());
+                                    if (todosLosLogs.size() > 0) {
+                                        Collections.reverse(todosLosLogs);
+                                        for (ArrayList<String> datosLog : todosLosLogs) {
+                                            objOS.writeObject(encriptarArrayListString(claveAES, datosLog));
+                                        }
+                                        System.out.println(this.nombre + "Datos de los logs enviados con éxito");
+                                    }
                                 }
                             }
                         }
@@ -243,8 +271,8 @@ public class HiloServidor extends Thread {
             System.out.println(nombre + "Enviando la primera pregunta: " + preguntas.get(pos).getTitulo());
             enviarPregunta(datosPreguntaYRespuestas(preguntas.get(pos), puntuacion), claveAES, objOS);
             boolean bucle = true;
-            boolean extra = false;
-            int opcion = -1;
+            boolean extra;
+            int opcion;
             while (bucle) {
                 opcion = (Integer) objIS.readObject();
                 switch (opcion) {
@@ -271,11 +299,11 @@ public class HiloServidor extends Thread {
                                 System.out.println(nombre + "Ha acertado todas las preguntas");
                                 boolean maxPuntuacion = cotejarPuntuaciones(puntuacion);
                                 objOS.writeObject(1);
-                                objOS.writeObject(extra);
                                 if (maxPuntuacion)
                                     objOS.writeObject(encriptarMensaje(claveAES, String.valueOf(puntuacion + "max")));
                                 else
                                     objOS.writeObject(encriptarMensaje(claveAES, String.valueOf(puntuacion)));
+                                objOS.writeObject(extra);
                                 bucle = false;
                             }
                         } else {
@@ -321,12 +349,13 @@ public class HiloServidor extends Thread {
         boolean mayorPuntuacion = false;
         if (loginContext != null) {
             Subject sujeto = loginContext.getSubject();
-            Set principales = sujeto.getPrincipals();
-            Iterator iterador = principales.iterator();
-            while (iterador.hasNext()) {
-                ImplementacionPrincipal principal = (ImplementacionPrincipal) iterador.next();
+            Set<Principal> principales = sujeto.getPrincipals();
+            for (Principal principale : principales) {
+                ImplementacionPrincipal principal = (ImplementacionPrincipal) principale;
                 if (principal.getUsuario().getPuntuacion() < puntuacion) {
+                    EscribirFicheros.modificarPuntuacionUsuario(nickJugador, puntuacion);
                     mayorPuntuacion = true;
+                    break;
                 }
             }
         } else {

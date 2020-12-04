@@ -2,6 +2,7 @@ package com.tamargo.datos;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.logging.Level;
 
 public class LeerFicheros {
@@ -9,7 +10,7 @@ public class LeerFicheros {
     /**
      * Recoge los usuarios del fichero usuarios.dat
      */
-    public static ArrayList<Usuario> leerUsuarios() {
+    public static synchronized ArrayList<Usuario> leerUsuarios() {
         ArrayList<Usuario> usuarios = new ArrayList<>();
 
         try {
@@ -36,9 +37,9 @@ public class LeerFicheros {
     }
 
     /**
-     * Recoge los preguntas del fichero preguntas.dat
+     * Recoge las preguntas del fichero preguntas.dat
      */
-    public static ArrayList<Pregunta> leerPreguntas() {
+    public static synchronized ArrayList<Pregunta> leerPreguntas() {
         ArrayList<Pregunta> preguntas = new ArrayList<>();
 
         try {
@@ -62,6 +63,30 @@ public class LeerFicheros {
         }
 
         return preguntas;
+    }
+
+    /**
+     * Genera un ArrayList que contendrá numerosos ArrayLists que cada uno de ellos contendrá el contenido de un log
+     */
+    public static synchronized ArrayList<ArrayList<String>> contenidoTodosLosLogs() {
+        ArrayList<ArrayList<String>> contenidoTodosLogs = new ArrayList<>();
+
+        for (File f: Objects.requireNonNull(new File("./logs").listFiles())) {
+            if (!f.getName().contains("lck")) {
+                ArrayList<String> contenidoUnLog = new ArrayList<>();
+                contenidoUnLog.add(f.getName());
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader(f));
+                    String linea;
+                    while ((linea = br.readLine()) != null) {
+                        contenidoUnLog.add(linea);
+                    }
+                } catch (IOException ignored) {}
+                contenidoTodosLogs.add(contenidoUnLog);
+            }
+        }
+
+        return contenidoTodosLogs;
     }
 
 }

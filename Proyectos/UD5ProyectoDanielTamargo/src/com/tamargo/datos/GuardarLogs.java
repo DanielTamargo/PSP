@@ -14,9 +14,9 @@ import java.util.logging.SimpleFormatter;
 public class GuardarLogs {
 
     public static final Logger logger = inicializarLog();
-    private static final int numLogsMaximos = 5;
+    private static final int numLogsMaximos = 12;
 
-    public static Logger inicializarLog() {
+    public static synchronized Logger inicializarLog() {
         Logger logger = Logger.getLogger("ProyectoUD5");
         FileHandler fh;
         try {
@@ -43,7 +43,7 @@ public class GuardarLogs {
         return logger;
     }
 
-    public static void borrarLogsSobrantes() {
+    public static synchronized void borrarLogsSobrantes() {
         try {
             File path = new File("./logs");
             ArrayList<File> logs = new ArrayList<>();
@@ -76,7 +76,7 @@ public class GuardarLogs {
         } catch (Exception ignored) { }
     }
 
-    public static void comprobarCarpetaLogs() {
+    public static synchronized void comprobarCarpetaLogs() {
         File f = new File("./logs");
         if (!f.exists()) {
             System.out.println("[Log] La carpeta logs no existe");

@@ -20,6 +20,14 @@ public class Servidor {
         lanzarServidor();
     }
 
+    /**
+     * Método que lanzará el Servidor y ejecutará los siguiente pasos:
+     * - Configura las propiedades para seleccionar qué certificado definirá la confianza con el servidor
+     * - Gracias a dichas propiedades, genera un SSLServerSocket que aceptará conexiones posteriormente
+     * - Genera un par de claves (pub/priv) RSA
+     * - Comienza un bucle infinito donde irá aceptando conexiones
+     * - Cada conexión aceptada se delegará en un hilo del servidor
+     */
     public static void lanzarServidor() {
         String nombre = "[Servidor] ";
 

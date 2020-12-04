@@ -1,0 +1,220 @@
+dic. 04, 2020 1:34:12 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:34:13 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:34:13 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:34:17 A. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 04, 2020 1:34:18 A. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 04, 2020 1:34:19 A. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 04, 2020 1:34:49 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 04, 2020 1:34:49 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 04, 2020 1:34:49 A. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 04, 2020 1:35:18 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:35:21 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:35:23 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:35:25 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:35:29 A. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 04, 2020 12:51:48 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 12:52:56 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 12:53:19 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 12:56:21 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 12:56:26 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 12:56:26 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado admin
+dic. 04, 2020 12:57:11 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 12:57:15 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 12:57:15 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado admin
+dic. 04, 2020 12:57:31 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 12:57:31 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado admin
+dic. 04, 2020 1:06:44 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:06:44 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado admin
+dic. 04, 2020 1:09:10 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:09:10 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado admin
+dic. 04, 2020 1:11:28 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:11:28 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 1:12:01 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:12:01 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 1:13:22 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:13:22 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 1:15:08 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:15:08 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 1:15:20 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:15:20 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 1:16:18 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:16:18 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 1:31:18 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:31:18 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 1:40:15 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:40:15 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 1:45:14 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 1:45:14 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 2:11:00 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 2:11:00 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 3:00:58 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:00:58 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 3:03:30 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:03:30 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 3:04:34 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:04:34 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 3:07:07 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:07:07 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 3:08:15 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:08:15 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 3:08:58 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:08:58 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 3:09:33 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:09:33 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 3:15:19 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:15:19 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 3:15:44 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:15:44 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 3:16:10 P. M. com.tamargo.datos.EscribirFicheros addUsuario
+FINE: Nuevo usuario registrado -> TestRegistro
+dic. 04, 2020 3:16:14 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:16:17 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario testregistro
+dic. 04, 2020 3:16:40 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:18:06 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:18:06 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 3:18:15 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:18:29 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario testregistro
+dic. 04, 2020 3:18:31 P. M. com.tamargo.datos.EscribirFicheros modificarPuntuacionUsuario
+FINE: Error al editar la puntuación del usuario -> testregistro
+dic. 04, 2020 3:23:49 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:23:54 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario testregistro
+dic. 04, 2020 3:24:15 P. M. com.tamargo.servicio.HiloServidor run
+INFO: El cliente se ha desconectado o ha rechazado la conexión. Error: Connection reset
+dic. 04, 2020 3:24:26 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 3:24:28 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario testregistro
+dic. 04, 2020 3:24:34 P. M. com.tamargo.datos.EscribirFicheros modificarPuntuacionUsuario
+FINE: Error al editar la puntuación del usuario -> testregistro
+dic. 04, 2020 3:35:51 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 4:04:26 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 04, 2020 4:04:45 P. M. com.tamargo.datos.EscribirFicheros modificarPuntuacionUsuario
+FINE: Error al editar la puntuación del usuario -> dani
+dic. 04, 2020 4:04:46 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 04, 2020 4:04:48 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 04, 2020 4:04:48 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 04, 2020 4:04:49 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 04, 2020 4:04:49 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 04, 2020 4:04:49 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 04, 2020 4:04:51 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 04, 2020 4:04:51 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 04, 2020 4:04:51 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 04, 2020 4:04:52 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 04, 2020 4:13:54 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 4:13:54 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin
+dic. 04, 2020 4:13:58 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 4:13:59 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 04, 2020 4:14:04 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 04, 2020 4:14:12 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 04, 2020 4:14:24 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 04, 2020 4:14:56 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+WARNING: Intento de inicio de sesión fallido. Usuario incorrecto
+dic. 04, 2020 4:17:34 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 4:17:38 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 04, 2020 4:18:01 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 04, 2020 4:18:29 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Comenzando una nueva partida con el usuario dani
+dic. 04, 2020 4:18:37 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 4:18:47 P. M. com.tamargo.jaas.modelo.PasswordLoginModule login
+FINE: Inicio de sesión exitoso
+dic. 04, 2020 4:18:47 P. M. com.tamargo.servicio.HiloServidor run
+FINE: Mandando logs al administrador loggeado -> admin

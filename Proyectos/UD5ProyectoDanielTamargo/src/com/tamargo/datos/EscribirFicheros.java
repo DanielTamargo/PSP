@@ -12,7 +12,7 @@ public class EscribirFicheros {
     /**
      * Añade un usuario al fichero usuarios.dat
      */
-    public static boolean addUsuario(Usuario usuario) {
+    public static synchronized boolean addUsuario(Usuario usuario) {
         boolean insertado = true;
 
         try {
@@ -43,7 +43,10 @@ public class EscribirFicheros {
         return insertado;
     }
 
-    public static void modificarPuntuacionUsuario(String nick, int puntuacion) {
+    /**
+     * Modifica el registro de la puntuación de un usuario en el fichero
+     */
+    public static synchronized void modificarPuntuacionUsuario(String nick, int puntuacion) {
         try {
             boolean nickExiste = false;
             ArrayList<Usuario> usuarios = LeerFicheros.leerUsuarios();
@@ -70,7 +73,7 @@ public class EscribirFicheros {
     /**
      * Añade una pregunta al fichero preguntas.dat
      */
-    public static boolean addPregunta(Pregunta pregunta) {
+    public static synchronized boolean addPregunta(Pregunta pregunta) {
         boolean insertada = true;
 
         try {
@@ -100,5 +103,54 @@ public class EscribirFicheros {
 
         return insertada;
     }
+
+
+
+    /*
+    Estos dos métodos que están comentados fueron creados con la idea de que varios clientes no pudieran iniciar sesión
+    a la vez con un usuario
+
+    Funcionaba bien, pero pensándolo bien, la mayoría de webs y juegos te dejan iniciar sesión donde ya se ha iniciado
+    sesión, de hecho, los juegos que no dejan tener 2 conexiones distintas en el mismo usuario, expulsan al usuario que
+    estaba conectado con anterioridad (se puede hacer pero ya me estoy quedando sin tiempo y prefiero acabar el
+    planning que tengo desde el principio)
+     */
+    /*
+    public static synchronized void conectarUsuario(Usuario usuario) {
+        try {
+            ArrayList<Usuario> usuarios = LeerFicheros.leerUsuarios();
+            ObjectOutputStream objOS = new ObjectOutputStream(new FileOutputStream(new File("./ficheros/usuarios.dat")));
+            for (Usuario usu : usuarios) {
+                if (usu.getNick().equalsIgnoreCase(usuario.getNick())) {
+                    usu.setConectado(true);
+                }
+                objOS.writeObject(usu);
+            }
+            objOS.close();
+
+        } catch (IOException ignored) {
+            System.out.println("[Fichero] Error al activar el nuevo como conectado -> " + usuario.getNick());
+            GuardarLogs.logger.log(Level.SEVERE, "Error al activar el nuevo como conectado -> " + usuario.getNick());
+        }
+    }
+
+    public static synchronized void desconectarUsuario(Usuario usuario) {
+        try {
+            ArrayList<Usuario> usuarios = LeerFicheros.leerUsuarios();
+            ObjectOutputStream objOS = new ObjectOutputStream(new FileOutputStream(new File("./ficheros/usuarios.dat")));
+            for (Usuario usu : usuarios) {
+                if (usu.getNick().equalsIgnoreCase(usuario.getNick())) {
+                    usu.setConectado(false);
+                }
+                objOS.writeObject(usu);
+            }
+            objOS.close();
+
+        } catch (IOException ignored) {
+            System.out.println("[Fichero] Error al activar el nuevo como conectado -> " + usuario.getNick());
+            GuardarLogs.logger.log(Level.SEVERE, "Error al activar el nuevo como conectado -> " + usuario.getNick());
+        }
+    }
+    */
 
 }

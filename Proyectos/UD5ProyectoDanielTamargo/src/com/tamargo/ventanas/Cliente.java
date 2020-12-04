@@ -62,7 +62,6 @@ public class Cliente {
     private JPanel panelPuntuaciones;
 
     private JButton b_nuevaPartida;
-    private JButton b_actualizarPuntuaciones;
     private JButton b_cerrarSesion;
 
     // PARTIDA
@@ -91,19 +90,27 @@ public class Cliente {
     private JTextPane tpPuntuaciones;
     private ArrayList<String> topPuntuaciones = new ArrayList<>();
 
+    // ADMIN
+    private JTextPane tpDatosLog;
+    private JComboBox<String> cbLogs;
+    private ArrayList<ArrayList<String>> datosTodosLosLogs = new ArrayList<>();
+    private int indexFiltroDatos = 0; // 0 = todos, 1 = fine + info, 2 = warning, 3 = error
+
+    //b_admnTodos b_admnFine b_admnWarning b_admnSevere b_admnCerrarSesion
+    private JButton b_admnTodos;
+    private JButton b_admnFine;
+    private JButton b_admnWarning;
+    private JButton b_admnSevere;
+    private JButton b_admnCerrarSesion;
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTOR
     public Cliente(JFrame ventana) {
-        // ✓ RECIBIR LA PUNTUACIÓN (EN STRING) AL ACABAR LA PARTIDA Y MOSTRARLA EN LOS JOPTIONPANES
-        // ✓ CALCULAR TIEMPO QUE HA TARDADO EN RESPONDER Y SUMAR UN PLUS SI ES NECESARIO
-        // ✓ UTILIZAR LA COLECCIÓN GETPRINCIPALS Y SACAR DE AHÍ EL USUARIO LOGGEADO Y EL TIPO (LOGIN GET CONTEXT)
-        // TODO TERMINAR VENTANA ADMIN
-        //  PREPARAR DOCUMENTACIÓN (mini check)
+        // TODO PREPARAR DOCUMENTACIÓN (mini check)
+        //  preparar inserción de datos base si no los detecta
 
         this.ventana = ventana;
         iniciarCliente();
-
-        //ventanaAdmin(null, null, null);
     }
     // LANZAR VENTANA
     public void iniciarCliente() {
@@ -178,7 +185,7 @@ public class Cliente {
             });
 
             //todo quitar
-            tNick.setText("dani");
+            tNick.setText("admin");
             tContrasenya.setText("test");
 
         } catch (IOException | NoSuchAlgorithmException |
@@ -213,10 +220,14 @@ public class Cliente {
                         // Encriptar como un mensaje normal y enviar
                         byte[] contrasenyaEncriptadaEncriptada = encriptarMensajeBytes(claveAES, contrasenyaEncriptada);
                         objOS.writeObject(contrasenyaEncriptadaEncriptada);
-
                         if ((boolean) objIS.readObject()) {
                             nickJugador = tNick.getText();
-                            ventanaValidarNormas(claveAES, objOS, objIS);
+                            int tipoUsuario = (int) objIS.readObject();
+                            if (tipoUsuario != 1) {
+                                ventanaValidarNormas(claveAES, objOS, objIS);
+                            } else {
+                                ventanaAdmin(claveAES, objOS, objIS);
+                            }
                         } else {
                             String titulo = "Credenciales incorrectas";
                             String mensaje = "Usuario y/o contraseña incorrectos";
@@ -407,6 +418,50 @@ public class Cliente {
             }
         });
     }
+    // ADMIN
+    public void listenersAdmin(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
+        cbLogs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                indexFiltroDatos = 0;
+                accionListenerComboBox();
+            }
+        });
+        b_admnTodos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                indexFiltroDatos = 0;
+                accionListenerComboBox();
+            }
+        });
+        b_admnFine.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                indexFiltroDatos = 1;
+                accionListenerComboBox();
+            }
+        });
+        b_admnWarning.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                indexFiltroDatos = 2;
+                accionListenerComboBox();
+            }
+        });
+        b_admnSevere.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                indexFiltroDatos = 3;
+                accionListenerComboBox();
+            }
+        });
+        b_admnCerrarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ventanaLogin(claveAES, objOS, objIS);
+            }
+        });
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // VENTANAS
@@ -440,47 +495,71 @@ public class Cliente {
         panelDatos.add(panelDatosLogs);
         panelDatosLogs.setBounds(margenPDL, posYDatosLogs, panelDatosNormasWidth, panelDatosNormasHeight);
 
-        JTextPane tpNormas = new JTextPane();
+        tpDatosLog = new JTextPane();
         int margenTP = 10;
-        tpNormas.setBounds(margenTP, margenTP, panelDatosNormasWidth - (margenTP * 2), panelDatosNormasHeight - (margenTP * 2));
-        tpNormas.setOpaque(false);
-        tpNormas.setEditable(false);
+        tpDatosLog.setBounds(margenTP, margenTP, panelDatosNormasWidth - (margenTP * 2), panelDatosNormasHeight - (margenTP * 2));
+        tpDatosLog.setOpaque(false);
+        tpDatosLog.setEditable(false);
         //tpNormas.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
-        tpNormas.setFont(new Font(fuenteMYHUI, Font.BOLD, 12));
+        tpDatosLog.setFont(new Font(fuenteMYHUI, Font.BOLD, 12));
 
-        JScrollPane scrollPane = new JScrollPane(tpNormas);
+        JScrollPane scrollPane = new JScrollPane(tpDatosLog);
         panelDatosLogs.add(scrollPane);
         scrollPane.setBounds(0, 0, panelDatosNormasWidth, panelDatosNormasHeight);
         scrollPane.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
 
         posYDatosLogs -= 50;
         int widthBoton = 100;
-        int heightBoton = 40;
-        int distanciaEntreBotones = 10;
+        int heightBoton = 20;
+        int distanciaEntreBotones = 5;
 
-        JButton b_fine = new JButton("Fine");
-        configurarButton(b_fine, fuenteMYHUI, Font.BOLD, 14);
-        panelDatos.add(b_fine);
-        b_fine.setBounds(margenPDL, posYDatosLogs, widthBoton, heightBoton);
+        int lFiltrarWidth = 40;
+        JLabel filtrar = new JLabel("Filtros:", SwingConstants.LEFT);
+        configurarLabel(filtrar, fuenteMYHUI, Font.BOLD, 12);
+        panelDatos.add(filtrar);
+        filtrar.setBounds(margenPDL, posYDatosLogs + 2, lFiltrarWidth, 40);
 
-        JButton b_warning = new JButton("Warning");
-        configurarButton(b_warning, fuenteMYHUI, Font.BOLD, 14);
-        panelDatos.add(b_warning);
-        b_warning.setBounds(margenPDL + distanciaEntreBotones + widthBoton, posYDatosLogs, widthBoton, heightBoton);
+        b_admnTodos = new JButton("Todos");
+        configurarButton(b_admnTodos, fuenteMYHUI, Font.BOLD, 11);
+        panelDatos.add(b_admnTodos);
+        b_admnTodos.setBounds(margenPDL + lFiltrarWidth + 10, posYDatosLogs, widthBoton, heightBoton);
 
-        JButton b_severe = new JButton("Severe");
-        configurarButton(b_severe, fuenteMYHUI, Font.BOLD, 14);
-        panelDatos.add(b_severe);
-        b_severe.setBounds(margenPDL + (distanciaEntreBotones + widthBoton) * 2, posYDatosLogs, widthBoton, heightBoton);
+        b_admnWarning = new JButton("Warning");
+        configurarButton(b_admnWarning, fuenteMYHUI, Font.BOLD, 11);
+        panelDatos.add(b_admnWarning);
+        b_admnWarning.setBounds(margenPDL + lFiltrarWidth + 10, posYDatosLogs + heightBoton + distanciaEntreBotones, widthBoton, heightBoton);
 
-        JButton b_cerrarSesion = new JButton("Cerrar Sesión");
-        configurarButton(b_cerrarSesion, fuenteMYHUI, Font.BOLD, 14);
-        panelDatos.add(b_cerrarSesion);
-        b_cerrarSesion.setBounds(440, posYDatosLogs, 150, heightBoton);
+        b_admnFine = new JButton("Fine + Info");
+        configurarButton(b_admnFine, fuenteMYHUI, Font.BOLD, 11);
+        panelDatos.add(b_admnFine);
+        b_admnFine.setBounds(margenPDL + lFiltrarWidth + 10 + distanciaEntreBotones + widthBoton, posYDatosLogs, widthBoton, heightBoton);
 
+        b_admnSevere = new JButton("Severe");
+        configurarButton(b_admnSevere, fuenteMYHUI, Font.BOLD, 11);
+        panelDatos.add(b_admnSevere);
+        b_admnSevere.setBounds(margenPDL + lFiltrarWidth + 10 + distanciaEntreBotones + widthBoton, posYDatosLogs + heightBoton + distanciaEntreBotones, widthBoton, heightBoton);
 
+        JLabel elegirLog = new JLabel("Logs disponibles:", SwingConstants.LEFT);
+        configurarLabel(elegirLog, fuenteMYHUI, Font.BOLD, 12);
+        panelDatos.add(elegirLog);
+        elegirLog.setBounds(margenPDL + 280, posYDatosLogs - 14, 200, 40);
 
+        cbLogs = new JComboBox<>();
+        panelDatos.add(cbLogs);
+        cbLogs.setBounds(margenPDL + 280, posYDatosLogs + 17, 138, 28);
+        cbLogs.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
 
+        b_admnCerrarSesion = new JButton("Cerrar Sesión");
+        configurarButton(b_admnCerrarSesion, fuenteMYHUI, Font.BOLD, 14);
+        panelDatos.add(b_admnCerrarSesion);
+        b_admnCerrarSesion.setBounds(470, posYDatosLogs, 120, 45);
+
+        recibirDatos(claveAES, objOS, objIS);
+        rellenarComboBox();
+
+        listenersAdmin(claveAES, objOS, objIS);
+
+        cbLogs.setSelectedIndex(0);
     }
     public void ventanaPanelPuntuaciones(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         try {
@@ -619,7 +698,7 @@ public class Cliente {
         ventana.setTitle("Menú");
         String fuenteMYHUI = "MicrosoftYaHeiUI";
 
-        // TODO cargar gif para empezar nueba partida??
+        // TODO cargar gif para empezar nueva partida??
         //  newlabel
         //  labelseticon
         //  panel.addlabel
@@ -1047,6 +1126,156 @@ public class Cliente {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MÉTODOS VARIOS
+    // ADMIN
+    public void accionListenerComboBox() {
+        if (cbLogs.getSelectedIndex() >= 0 && cbLogs.getSelectedIndex() < datosTodosLosLogs.size())
+            volcarDatosTextPaneLog(datosTodosLosLogs.get(cbLogs.getSelectedIndex()));
+        else {
+            tpDatosLog.setText("Sin datos ?¿?¿?");
+        }
+    }
+    public void volcarDatosTextPaneLog(ArrayList<String> listaStrings) {
+        tpDatosLog.setText("");
+
+        StyledDocument doc = tpDatosLog.getStyledDocument();
+
+        Style style = tpDatosLog.addStyle("PlaylistStyle", null);
+        StyleConstants.setForeground(style, Color.DARK_GRAY);
+
+        try {
+            int n = 0;
+            int i = 0;
+            boolean resetearColor = false;
+            for (String str : listaStrings) { //new Color(0, 140, 37));new Color(150, 35, 23)
+                if (!listaStrings.get(0).equalsIgnoreCase(str)) {
+
+                    if (str.contains("FINE")) {
+                        StyleConstants.setForeground(style, new Color(0, 140, 37));
+                        resetearColor = true;
+                    } else if (str.contains("WARNING")) {
+                        StyleConstants.setForeground(style, new Color(201, 143, 54));
+                        resetearColor = true;
+                    } else if (str.contains("SEVERE") || str.contains("ERROR")) {
+                        StyleConstants.setForeground(style, new Color(150, 35, 23));
+                        resetearColor = true;
+                    } else if (str.contains("INFO")) {
+                        StyleConstants.setForeground(style, new Color(54, 105, 201));
+                        resetearColor = true;
+                    }
+
+                    if (indexFiltroDatos == 1) { // FINE + INFO
+                        if (i + 1 < listaStrings.size()) {
+                            if (listaStrings.get(i).contains("FINE") || listaStrings.get(i).contains("INFO") || listaStrings.get(i + 1).contains("FINE") || listaStrings.get(i + 1).contains("INFO")) {
+                                n++;
+                                doc.insertString(doc.getLength(), str, style);
+                                doc.insertString(doc.getLength(), "\n", style);
+                                if (n % 2 == 0)
+                                    doc.insertString(doc.getLength(), "\n", style);
+                            }
+                        } else {
+                            if (listaStrings.get(i).contains("FINE") || listaStrings.get(i).contains("INFO")) {
+                                n++;
+                                doc.insertString(doc.getLength(), str, style);
+                                doc.insertString(doc.getLength(), "\n", style);
+                                if (n % 2 == 0)
+                                    doc.insertString(doc.getLength(), "\n", style);
+                            }
+                        }
+                    } else if (indexFiltroDatos == 2) { // WARNING
+                        if (i + 1 < listaStrings.size()) {
+                            if (listaStrings.get(i).contains("WARNING") || listaStrings.get(i + 1).contains("WARNING")) {
+                                n++;
+                                doc.insertString(doc.getLength(), str, style);
+                                doc.insertString(doc.getLength(), "\n", style);
+                                if (n % 2 == 0)
+                                    doc.insertString(doc.getLength(), "\n", style);
+                            }
+                        } else {
+                            if (listaStrings.get(i).contains("WARNING")) {
+                                n++;
+                                doc.insertString(doc.getLength(), str, style);
+                                doc.insertString(doc.getLength(), "\n", style);
+                                if (n % 2 == 0)
+                                    doc.insertString(doc.getLength(), "\n", style);
+                            }
+                        }
+                    } else if (indexFiltroDatos == 3) { // SEVERE + ERROR
+                        if (i + 1 < listaStrings.size()) {
+                            if (listaStrings.get(i).contains("SEVERE") || listaStrings.get(i).contains("ERROR") || listaStrings.get(i + 1).contains("SEVERE") || listaStrings.get(i + 1).contains("ERROR")) {
+                                n++;
+                                doc.insertString(doc.getLength(), str, style);
+                                doc.insertString(doc.getLength(), "\n", style);
+                                if (n % 2 == 0)
+                                    doc.insertString(doc.getLength(), "\n", style);
+                            }
+                        } else {
+                            if (listaStrings.get(i).contains("SEVERE") || listaStrings.get(i).contains("ERROR")) {
+                                n++;
+                                doc.insertString(doc.getLength(), str, style);
+                                doc.insertString(doc.getLength(), "\n", style);
+                                if (n % 2 == 0)
+                                    doc.insertString(doc.getLength(), "\n", style);
+                            }
+                        }
+                    } else { //TODOS
+                        n++;
+                        doc.insertString(doc.getLength(), str, style);
+                        doc.insertString(doc.getLength(), "\n", style);
+                        if (n % 2 == 0)
+                            doc.insertString(doc.getLength(), "\n", style);
+                    }
+
+                    if (resetearColor) {
+                        StyleConstants.setForeground(style, Color.DARK_GRAY);
+                        resetearColor = false;
+                    }
+                }
+
+                i++;
+            }
+
+            if (tpDatosLog.getText().equalsIgnoreCase("")) {
+                String mensaje;
+
+                if (indexFiltroDatos == 1)
+                    mensaje = "Sin logs de nivel FINE o INFO";
+                else if (indexFiltroDatos == 2)
+                    mensaje = "Sin logs de nivel WARNING";
+                else if (indexFiltroDatos == 3)
+                    mensaje = "Sin logs de nivel SEVERE";
+                else
+                    mensaje = "Sin logs";
+
+                StyleConstants.setForeground(style, Color.GRAY);
+                doc.insertString(doc.getLength(), mensaje, style);
+            }
+        } catch (BadLocationException ignored) {}
+    }
+    public void recibirDatos(SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
+        try {
+            datosTodosLosLogs = new ArrayList<>();
+            int numObjetos = (int) objIS.readObject(); // Le decimos al servidor que queremos recibir los logs
+
+            for (int i = 0; i < numObjetos; i++) {
+                ArrayList<String> datosLog = desencriptarArrayListString(claveAES, (byte[]) objIS.readObject());
+                datosTodosLosLogs.add(datosLog);
+            }
+
+        } catch (IOException | ClassCastException | ClassNotFoundException |
+                NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException |
+                BadPaddingException | IllegalBlockSizeException ignored) {}
+    }
+    public void rellenarComboBox() {
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+        for (ArrayList<String> datosLog : datosTodosLosLogs) {
+            try {
+                modelo.addElement(datosLog.get(0));
+            } catch (NullPointerException ignored) { }
+        }
+        cbLogs.setModel(modelo);
+    }
+
+    // PARTIDA
     public void inGameEnviarRespuestaAlServidor(int tipo, String textoRespuesta, SecretKey claveAES, ObjectOutputStream objOS, ObjectInputStream objIS) {
         int respuesta = -1;
         try {
@@ -1208,6 +1437,8 @@ public class Cliente {
         resultado[3] = (byte) ((dato & 0x000000FF));
         return resultado;
     }
+
+    // PUNTUACIONES
     public void volcarDatosTextPane(JTextPane textPane, ArrayList<String> listaStrings, int tipo) {
         textPane.setText("");
 
@@ -1221,7 +1452,7 @@ public class Cliente {
         try {
             boolean resetearColor = false;
             for (String str : listaStrings) {
-                if ((tipo == 2 && str.contains(nickJugador)) || (tipo == 2 && str.contains("Tu puntuación"))
+                if ((tipo == 2 && str.toLowerCase().contains(nickJugador.toLowerCase())) || (tipo == 2 && str.contains("Tu puntuación"))
                         || (tipo == 1 && nums.contains(str.substring(0, 1)))) {
                     StyleConstants.setForeground(style, Color.BLUE);
                     resetearColor = true;
@@ -1236,6 +1467,8 @@ public class Cliente {
             }
         } catch (BadLocationException ignored) {}
     }
+
+    // LOGIN + REGISTRO
     public boolean comprobarPatrones(int tipo) {
         boolean correcto = true;
         String titulo = "Error al recoger datos";
@@ -1289,6 +1522,8 @@ public class Cliente {
         
         return correcto;
     }
+
+    // REUTILIZADO DONDE SE QUIERA MOSTRAR UN JOPTIONPANE PERSONALIZADO
     public void mostrarJOptionPane(String titulo, String mensaje, int tipo) {
         JButton okButton = new JButton("Ok");
         okButton.setFocusPainted(false);
@@ -1298,6 +1533,8 @@ public class Cliente {
         okButton.addActionListener(e -> dialog.dispose());
         dialog.setVisible(true);
     }
+
+    // REUTILIZADOS A LA HORA DE CREAR VENTANAS
     public void configurarLabel(JLabel label, String fuente, int tipo, int size) {
         label.setFont(new Font(fuente, tipo, size));
         label.setForeground(Color.DARK_GRAY);

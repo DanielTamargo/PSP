@@ -91,14 +91,14 @@ public class PasswordLoginModule implements LoginModule {
         // Validar usuario y password
         for (Usuario usu: usuarios) {
             if (usu.getNick().equalsIgnoreCase(nickUsuario)) {
-                if (usu.getContrasenya().equals(contrasenyaCotejar)) {
+                if (usu.getContrasenya().equals(contrasenyaCotejar)) { // Si lo ha encontrado y la contraseña coincide, login valido
                     GuardarLogs.logger.log(Level.FINE, "Inicio de sesión exitoso");
                     System.out.println("[PasswordLoginModule] Inicio de sesión correcto");
                     loginExito = true;
                     //tipoUsuario = usu.getTipo();
                     usuario = usu;
                     return true;
-                } else {
+                } else { // Si lo ha encontrado pero la contraseña no coincide, login fallido
                     nickUsuario = null;
                     usuario = null;
                     clearPassword();
@@ -110,7 +110,9 @@ public class PasswordLoginModule implements LoginModule {
             }
         }
 
+        // Si no lo ha encontrado, login fallido
         nickUsuario = null;
+        usuario = null;
         clearPassword();
         GuardarLogs.logger.log(Level.WARNING, "Intento de inicio de sesión fallido. Usuario incorrecto");
         System.out.println("[PasswordLoginModule] Usuario incorrecto");
