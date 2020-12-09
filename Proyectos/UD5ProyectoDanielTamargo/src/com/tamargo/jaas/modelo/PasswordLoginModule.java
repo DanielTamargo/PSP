@@ -121,7 +121,7 @@ public class PasswordLoginModule implements LoginModule {
     }
 
     /**
-     *	Llamar si el login tiene éxito
+     *	Método que se ejecuta si el login tiene éxito
      */
     public boolean commit() throws LoginException {
         // Si el login falló pero por algún motivo hemos llegado al commit, abortamos
@@ -141,7 +141,7 @@ public class PasswordLoginModule implements LoginModule {
     }
 
     /**
-     * Llamar si el login falla
+     * Método que se ejecuta si el login falla
      */
     public boolean abort() throws LoginException {
         // Si login falla, devolver false
@@ -163,7 +163,7 @@ public class PasswordLoginModule implements LoginModule {
     }
 
     /**
-     * Logout
+     * Método que ejecutamos cuando el usuario cierra sesión Logout
      */
     public boolean logout() throws LoginException {
         // Borrar principal del usuario
@@ -177,7 +177,7 @@ public class PasswordLoginModule implements LoginModule {
     }
 
     /**
-     * Limpiar la contraseña
+     * Método que limpiar la contraseña (logout, abort)
      */
     private void clearPassword() {
         if (contrasenyaUsuario == null) {

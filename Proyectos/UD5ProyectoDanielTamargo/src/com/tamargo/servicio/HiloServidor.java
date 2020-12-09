@@ -108,7 +108,6 @@ public class HiloServidor extends Thread {
 
 
             // Bucle comunicativo
-            // TODO aquí el hilo del server esperará recibir opciones
             try {
                 int n = 1;
                 Integer respuesta = -1;
@@ -228,19 +227,19 @@ public class HiloServidor extends Thread {
             GuardarLogs.logger.log(Level.INFO, "El cliente se ha desconectado o ha rechazado la conexión. Error: " + e.getLocalizedMessage());
         } catch (NoSuchAlgorithmException e) {
             System.out.println(nombre + "Error al generar la clave simétrica o alguno de los cifradores: " + e.getLocalizedMessage());
-            GuardarLogs.logger.log(Level.INFO, "Error al generar la clave simétrica o alguno de los cifradores: " + e.getLocalizedMessage());
+            GuardarLogs.logger.log(Level.SEVERE, "Error al generar la clave simétrica o alguno de los cifradores: " + e.getLocalizedMessage());
         } catch (ClassNotFoundException e) {
             System.out.println(nombre + "Error al intentar utilizar una clase que no existe: " + e.getLocalizedMessage());
-            GuardarLogs.logger.log(Level.INFO, "Error al intentar utilizar una clase que no existe: " + e.getLocalizedMessage());
+            GuardarLogs.logger.log(Level.SEVERE, "Error al intentar utilizar una clase que no existe: " + e.getLocalizedMessage());
         } catch (NoSuchPaddingException e) {
             System.out.println(nombre + "Error al intentar configurar los cifradores: " + e.getLocalizedMessage());
-            GuardarLogs.logger.log(Level.INFO, "Error al intentar configurar los cifradores: " + e.getLocalizedMessage());
+            GuardarLogs.logger.log(Level.SEVERE, "Error al intentar configurar los cifradores: " + e.getLocalizedMessage());
         } catch (InvalidKeyException e) {
             System.out.println(nombre + "Error al utilizar una clave no válida para configurar los cifradores: " + e.getLocalizedMessage());
-            GuardarLogs.logger.log(Level.INFO, "Error al utilizar una clave no válida para configurar los cifradores: " + e.getLocalizedMessage());
+            GuardarLogs.logger.log(Level.SEVERE, "Error al utilizar una clave no válida para configurar los cifradores: " + e.getLocalizedMessage());
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             System.out.println(nombre + "Error al utilizar el cifrador para encriptar/desencriptar: " + e.getLocalizedMessage());
-            GuardarLogs.logger.log(Level.INFO, "Error al utilizar el cifrador para encriptar/desencriptar: " + e.getLocalizedMessage());
+            GuardarLogs.logger.log(Level.SEVERE, "Error al utilizar el cifrador para encriptar/desencriptar: " + e.getLocalizedMessage());
         }
 
     }

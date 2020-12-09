@@ -213,8 +213,10 @@ public class Cliente {
                         // Encriptar como un mensaje normal y enviar
                         byte[] contrasenyaEncriptadaEncriptada = encriptarMensajeBytes(claveAES, contrasenyaEncriptada);
                         objOS.writeObject(contrasenyaEncriptadaEncriptada);
+
                         if ((boolean) objIS.readObject()) {
                             nickJugador = tNick.getText();
+                            System.out.println(nombre + "Login validado");
                             int tipoUsuario = (int) objIS.readObject();
                             if (tipoUsuario != 1) {
                                 ventanaValidarNormas(claveAES, objOS, objIS);
@@ -226,6 +228,7 @@ public class Cliente {
                             String mensaje = "Usuario y/o contraseña incorrectos";
                             mostrarJOptionPane(titulo, mensaje, 0);
                         }
+
                     } catch (IOException | NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException ex) {
                         String titulo = "Error";
                         String mensaje = "Error al intentar enviar los datos.\nMotivo: " + ex.getLocalizedMessage();

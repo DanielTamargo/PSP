@@ -14,8 +14,12 @@ import java.util.logging.SimpleFormatter;
 public class GuardarLogs {
 
     public static final Logger logger = inicializarLog();
-    private static final int numLogsMaximos = 12;
+    private static final int numLogsMaximos = 8;
 
+    /**
+     * Inicializa el log, le genera un FileHandler y configura los niveles que aceptará
+     * Este método llamará a comprobarCarpetaLogs() y borrarLogsSobrantes()
+     */
     public static synchronized Logger inicializarLog() {
         Logger logger = Logger.getLogger("ProyectoUD5");
         FileHandler fh;
@@ -43,6 +47,11 @@ public class GuardarLogs {
         return logger;
     }
 
+    /**
+     * Borra los logs "sobrantes"
+     * La variable numLogsMaximos determinará cuantos logs puede almacenar, una vez se exceda el número, se eliminarán
+     * los logs más antiguos
+     */
     public static synchronized void borrarLogsSobrantes() {
         try {
             File path = new File("./logs");
@@ -53,29 +62,38 @@ public class GuardarLogs {
                     logs.add(f);
                 else
                     logsLCK.add(f);
+                System.out.println(f.getName());
             }
 
             if (logs.size() > numLogsMaximos) {
-                File f = logs.get(0);
-                boolean borrado = false;
-                borrado = f.delete();
+                while (logs.size() > numLogsMaximos) {
+                    File f = logs.get(0);
+                    boolean borrado = false;
+                    borrado = f.delete();
 
-                if (borrado) {
-                    System.out.println("[Log] Para evitar un excesivo número de logs se ha eliminado el log más antiguo: " + f.getName());
-                    borrarLogsSobrantes();
-                } else
-                    System.out.println("[Log] Se ha intentado eliminar sin éxito");
+                    if (borrado) {
+                        System.out.println("[Log] Para evitar un excesivo número de logs se ha eliminado el log más antiguo: " + f.getName());
+                    } else {
+                        System.out.println("[Log] Se ha intentado eliminar sin éxito");
+                    }
+
+                    logs.remove(0);
+                }
             }
 
             if (logsLCK.size() > 1) {
                 while (logsLCK.size() > 1) {
                     logsLCK.get(0).delete();
+                    logsLCK.remove(0);
                 }
             }
 
         } catch (Exception ignored) { }
     }
 
+    /**
+     * Comprueba que la carpeta logs existe, si no existe, la crea para poder generar dentro los logs
+     */
     public static synchronized void comprobarCarpetaLogs() {
         File f = new File("./logs");
         if (!f.exists()) {
